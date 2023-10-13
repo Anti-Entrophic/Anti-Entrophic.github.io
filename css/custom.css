@@ -11,6 +11,10 @@
     font-weight: lighter;
   }
   
+  body {
+    font-family: "ZhuZiAYuanJWD";
+  }
+
   div#menus {
     font-family: "ZhuZiAYuanJWD";
   }
