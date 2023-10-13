@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/posts/d87f7e0c.html</loc>
+    <loc>http://example.com/posts/10003.html</loc>
     
     <lastmod>2023-10-13</lastmod>
     
@@ -11,7 +11,34 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/ec69bb31.html</loc>
+    <loc>http://example.com/tags/index.html</loc>
+    
+    <lastmod>2023-10-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/index.html</loc>
+    
+    <lastmod>2023-10-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/posts/2a2e34a2.html</loc>
+    
+    <lastmod>2023-10-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/posts/d87f7e0c.html</loc>
     
     <lastmod>2023-10-13</lastmod>
     
@@ -37,6 +64,20 @@
   </url>
 
   
+  <url>
+    <loc>http://example.com/tags/Hexo-Butterfly-tutorial/</loc>
+    <lastmod>2023-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
+  
+  <url>
+    <loc>http://example.com/categories/Hexo-Butterfly-tutorial/</loc>
+    <lastmod>2023-10-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 </urlset>
