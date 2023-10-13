@@ -1,1 +1,1 @@
-http://example.com/posts/10003.html
+https://anti-entrophic.github.io/posts/10003.html
