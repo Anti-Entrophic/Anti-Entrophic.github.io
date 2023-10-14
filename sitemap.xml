@@ -2,16 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://anti-entrophic.github.io/posts/10003.html</loc>
+    <loc>https://anti-entrophic.github.io/posts/10002.html</loc>
     
-    <lastmod>2023-10-13</lastmod>
+    <lastmod>2023-10-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://anti-entrophic.github.io/posts/10002.html</loc>
+    <loc>https://anti-entrophic.github.io/posts/10004.html</loc>
+    
+    <lastmod>2023-10-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/posts/d87f7e0c.html</loc>
+    
+    <lastmod>2023-10-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/posts/10003.html</loc>
     
     <lastmod>2023-10-13</lastmod>
     
@@ -38,15 +56,6 @@
   </url>
   
   <url>
-    <loc>https://anti-entrophic.github.io/posts/d87f7e0c.html</loc>
-    
-    <lastmod>2023-10-13</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://anti-entrophic.github.io/posts/4a17b156.html</loc>
     
     <lastmod>2023-10-13</lastmod>
@@ -58,7 +67,7 @@
 
   <url>
     <loc>https://anti-entrophic.github.io/</loc>
-    <lastmod>2023-10-13</lastmod>
+    <lastmod>2023-10-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -66,7 +75,7 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Hexo-Butterfly-tutorial/</loc>
-    <lastmod>2023-10-13</lastmod>
+    <lastmod>2023-10-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -75,7 +84,7 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Hexo-Butterfly-tutorial/</loc>
-    <lastmod>2023-10-13</lastmod>
+    <lastmod>2023-10-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
