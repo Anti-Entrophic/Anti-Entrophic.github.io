@@ -6,7 +6,7 @@
   <link href="https://anti-entrophic.github.io/atom.xml" rel="self"/>
   
   <link href="https://anti-entrophic.github.io/"/>
-  <updated>2023-10-14T10:38:36.939Z</updated>
+  <updated>2023-10-14T11:53:25.790Z</updated>
   <id>https://anti-entrophic.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://anti-entrophic.github.io/posts/10005.html"/>
     <id>https://anti-entrophic.github.io/posts/10005.html</id>
     <published>2023-10-14T08:31:31.000Z</published>
-    <updated>2023-10-14T10:38:36.939Z</updated>
+    <updated>2023-10-14T11:53:25.790Z</updated>
     
-    <content type="html"><![CDATA[<p>简单推导一下反向传播算法的公式</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picst.sunbangyan.cn/2023/10/14/r3efwk.png" alt="多层前馈神经网络示例。" style="width:400px;"/></div><span class="image-caption">多层前馈神经网络示例。</span></div><p>设激活函数为sigmoid函数，误差函数采用均方误差，正向传播得到的结果为 $\hat{\boldsymbol{y}}$，真实值为y。</p><h1 id="最后一层参数"><a href="#最后一层参数" class="headerlink" title="最后一层参数"></a>最后一层参数</h1><p>设隐层 $b_i$ 到输出层 $y_j$ 的参数为 $w_{ij} $</p><p>以更新 $w_{11}$ 为例，现在已经得到了均方误差 $E$ :</p><script type="math/tex; mode=display">E = \frac{1}{2} \sum_{i=1}^n (\hat{y_i} - y_i)^2</script><p>用梯度下降最小化均方误差更新隐层到输出层参数</p><script type="math/tex; mode=display">\frac{\partial E}{\partial w_{11}} = \frac{\partial E}{\partial y_1} \cdot \frac{\partial y_1}{\partial \beta_{1}} \cdot \frac{\partial \beta_1}{\partial w_{11}}</script>]]></content>
+    <content type="html"><![CDATA[<p>简单推导一下反向传播算法的公式</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picst.sunbangyan.cn/2023/10/14/r3efwk.png" alt="多层前馈神经网络示例。" style="width:400px;"/></div><span class="image-caption">多层前馈神经网络示例。</span></div><p>设激活函数为sigmoid函数，误差函数采用均方误差，正向传播得到的结果为 $\hat{\boldsymbol{y}}$，真实值为y。</p><h1 id="最后一层参数"><a href="#最后一层参数" class="headerlink" title="最后一层参数"></a>最后一层参数</h1><p>设隐层 $b_i$ 到输出层 $y_j$ 的参数为 $w_{ij} $</p><p>以更新 $w_{11}$ 为例，现在已经得到了均方误差 $E$ :</p><script type="math/tex; mode=display">E = \frac{1}{2} \sum_{i=1}^n (\hat{y_i} - y_i)^2</script><p>用梯度下降最小化均方误差更新隐层到输出层参数，由链式法则</p><script type="math/tex; mode=display">\frac{\partial E}{\partial w_{11}} = \frac{\partial E}{\partial \hat{y_1}} \cdot \frac{\partial \hat{y_1}}{\partial \beta_{1}} \cdot \frac{\partial \beta_1}{\partial w_{11}}</script><script type="math/tex; mode=display">\begin{equation}\left\{    \begin{array}{ll}        \frac{\partial E}{\partial \hat{y_1}} = \hat{y_1}-y_1 & \\        \frac{\partial \hat{y_1}}{\partial \beta_{1}} = \hat{y_1} (1- \hat{y_1}) & 对sigmoid求导 \\    \frac{\partial \beta_1}{\partial w_{11}} = b_1    \end{array}\right. \notag\end{equation}</script><p>所以 $\Delta w_{11} = $ </p>]]></content>
     
     
       
