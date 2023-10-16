@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://anti-entrophic.github.io/posts/10007.html</loc>
+    
+    <lastmod>2023-10-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://anti-entrophic.github.io/posts/10006.html</loc>
     
     <lastmod>2023-10-15</lastmod>
@@ -126,6 +135,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://anti-entrophic.github.io/tags/Computer-Network/</loc>
+    <lastmod>2023-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -151,6 +167,13 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Operating-System/</loc>
+    <lastmod>2023-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/categories/Study/Computer-Network/</loc>
     <lastmod>2023-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

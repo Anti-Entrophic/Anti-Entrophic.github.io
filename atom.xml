@@ -6,7 +6,7 @@
   <link href="https://anti-entrophic.github.io/atom.xml" rel="self"/>
   
   <link href="https://anti-entrophic.github.io/"/>
-  <updated>2023-10-15T15:28:22.771Z</updated>
+  <updated>2023-10-16T10:23:32.209Z</updated>
   <id>https://anti-entrophic.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机网络 Wireshark的使用</title>
+    <link href="https://anti-entrophic.github.io/posts/10007.html"/>
+    <id>https://anti-entrophic.github.io/posts/10007.html</id>
+    <published>2023-10-16T09:30:21.000Z</published>
+    <updated>2023-10-16T10:23:32.209Z</updated>
+    
+    <content type="html"><![CDATA[<p>随便写写</p><p>Wireshark是网络包分析工具，主要作用是在接囗实时捕捉网络包，并详细显示包的协议信息。</p><ul><li><p>可以捕捉多种网络接囗类型的包，包括无线局域网接囗。</p></li><li><p>可以支持多种协议的解码，如TCP，DNS等。</p></li></ul><h1 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h1><p>Wireshark的过滤器分为捕获过滤器和显示过滤器</p><ul><li><p>前者需要在捕捉前设置好，决定捕捉什么包</p></li><li><p>后者在捕获过程中及结束后可以随时修改，只是显示捕获结果符合要求的包</p></li></ul><h1 id="捕获过滤器语法"><a href="#捕获过滤器语法" class="headerlink" title="捕获过滤器语法"></a>捕获过滤器语法</h1><p>这里很全：<a href="https://blog.csdn.net/qq_39720249/article/details/128157288">https://blog.csdn.net/qq_39720249/article/details/128157288</a></p><h2 id="基于协议过滤"><a href="#基于协议过滤" class="headerlink" title="基于协议过滤"></a>基于协议过滤</h2><ul><li>例：只捕获端口为80的tcp数据包</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp port 80</span><br></pre></td></tr></table></figure><h2 id="基于方向过滤"><a href="#基于方向过滤" class="headerlink" title="基于方向过滤"></a>基于方向过滤</h2><p>可以指定获取 源src 或是 目的dst 方向的数据包，也可以用 src and dst 或是 src or dst</p><ul><li>例：只捕获目的ip为本机ip的ipv4数据包</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dst host &lt;本机ip&gt;</span><br></pre></td></tr></table></figure><h2 id="基于类型过滤"><a href="#基于类型过滤" class="headerlink" title="基于类型过滤"></a>基于类型过滤</h2><p>可选项有 主机host，网段net，端口port，端口范围portrange 等</p><ul><li>例：只捕获端口不为80的数据包</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">not port 80</span><br></pre></td></tr></table></figure><h1 id="显示过滤器语法"><a href="#显示过滤器语法" class="headerlink" title="显示过滤器语法"></a>显示过滤器语法</h1><p>例：显示ip为本机ip的dns数据包</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip.addr == &lt;本机ip&gt; &amp;&amp; dns</span><br></pre></td></tr></table></figure><p>但是会发现这样什么包都没有。</p><p>将显示过滤器条件简化为dns后发现能正确找到相关dns数据包，但是其src和dst都是我本机的临时Ipv6地址。</p><p>将表达式更改为以下式子即可正确获取dns数据包</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipv6.addr == &lt;本机ip&gt; &amp;&amp; dns</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">作业，顺便记录一下Wireshark的使用方法</summary>
+    
+    
+    
+    <category term="Study" scheme="https://anti-entrophic.github.io/categories/Study/"/>
+    
+    <category term="Computer Network" scheme="https://anti-entrophic.github.io/categories/Study/Computer-Network/"/>
+    
+    
+    <category term="Study" scheme="https://anti-entrophic.github.io/tags/Study/"/>
+    
+    <category term="Notes" scheme="https://anti-entrophic.github.io/tags/Notes/"/>
+    
+    <category term="Computer Network" scheme="https://anti-entrophic.github.io/tags/Computer-Network/"/>
+    
+  </entry>
   
   <entry>
     <title>FDU Operating System Lab2</title>
