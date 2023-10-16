@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日语词汇自练</title>
+</head>
+<body>
+    <div class="qa"></div>
+    <div class="qa"></div>
+    <div class="qa"></div>
+    <button onclick="myFunction()">刷新题目</button>
+    <button onclick="answer()">显示答案</button>
+</body>
+
+<script>
+    let phrase = {
+        0 : ["别墅", "別荘 ", "べっそう"],
+        1 : ["怎么样(敬语)", " ", "いかがですか"],
+        2 : ["木片拼花工艺", "寄木細工 ","よせぎざいく"],
+    };
+
+    let length = Object.keys(phrase).length;
+
+    let divs = document.getElementsByClassName("qa");
+
+    let total = divs[0];
+    let ques = divs[1];
+    let ans =  divs[2];
+
+    total.innerHTML = "共" + length.toString() + "个词汇";
+
+    var id, pre_id;
+
+    function myFunction() {
+        while(id===pre_id) {
+            id = Math.floor(Math.random()*length);
+        }
+        pre_id = id;
+        ques.innerHTML = (id + 1).toString() + ". " + phrase[id][0];
+        ans.innerHTML = "";
+    }
+
+    function answer() {
+        ans.innerHTML = phrase[id][1] + phrase[id][2];
+    }
+
+</script>
+</html>
