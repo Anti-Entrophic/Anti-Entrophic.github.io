@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>PyTorch学习笔记（三） LSTM</title>
+      <link href="/posts/10012.html"/>
+      <url>/posts/10012.html</url>
+      
+        <content type="html"><![CDATA[<p>参考：<a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a> ，写得非常详细，有精致的图例和清楚的公式，建议先阅读该篇文章</p><p class='p left logo large'>基本概念</p><p>LSTM，长短期记忆神经网络，它克服了RNN难以记录长期信息的特点。</p><p>举个例子，“天上红色的是__”，RNN可以一定程度上利用“天上”、“红色”等信息来预测当前应填的单词，可能是“太阳”。</p><p>但是，如果有效信息相隔非常远，例如：“我是一个中国人，……，我会说___，英语和日语”，这些久远的信息很难留存在RNN的hidden state中。</p><p>LSTM在结构上做出了改进，如下图所示。它包含两种hidden state，一个是上方的$C_t$，它代表着长期记忆，在训练过程中改动较少，一个是下方的$h_t$，代表着短期记忆（？也许，其实没有这么明确的物理意义，只是我期望可以这么认为）。它们通过一些方式互相影响并更新，下面一一介绍。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/18/a1e155b0ed13694af1700b3c732024b9.png" style="width:800px;"/></div></div><p class='p left logo large'>网络结构</p><h1 id="遗忘门"><a href="#遗忘门" class="headerlink" title="遗忘门"></a>遗忘门</h1><p>LSTM的第一步是决定要让长期记忆$C_{t-1}$去遗忘什么。它拼接当前输入$x_t$和上一时刻的状态$h_{t-1}$，并送入sigmoid层，得到一个介于0与1之间的输出向量。随后，和$C_{t-1}$做Hadamard积。如果sigmoid层对应输出越接近0，则对应信息遗忘得越多，反之则继续记忆。</p><p>形象化的理解可能就是，用当前状态去判断哪些记忆不再适用了，比如说之前还一直在谈论A，现在突然转到谈论B了，一些有关A的信息就不再需要了。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdm.sunbangyan.cn/2023/10/19/9e11a5f3e9ea43fa9bb0538dbcc869e5.png" style="width:800px;"/></div></div><h1 id="输入门"><a href="#输入门" class="headerlink" title="输入门"></a>输入门</h1><p>第二步是决定要让$C_{t-1}$记住什么。当前输入首先会经过一个sigmoid层得到$i_t$，这决定了接下来哪些信息是有必要被记住的。实际上的更新向量$\tilde{C_t}$是通过tanh激活函数得到的，至于为什么选tanh，我找到了一些说法：（来自：<a href="https://stackoverflow.com/questions/40761185/what-is-the-intuition-of-using-tanh-in-lstm）">https://stackoverflow.com/questions/40761185/what-is-the-intuition-of-using-tanh-in-lstm）</a></p><ul><li><p>为了防止梯度消失问题，我们需要一个二次导数在大范围内不为0的函数，而tanh函数可以满足这一点</p></li><li><p>为了便于凸优化，我们需要一个单调函数</p></li><li><p>tanh函数一般收敛的更快</p></li><li><p>tanh函数的求导占用系统的资源更少</p></li></ul><p>随后，$i_t$与$\tilde{C_t}$相乘，得到正式的update内容。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/10/19/9cb764099821843a91cd0197a98e1824.png" style="width:800px;"/></div></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdm.sunbangyan.cn/2023/10/19/59ab5d4957ad6e60f3984257d96245f5.png" style="width:800px;"/></div></div><h1 id="输出门"><a href="#输出门" class="headerlink" title="输出门"></a>输出门</h1><p>我们要决定输出什么内容。总之就是输入经过一个sigmoid层，加上记忆$C_{t}$的影响（经过tanh），</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/19/a3243ac1c491e8b184bc8912621828af.png" style="width:800px;"/></div></div><p class='p left logo large'>代码</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Study </category>
+          
+          <category> Neural Network </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Neural Network </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PyTorch学习笔记（二） CNN</title>
       <link href="/posts/10011.html"/>
       <url>/posts/10011.html</url>
