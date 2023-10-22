@@ -6,7 +6,7 @@
   <link href="https://anti-entrophic.github.io/atom.xml" rel="self"/>
   
   <link href="https://anti-entrophic.github.io/"/>
-  <updated>2023-10-22T15:05:07.451Z</updated>
+  <updated>2023-10-22T15:59:14.467Z</updated>
   <id>https://anti-entrophic.github.io/</id>
   
   <author>
@@ -17,13 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>NLP论文精读（三） Attention机制</title>
+    <link href="https://anti-entrophic.github.io/posts/10014.html"/>
+    <id>https://anti-entrophic.github.io/posts/10014.html</id>
+    <published>2023-10-22T15:57:17.000Z</published>
+    <updated>2023-10-22T15:59:14.467Z</updated>
+    
+    <content type="html"><![CDATA[<p>参考：<a href="https://wmathor.com/index.php/archives/1450/">https://wmathor.com/index.php/archives/1450/</a></p><p>上回说到：<a href="https://anti-entrophic.github.io/posts/10013.html">https://anti-entrophic.github.io/posts/10013.html</a></p><p>其中的样例是英语——&gt;法语的机器翻译：</p><blockquote><p>英语：They are watching</p><p>法语：lls regardent</p></blockquote><p>我们可以想到，在生成目标语句的时候，’lls’ 应该更多地依赖于 ‘They are’ 来生成，而 ‘regardent’ 则更多地依赖于 ‘watching’</p><p>但是在seq2seq的设计中，所有的输入序列影响都被整合为了一个统一的背景词向量 $c$ ，尤其是当输入很长时，这会损失很多细节，影响模型的表现</p><p>Attention机制的目的就是希望在decoder时，能够利用不同的词背景向量，或者说，更相关的词背景向量。</p><p>相关论文：<a href="https://arxiv.org/pdf/1409.0473.pdf">https://arxiv.org/pdf/1409.0473.pdf</a></p><h1 id="模型解释"><a href="#模型解释" class="headerlink" title="模型解释"></a>模型解释</h1><p>简单来说就是，在decoder中，计算出往下传递的隐藏状态 $s_i$ 后，我们需要拿 $s_i$ 去和encoder的隐藏状态 $h_i$，计算相关性后加权平均得到一个动态变化的背景词向量 $c_i$</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/10/22/88f7bbfcd29cea0bcaffe1a0e160e62d.png" style="width:400px;"/></div></div><p>我们取 $s_0$ 简单的在数值上就等于最后一个隐状态 $h_m$</p><p>随后，我们需要这个词向量 $s_0$ 和所有隐藏状态 $h_i$ 计算一个相关性 ${\alpha}_i = align(h_i,s_0)$</p><p>计算得到 $m$ 个相关性参数 ${\alpha}_i$ 后，将这些值与 $h_i$ 作加权求和，即：</p><script type="math/tex; mode=display">c_0 = \sum_{i=1}^m {\alpha}_ih_i={\alpha}_1 h_1 + ... + {\alpha}_m h_m</script><p>这样就可以反映出不同的影响力</p><p>随后我们会算出新的隐藏状态 $s_1$ 以及输出 $x_1’$，再加权算出 $c_1$，一起送到下一个单元中，依次类推，直到生成终止符结束。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/22/0e2bff808b7921740feb0173ba328bc1.png" style="width:400px;"/></div></div><h1 id="相关性计算函数align-的设计"><a href="#相关性计算函数align-的设计" class="headerlink" title="相关性计算函数align()的设计"></a>相关性计算函数align()的设计</h1><p>比较主流的，目前 Transformer 中的 Attention 设计是</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/22/143d2c67d696231324d72ef40e212d99.png" style="width:400px;"/></div></div><p>嗯，完全不懂为什么Q，K，V要这样设计。。去看看别的文章学习一下</p>]]></content>
+    
+    
+    <summary type="html">大名鼎鼎的Attention</summary>
+    
+    
+    
+    <category term="Study" scheme="https://anti-entrophic.github.io/categories/Study/"/>
+    
+    <category term="NLP" scheme="https://anti-entrophic.github.io/categories/Study/NLP/"/>
+    
+    
+    <category term="NLP" scheme="https://anti-entrophic.github.io/tags/NLP/"/>
+    
+  </entry>
+  
+  <entry>
     <title>NLP论文精读（二） seq2seq</title>
     <link href="https://anti-entrophic.github.io/posts/10013.html"/>
     <id>https://anti-entrophic.github.io/posts/10013.html</id>
     <published>2023-10-22T15:03:17.000Z</published>
-    <updated>2023-10-22T15:05:07.451Z</updated>
+    <updated>2023-10-22T15:39:29.335Z</updated>
     
-    <content type="html"><![CDATA[<p>这次学个简单一点的知识。参考：<a href="https://wmathor.com/index.php/archives/1432/">https://wmathor.com/index.php/archives/1432/</a></p><p>假如有一个机器翻译的任务：</p><blockquote><p>英语：They are watching</p><p>法语：lls regardent</p></blockquote><p>seq2seq的方法就是利用了两个RNN，分别是对应输入序列的编码器和输出序列的解码器。</p><p>在解码阶段有两种选择，后续会介绍</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/10/22/cafabd89e6c6a72dffeb51abd91137ed.png" style="width:400px;"/></div></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/22/fb1c2b642a2633e3193ce4d4c81af572.png" style="width:400px;"/></div></div><h1 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h1><p>在encoder这步的作用是把一个不定长的输入序列转化成一个定长的背景词向量 $c$ ，该背景词向量 $c$ 包含了输入序列的信息。</p><p>设在 $t$ 时刻，输入为 $x_t$，神经元的隐藏状态为 $h_t$ ，则有 $h_t=f(h_{t-1},x_t)$ </p><p>$c$ 就是与所有隐藏状态相关的一个函数：$c=q(h_1,…,h_T)$ ，当然，最简单的函数就是直接让 $c = h_T$</p><p>通常我们会在输入序列最后加上一个特殊字符 ‘eos’ 表示序列的终结。</p><h1 id="解码器"><a href="#解码器" class="headerlink" title="解码器"></a>解码器</h1><p>上文提到了两种decode方式，一种是直接把背景向量 $c$ 送到decoder中（但是这样不是只有一个输入了？还是RNN吗），一种是让语义向量 $c$ 参与序列所有时刻的运算</p><p>不管怎么样，我们能通过decoder得到一个输出序列：$y_1, y_2, …, y_{T’}$ ，而真实的输出序列是 $y_1’, …, y_{T’}’$ ，设decoder在 $t$ 时刻的隐藏状态是 $s_t$</p><p>自然，我们想要最大化联合概率函数 $P(y_1’, …, y_{T’}’) = \prod_{i=1}^{T’} P(y_i’) = \prod_{i=1}^{T’} p(y_{i-1}’, s_i,c)$ ,其中 $p$ 是decoder的算子。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总之就比较简单，还有一些诸如Teacher Forcing, Beam Search的优化。可以参考：<a href="https://zhuanlan.zhihu.com/p/194308943">https://zhuanlan.zhihu.com/p/194308943</a></p><p>下一章讲attention机制 ૮₍ ˃ ⤙ ˂ ₎ა</p>]]></content>
+    <content type="html"><![CDATA[<p>这次学个简单一点的知识。参考：<a href="https://wmathor.com/index.php/archives/1432/">https://wmathor.com/index.php/archives/1432/</a></p><p>假如有一个机器翻译的任务：</p><blockquote><p>英语：They are watching</p><p>法语：lls regardent</p></blockquote><p>seq2seq的方法就是利用了两个RNN，分别是对应输入序列的编码器和输出序列的解码器。</p><p>在解码阶段有两种选择，后续会介绍</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/10/22/cafabd89e6c6a72dffeb51abd91137ed.png" style="width:400px;"/></div></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/22/fb1c2b642a2633e3193ce4d4c81af572.png" style="width:400px;"/></div></div><h1 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h1><p>在encoder这步的作用是把一个不定长的输入序列转化成一个定长的背景词向量 $c$ ，该背景词向量 $c$ 包含了输入序列的信息。</p><p>设在 $t$ 时刻，输入为 $x_t$，神经元的隐藏状态为 $h_t$ ，则有 $h_t=f(h_{t-1},x_t)$ </p><p>$c$ 就是与所有隐藏状态相关的一个函数：$c=q(h_1,…,h_T)$ ，当然，最简单的函数就是直接让 $c = h_T$</p><p>通常我们会在输入序列最后加上一个特殊字符 ‘eos’ 表示序列的终结。</p><h1 id="解码器"><a href="#解码器" class="headerlink" title="解码器"></a>解码器</h1><p>上文提到了两种decode方式，一种是直接把背景向量 $c$ 送到decoder中，一种是让语义向量 $c$ 参与序列所有时刻的运算</p><p>不管怎么样，我们能通过decoder得到一个输出序列：$y_1, y_2, …, y_{T’}$ ，而真实的输出序列是 $y_1’, …, y_{T’}’$ ，设decoder在 $t$ 时刻的隐藏状态是 $s_t$</p><p>自然，我们想要最大化联合概率函数 $P(y_1’, …, y_{T’}’) = \prod_{i=1}^{T’} P(y_i’) = \prod_{i=1}^{T’} g(y_{i-1}’, s_i,c)$ ,其中 $g$ 是decoder的算子。</p><p>维度问题可能有点混乱。。。。</p><p>看后一种decoder方式吧，那每个RNN单元应该有三个输入，一个是背景词向量 $c$ ，一个是上一次的隐状态 $s_0$ ，一个是上一次的预测输出的embedding，拼起来</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总之就比较简单，还有一些诸如Teacher Forcing, Beam Search的优化。可以参考：<a href="https://zhuanlan.zhihu.com/p/194308943">https://zhuanlan.zhihu.com/p/194308943</a></p><p>下一章讲attention机制 ૮₍ ˃ ⤙ ˂ ₎ა</p>]]></content>
     
     
     <summary type="html">简单的encoder-decoder</summary>
