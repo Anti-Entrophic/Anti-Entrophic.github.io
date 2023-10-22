@@ -6,7 +6,7 @@
   <link href="https://anti-entrophic.github.io/atom.xml" rel="self"/>
   
   <link href="https://anti-entrophic.github.io/"/>
-  <updated>2023-10-19T11:31:21.348Z</updated>
+  <updated>2023-10-22T15:05:07.451Z</updated>
   <id>https://anti-entrophic.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NLP论文精读（二） seq2seq</title>
+    <link href="https://anti-entrophic.github.io/posts/10013.html"/>
+    <id>https://anti-entrophic.github.io/posts/10013.html</id>
+    <published>2023-10-22T15:03:17.000Z</published>
+    <updated>2023-10-22T15:05:07.451Z</updated>
+    
+    <content type="html"><![CDATA[<p>这次学个简单一点的知识。参考：<a href="https://wmathor.com/index.php/archives/1432/">https://wmathor.com/index.php/archives/1432/</a></p><p>假如有一个机器翻译的任务：</p><blockquote><p>英语：They are watching</p><p>法语：lls regardent</p></blockquote><p>seq2seq的方法就是利用了两个RNN，分别是对应输入序列的编码器和输出序列的解码器。</p><p>在解码阶段有两种选择，后续会介绍</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/10/22/cafabd89e6c6a72dffeb51abd91137ed.png" style="width:400px;"/></div></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/22/fb1c2b642a2633e3193ce4d4c81af572.png" style="width:400px;"/></div></div><h1 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h1><p>在encoder这步的作用是把一个不定长的输入序列转化成一个定长的背景词向量 $c$ ，该背景词向量 $c$ 包含了输入序列的信息。</p><p>设在 $t$ 时刻，输入为 $x_t$，神经元的隐藏状态为 $h_t$ ，则有 $h_t=f(h_{t-1},x_t)$ </p><p>$c$ 就是与所有隐藏状态相关的一个函数：$c=q(h_1,…,h_T)$ ，当然，最简单的函数就是直接让 $c = h_T$</p><p>通常我们会在输入序列最后加上一个特殊字符 ‘eos’ 表示序列的终结。</p><h1 id="解码器"><a href="#解码器" class="headerlink" title="解码器"></a>解码器</h1><p>上文提到了两种decode方式，一种是直接把背景向量 $c$ 送到decoder中（但是这样不是只有一个输入了？还是RNN吗），一种是让语义向量 $c$ 参与序列所有时刻的运算</p><p>不管怎么样，我们能通过decoder得到一个输出序列：$y_1, y_2, …, y_{T’}$ ，而真实的输出序列是 $y_1’, …, y_{T’}’$ ，设decoder在 $t$ 时刻的隐藏状态是 $s_t$</p><p>自然，我们想要最大化联合概率函数 $P(y_1’, …, y_{T’}’) = \prod_{i=1}^{T’} P(y_i’) = \prod_{i=1}^{T’} p(y_{i-1}’, s_i,c)$ ,其中 $p$ 是decoder的算子。</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总之就比较简单，还有一些诸如Teacher Forcing, Beam Search的优化。可以参考：<a href="https://zhuanlan.zhihu.com/p/194308943">https://zhuanlan.zhihu.com/p/194308943</a></p><p>下一章讲attention机制 ૮₍ ˃ ⤙ ˂ ₎ა</p>]]></content>
+    
+    
+    <summary type="html">简单的encoder-decoder</summary>
+    
+    
+    
+    <category term="Study" scheme="https://anti-entrophic.github.io/categories/Study/"/>
+    
+    <category term="NLP" scheme="https://anti-entrophic.github.io/categories/Study/NLP/"/>
+    
+    
+    <category term="NLP" scheme="https://anti-entrophic.github.io/tags/NLP/"/>
+    
+  </entry>
   
   <entry>
     <title>PyTorch学习笔记（三） LSTM</title>
