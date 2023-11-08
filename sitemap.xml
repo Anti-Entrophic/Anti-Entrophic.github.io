@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://anti-entrophic.github.io/posts/10015.html</loc>
+    
+    <lastmod>2023-11-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/posts/10013.html</loc>
+    
+    <lastmod>2023-11-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://anti-entrophic.github.io/posts/10016.html</loc>
     
     <lastmod>2023-11-02</lastmod>
@@ -11,25 +29,7 @@
   </url>
   
   <url>
-    <loc>https://anti-entrophic.github.io/posts/10015.html</loc>
-    
-    <lastmod>2023-10-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://anti-entrophic.github.io/posts/10014.html</loc>
-    
-    <lastmod>2023-10-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://anti-entrophic.github.io/posts/10013.html</loc>
     
     <lastmod>2023-10-22</lastmod>
     
@@ -175,7 +175,7 @@
 
   <url>
     <loc>https://anti-entrophic.github.io/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -183,49 +183,56 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Hexo-Butterfly-tutorial/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Computer-Network/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Study/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Notes/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/NLP/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Neural-Network/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Operating-System/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/tags/TOOLS/</loc>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -234,56 +241,42 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Hexo-Butterfly-tutorial/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Neural-Network/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Computer-Network/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/NLP/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Operating-System/</loc>
-    <lastmod>2023-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://anti-entrophic.github.io/categories/Tools/</loc>
-    <lastmod>2023-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://anti-entrophic.github.io/categories/Tools/NLP/</loc>
-    <lastmod>2023-11-02</lastmod>
+    <lastmod>2023-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
