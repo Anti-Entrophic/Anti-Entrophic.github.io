@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MIT 6.824 Distributed System Lab1 | 不会魔法的小圆</title><meta name="author" content="不会魔法的小圆"><meta name="copyright" content="不会魔法的小圆"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Lab page: http:&#x2F;&#x2F;nil.csail.mit.edu&#x2F;6.824&#x2F;2022&#x2F;labs&#x2F;lab-mr.html Lab概述正好这学期正好学校里要上”并行分布式系统”, 也有同学推荐我去学习这门MIT的课程，遂做一些尝试。 本次Lab1主要是实现一个简单的MapReduce框架，完成Coordinator和Worker的设计，实现一个Word Count程序。 全课程Lab主要采用go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT 6.824 Distributed System Lab1">
+<meta property="og:url" content="https://anti-entrophic.github.io/posts/10022.html">
+<meta property="og:site_name" content="不会魔法的小圆">
+<meta property="og:description" content="Lab page: http:&#x2F;&#x2F;nil.csail.mit.edu&#x2F;6.824&#x2F;2022&#x2F;labs&#x2F;lab-mr.html Lab概述正好这学期正好学校里要上”并行分布式系统”, 也有同学推荐我去学习这门MIT的课程，遂做一些尝试。 本次Lab1主要是实现一个简单的MapReduce框架，完成Coordinator和Worker的设计，实现一个Word Count程序。 全课程Lab主要采用go">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picst.sunbangyan.cn/2023/10/13/oynsmu.jpg">
+<meta property="article:published_time" content="2024-03-04T14:37:41.000Z">
+<meta property="article:modified_time" content="2024-03-12T08:04:13.816Z">
+<meta property="article:author" content="不会魔法的小圆">
+<meta property="article:tag" content="Notes">
+<meta property="article:tag" content="Distributed System">
+<meta property="article:tag" content="Lab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picst.sunbangyan.cn/2023/10/13/oynsmu.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://anti-entrophic.github.io/posts/10022.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MIT 6.824 Distributed System Lab1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-12 16:04:13'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="不会魔法的小圆" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://picst.sunbangyan.cn/2023/10/13/oynsmu.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="不会魔法的小圆"><span class="site-name">不会魔法的小圆</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MIT 6.824 Distributed System Lab1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-04T14:37:41.000Z" title="发表于 2024-03-04 22:37:41">2024-03-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-12T08:04:13.816Z" title="更新于 2024-03-12 16:04:13">2024-03-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Study/">Study</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Study/Distributed-System/">Distributed System</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MIT 6.824 Distributed System Lab1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Lab page: <a target="_blank" rel="noopener" href="http://nil.csail.mit.edu/6.824/2022/labs/lab-mr.html">http://nil.csail.mit.edu/6.824/2022/labs/lab-mr.html</a></p>
+<h1 id="Lab概述"><a href="#Lab概述" class="headerlink" title="Lab概述"></a>Lab概述</h1><p>正好这学期正好学校里要上”并行分布式系统”, 也有同学推荐我去学习这门MIT的课程，遂做一些尝试。</p>
+<p>本次Lab1主要是实现一个简单的MapReduce框架，完成Coordinator和Worker的设计，实现一个Word Count程序。</p>
+<p>全课程Lab主要采用go语言来实现，学习go语言语法也是开始本次Lab的第一步。</p>
+<p>以下所有内容仅为个人记录所用，请依照课程要求独立完成Lab实验。</p>
+<p>以上。记录一下本次的Lab1的实现思路。</p>
+<h1 id="一、安装go环境"><a href="#一、安装go环境" class="headerlink" title="一、安装go环境"></a>一、安装go环境</h1><p>上来首先先安装一下以前没用过的go环境。我是在实验室linux服务器上试的，windows系统就不太清楚了。。</p>
+<p>首先下载go的安装包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>然后，将其解压到 $HOME/local 下</p>
+<p>之后需要将go命令加到PATH中</p>
+<p>一种方法是 <code>export PATH=$PATH:$HOME/local/go/bin</code> ，但是这样是暂时的，下次启动就没有了</p>
+<p>解决办法就是把这句话加到 .bashrc 中的最后即可</p>
+<p>顺便使用 <code>echo -e $PATH | tr &quot;:&quot; &quot;\n&quot;</code> 可以查看当前的PATH</p>
+<h1 id="二、下载Lab框架"><a href="#二、下载Lab框架" class="headerlink" title="二、下载Lab框架"></a>二、下载Lab框架</h1><p>下载一下Lab的文件，看看有什么东西</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git://g.csail.mit.edu/6.824-golabs-2022 6.824</span><br></pre></td></tr></table></figure>
+<p>官方提供了一个sequential的MapReduce实现（src/main/mrsequential.go），我们可以先试着跑起来这个。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd 6.824/src/main</span><br><span class="line">go build -race -buildmode=plugin ../mrapps/wc.go</span><br><span class="line">rm mr-out*</span><br><span class="line">go run -race mrsequential.go wc.so pg*.txt</span><br><span class="line">more mr-out-0</span><br></pre></td></tr></table></figure>
+<p>第一次用go可能还是比较懵的，简单介绍一下各步都做了什么。</p>
+<p>go build就是编译go文件，以*.so的形式保存（我不知道说编译成为可执行文件准不准确）</p>
+<p><code>-race</code> 表示启用竞争检测，以避免可能的冲突</p>
+<p><code>-buildmode=plugin</code> 则表示将其编译为plugin，在 <code>mrsequential.go</code> 中，我们可以看到这一插件的用法（下面会介绍）</p>
+<p><code>rm mr-out*</code> 则是删除之前可能的输出文件，保证新一次的输出不会受到影响</p>
+<p><code>go run -race mrsequential.go wc.so pg*.txt</code> go run 就是运行，同样开启竞争检测。这次我们要传入wc.so中的函数，以及运行Word Count需要的所有文件名</p>
+<p>最后，输出结果</p>
+<p>注意在 <code>wc.so</code> 中是有 <code>import &quot;6.824/mr&quot;</code>（也就是需要我们编写的部分，所以记得每次写完测试时都要重新编译wc.so）</p>
+<h2 id="如何使用plugin"><a href="#如何使用plugin" class="headerlink" title="如何使用plugin"></a>如何使用plugin</h2><p>首先需要 <code>import &quot;plugin&quot;</code></p>
+<p>然后打开.so文件，读取其中的函数 <code>p, err := plugin.Open(filename)</code> ，其中filename是在命令行中传递的参数，也就是.so文件的名称</p>
+<p>然后就可以使用 <code>xmapf, err := p.Lookup(FuncName)</code> 来调用定义在.so文件中的function了，比如说调用map函数： <code>xmapf, err := p.Lookup(&quot;Map&quot;)</code></p>
+<p>初次读进来的xmapf似乎是一种独特的类型，还需要转换该函数的形式，设置正确的形参和返回值类型</p>
+<p>例：<code>mapf := xmapf.(func(string, string) []mr.KeyValue)</code> </p>
+<h2 id="mrapps"><a href="#mrapps" class="headerlink" title="mrapps"></a>mrapps</h2><p>可以看到，mrapps文件夹下的各个文件都包含一个map函数和一个reduce函数，不同的函数实现可以让程序实现不同的功能，包括但不限于Word Count</p>
+<h1 id="三、Start"><a href="#三、Start" class="headerlink" title="三、Start"></a>三、Start</h1><p>一开始肯定是很懵的，总之先试着看懂文件的结构。可以参照 <code>mrsequential.go</code> 的逻辑，这个是非常容易理解的。</p>
+<p>第一步就是用mapf函数把文件拆成intermediate，然后将其按照键值排序，我们就把这个作为第一步。</p>
+<p>当然在这之前，worker还需要向coordinator请求一个任务，因此还需要我们发送rpc请求，在<code>mr/worker.go</code>中，给我们展示了如何发送rpc请求，可以参考一下。简单来说就是调call函数，有三个参数，第一个是指定使用coordinator的哪个函数，第二个是传过去的参数，第三个是希望收到的回复。</p>
+<p>暂时还不知道怎么设计，一步一步慢慢来，假设我们coordinator有一个handler函数，我们需要向其请求一个map任务。</p>
+<p>这边有一个我不是很清楚的点，因为看论文，是需要将文件拆分成一个一个块的。这里我们就直接把文件名返回给worker，让worker去做读取这件事。</p>
+<p>参考CallExample()<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// worker.go/func Worker</span></span><br><span class="line"><span class="comment">// ask for a job</span></span><br><span class="line">ok := call(<span class="string">&quot;Coordinator.Handler&quot;</span>, &amp;args, &amp;reply)</span><br><span class="line"><span class="keyword">if</span> ok &#123;</span><br><span class="line">  <span class="comment">// reply.Y should be 100.</span></span><br><span class="line">  fmt.Printf(<span class="string">&quot;call success, Job name: %s\n&quot;</span>, reply.Filename)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;call failed!\n&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里要考虑的就是怎么设计reply。因为Worker有可能做map，有可能做reduce，所以首先需要的就是返回任务的类型，然后还有需要处理的文件名称。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// rpc.go</span></span><br><span class="line"><span class="keyword">type</span> RPCReply <span class="keyword">struct</span> &#123;</span><br><span class="line">	JobType <span class="type">string</span></span><br><span class="line">	Filename <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后考虑Coordinator这边，Coordinator应该需要知道，自己要给worker分配什么任务，包括任务类型和任务内容。这就需要Coordinator维护一个任务列表，以及一个任务状态。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Coordinator <span class="keyword">struct</span> &#123;</span><br><span class="line">	<span class="comment">// Your definitions here.</span></span><br><span class="line">	FilenameList []<span class="type">string</span></span><br><span class="line">	JobType <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Coordinator初始化的时候，它就应该拥有一个map任务列表，且当前的任务状态是”map”</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">MakeCoordinator</span><span class="params">(files []<span class="type">string</span>, nReduce <span class="type">int</span>)</span></span> *Coordinator &#123;</span><br><span class="line">	c := Coordinator&#123;</span><br><span class="line">		JobType: <span class="string">&quot;map&quot;</span>,  <span class="comment">// 一开始做map操作</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Your code here.</span></span><br><span class="line">	<span class="keyword">for</span> _, filename := <span class="keyword">range</span> os.Args[<span class="number">2</span>:] &#123;</span><br><span class="line">		c.FilenameList = <span class="built_in">append</span>(c.FilenameList, filename)</span><br><span class="line">		fmt.Printf(<span class="string">&quot;我读取了文件:%s\n&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	c.server()  <span class="comment">// 注意这会创建一个新的go routine，导致可能的race</span></span><br><span class="line">	<span class="keyword">return</span> &amp;c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>race问题之后会说明，此处暂时略过。然后就是具体的Handler()函数，在接收到请求后将任务发还给worker即可。如果map任务发完了就将状态改为”reduce”</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Handler(args *ExampleArgs, reply *RPCReply) <span class="type">error</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> c.JobType == <span class="string">&quot;map&quot;</span> &#123;</span><br><span class="line">		reply.JobType = <span class="string">&quot;map&quot;</span></span><br><span class="line">		reply.Filename = c.FilenameList[<span class="number">0</span>]</span><br><span class="line">		c.FilenameList = c.FilenameList[<span class="number">1</span>:]  <span class="comment">// 关于这一步的性能问题，可以参见 https://zhuanlan.zhihu.com/p/430888116</span></span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(c.FilenameList) == <span class="number">0</span> &#123;</span><br><span class="line">			c.JobType = <span class="string">&quot;reduce&quot;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;not implemented yet\n&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在只是简单地测试一下rpc是否正确，启动一下看看。需要开两个terminal</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 第一个terminal</span><br><span class="line">go build -race -buildmode=plugin ../mrapps/wc.go</span><br><span class="line">rm mr-out*</span><br><span class="line">go run -race mrcoordinator.go pg-*.txt</span><br><span class="line"></span><br><span class="line">// 第二个terminal</span><br><span class="line">go run -race mrworker.go wc.so</span><br></pre></td></tr></table></figure>
+<p>如果顺利的话，worker应该正确接收到了一个文件的map任务</p>
+<p>不过，coordinator这边会被race检测器检测到问题。检查mrcoordinator.go文件，它需要不断地检查 m.Done()来判断Coordinator是否完成了所有的mapreduce任务；而我们在coordinator.go中，因为启动了server会创建一个新的go routine，这其中又在不断地修改我们的Coordinator的状态，这其中就有可能产生冲突。</p>
+<p>一个办法就是给需要访问Coordinator状态的地方加上锁，锁的用法在MIT Lecture2的Crawler.go中有介绍。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Coordinator <span class="keyword">struct</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">	mu      sync.Mutex  <span class="comment">// 加一个锁来维护</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Handler(args *ExampleArgs, reply *RPCReply) <span class="type">error</span> &#123;</span><br><span class="line">	c.mu.Lock()</span><br><span class="line">	<span class="keyword">if</span> c.JobType == <span class="string">&quot;map&quot;</span> &#123;</span><br><span class="line">		reply.JobType = <span class="string">&quot;map&quot;</span></span><br><span class="line">		reply.Filename = c.FilenameList[<span class="number">0</span>]</span><br><span class="line">		c.FilenameList = c.FilenameList[<span class="number">1</span>:]</span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(c.FilenameList) == <span class="number">0</span> &#123;</span><br><span class="line">			c.JobType = <span class="string">&quot;reduce&quot;</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;not implemented yet\n&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	c.mu.Unlock()</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Done() <span class="type">bool</span> &#123;</span><br><span class="line">	ret := <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Your code here.</span></span><br><span class="line">	c.mu.Lock()</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(c.FilenameList) == <span class="number">0</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;map completed\n&quot;</span>)</span><br><span class="line">		ret = <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">	c.mu.Unlock()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再次启动可以发现没有race问题了。</p>
+<p>当然以上仅是最简单的情况。我们可以以此为基础，整理一下我们接下来要做的事：</p>
+<ul>
+<li><p>worker在收到map任务后的处理逻辑，需要应用map function，然后按键排序，最后写入到一个文件中。</p>
+</li>
+<li><p>完成任务后应当给Coordinator一个反馈，表示已经完成了任务，这样Coordinator可以将intermediate文件加入到它的reduce任务列表中。这要求Coordinator在分配任务的时候分配一个工作id，以唯一指示。</p>
+</li>
+<li><p>worker还需要能够处理reduce任务，逻辑同 <code>mrsequential.go</code></p>
+</li>
+</ul>
+<p>至此，思路已经很清晰了，无非是一边熟悉go语言一边完成Lab。</p>
+<h1 id="四、map任务"><a href="#四、map任务" class="headerlink" title="四、map任务"></a>四、map任务</h1><p>把逻辑优化一下，整一个专门的WorkerMap()函数来做这件事。需要传什么参数写着写着就知道了，对应修改结构体即可。</p>
+<p>一个神奇的点是我发现自己发送的nReduce字段无法被worker接受到，最后才发现，原来RPC只发送字段名以大写字母开头的结构体字段，这一点Hints里也提到了。根据chatgpt说小写字母开头的是私有字段，在其他包中是无法访问的。</p>
+<p>读文件，map，sort，和之前一样</p>
+<p>随后，根据Lab的Hints，为了避免程序写到一半中断，出现一个文件里面内容不全的情况，我们需要使用临时文件，待完全写入后再将其命名为目标文件。这样能保证保存下来的文件内容是全的。包括写入文件也需要使用Hints中提到的 <code>encoding/json</code></p>
+<p>所以我们创建nReduce个临时文件，以及对应的json encoder</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// create temporary files and json encoder</span></span><br><span class="line"><span class="keyword">var</span> tempFiles []*os.File</span><br><span class="line"><span class="keyword">var</span> fileEncs []*json.Encoder</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; nReduce; i++&#123;</span><br><span class="line">  <span class="comment">// tmp files</span></span><br><span class="line">  tmpFile, err := ioutil.TempFile(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;temp-intermediate-*&quot;</span>)</span><br><span class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123; </span><br><span class="line">    fmt.Printf(<span class="string">&quot;Failed to create temporary file %d: %v\n&quot;</span>, i, err) </span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">  &#125;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;Create temporary file %d: %s\n&quot;</span>, i+<span class="number">1</span>, tmpFile.Name())</span><br><span class="line">  tempFiles = <span class="built_in">append</span>(tempFiles, tmpFile)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// json encoder</span></span><br><span class="line">  enc := json.NewEncoder(tmpFile)  <span class="comment">// 和对应文件输出流绑定</span></span><br><span class="line">  fileEncs = <span class="built_in">append</span>(fileEncs, enc)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我一开始写的是ioutil.TempFile(“”, “temp-intermediate-*”)，结果报错：invalid cross-device link，估计直接保存到服务器的tmp目录下去了？可能是跟我们实验室服务器的硬盘配置有关，把临时文件设到当前目录下就可以解决了。</p>
+<p>然后在保存的时候，每个键值对具体保存到哪个文件，需要使用给出的ihash()函数进行映射，而不是按顺序存储</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// save the intermediate</span></span><br><span class="line">total_len := <span class="built_in">len</span>(intermediate)</span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; total_len; i++&#123;</span><br><span class="line">	index := ihash(intermediate[i].Key) % nReduce</span><br><span class="line">	enc := fileEncs[index]</span><br><span class="line">	err := enc.Encode(&amp;intermediate[i])</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;json encode error\n&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，把临时文件重新命名保存为正式文件，保证删除临时文件。保存的中间intermediate文件名为”map-{JobId}-{i}”</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// rename temporary files to formal files</span></span><br><span class="line"><span class="keyword">for</span> i, file := <span class="keyword">range</span> tempFiles &#123;</span><br><span class="line">	oname := fmt.Sprintf(<span class="string">&quot;map-%d-%d&quot;</span>, JobId, i)</span><br><span class="line">	err = os.Rename(file.Name(), oname)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">           fmt.Printf(<span class="string">&quot;Failed to rename temporary file %d: %v\n&quot;</span>, i, err)</span><br><span class="line">       &#125;</span><br><span class="line">	file.Close()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// delete temporary files</span></span><br><span class="line"><span class="keyword">for</span> _, file := <span class="keyword">range</span> tempFiles &#123;</span><br><span class="line">	<span class="keyword">defer</span> os.Remove(file.Name())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="四、读论文"><a href="#四、读论文" class="headerlink" title="四、读论文"></a>四、读论文</h1><p>论文链接：<a target="_blank" rel="noopener" href="http://research.google.com/archive/mapreduce-osdi04.pdf">http://research.google.com/archive/mapreduce-osdi04.pdf</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io">不会魔法的小圆</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io/posts/10022.html">https://anti-entrophic.github.io/posts/10022.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://anti-entrophic.github.io" target="_blank">不会魔法的小圆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Notes/">Notes</a><a class="post-meta__tags" href="/tags/Distributed-System/">Distributed System</a><a class="post-meta__tags" href="/tags/Lab/">Lab</a></div><div class="post_share"><div class="social-share" data-image="https://picst.sunbangyan.cn/2023/10/13/oynsmu.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/10021.html" title="恢复更新通知 &amp; 2024plan"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picst.sunbangyan.cn/2023/10/13/oynsmu.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">恢复更新通知 &amp; 2024plan</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/10007.html" title="计算机网络 Wireshark的使用"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picss.sunbangyan.cn/2023/10/16/c94ddbde5d2447ce85f5ae33d1f9603e.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="title">计算机网络 Wireshark的使用</div></div></a></div><div><a href="/posts/10005.html" title="BP神经网络与反向传播算法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picst.sunbangyan.cn/2023/10/13/oynsmu.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-14</div><div class="title">BP神经网络与反向传播算法</div></div></a></div><div><a href="/posts/10006.html" title="FDU Operating System Lab2"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picst.sunbangyan.cn/2023/10/15/8b0f758f7191173b32761bba2ad5da7f.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-15</div><div class="title">FDU Operating System Lab2</div></div></a></div><div><a href="/posts/10018.html" title="FDU Operating System Lab4"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picdl.sunbangyan.cn/2023/11/15/25a57e4b2033c50b82f5b2feebcfe5e1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-15</div><div class="title">FDU Operating System Lab4</div></div></a></div><div><a href="/posts/10019.html" title="Mininet安装全指南"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picss.sunbangyan.cn/2023/11/22/22064fca6ab383d6556c6b7c4da0a6ed.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-22</div><div class="title">Mininet安装全指南</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">不会魔法的小圆</div><div class="author-info__description">不会魔法的小圆，博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Anti-Entrophic"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">图片加载问题或文章错误请反馈至 21307140018@m.fudan.edu.cn ,感谢！！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lab%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">Lab概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85go%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">一、安装go环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%8B%E8%BD%BDLab%E6%A1%86%E6%9E%B6"><span class="toc-number">3.</span> <span class="toc-text">二、下载Lab框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8plugin"><span class="toc-number">3.1.</span> <span class="toc-text">如何使用plugin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mrapps"><span class="toc-number">3.2.</span> <span class="toc-text">mrapps</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81Start"><span class="toc-number">4.</span> <span class="toc-text">三、Start</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81map%E4%BB%BB%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">四、map任务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AF%BB%E8%AE%BA%E6%96%87"><span class="toc-number">6.</span> <span class="toc-text">四、读论文</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/10022.html" title="MIT 6.824 Distributed System Lab1"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picst.sunbangyan.cn/2023/10/13/oynsmu.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MIT 6.824 Distributed System Lab1"/></a><div class="content"><a class="title" href="/posts/10022.html" title="MIT 6.824 Distributed System Lab1">MIT 6.824 Distributed System Lab1</a><time datetime="2024-03-04T14:37:41.000Z" title="发表于 2024-03-04 22:37:41">2024-03-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10021.html" title="恢复更新通知 &amp; 2024plan"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picst.sunbangyan.cn/2023/10/13/oynsmu.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="恢复更新通知 &amp; 2024plan"/></a><div class="content"><a class="title" href="/posts/10021.html" title="恢复更新通知 &amp; 2024plan">恢复更新通知 &amp; 2024plan</a><time datetime="2024-02-28T06:46:54.000Z" title="发表于 2024-02-28 14:46:54">2024-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10020.html" title="FDU Computer Graphics pj2"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picdm.sunbangyan.cn/2023/12/11/960bdd0a493c74634c827bf2e2a98dea.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="FDU Computer Graphics pj2"/></a><div class="content"><a class="title" href="/posts/10020.html" title="FDU Computer Graphics pj2">FDU Computer Graphics pj2</a><time datetime="2023-12-11T08:30:56.000Z" title="发表于 2023-12-11 16:30:56">2023-12-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10019.html" title="Mininet安装全指南"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picss.sunbangyan.cn/2023/11/22/22064fca6ab383d6556c6b7c4da0a6ed.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mininet安装全指南"/></a><div class="content"><a class="title" href="/posts/10019.html" title="Mininet安装全指南">Mininet安装全指南</a><time datetime="2023-11-22T14:01:21.000Z" title="发表于 2023-11-22 22:01:21">2023-11-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10018.html" title="FDU Operating System Lab4"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://picdl.sunbangyan.cn/2023/11/15/25a57e4b2033c50b82f5b2feebcfe5e1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="FDU Operating System Lab4"/></a><div class="content"><a class="title" href="/posts/10018.html" title="FDU Operating System Lab4">FDU Operating System Lab4</a><time datetime="2023-11-15T07:46:42.000Z" title="发表于 2023-11-15 15:46:42">2023-11-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 不会魔法的小圆</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
