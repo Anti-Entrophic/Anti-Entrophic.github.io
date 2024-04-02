@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>MIT 6.824 Distributed System Lab2</title>
+      <link href="/posts/10023.html"/>
+      <url>/posts/10023.html</url>
+      
+        <content type="html"><![CDATA[<p>Lab Page：<a href="http://nil.csail.mit.edu/6.824/2022/labs/lab-raft.html">http://nil.csail.mit.edu/6.824/2022/labs/lab-raft.html</a></p><h1 id="Lab概述"><a href="#Lab概述" class="headerlink" title="Lab概述"></a>Lab概述</h1><p>本次lab需要实现共识算法raft。Lab2A我看应该是只需要做出election就可以，一步一步来吧。</p><h1 id="Raft知识点"><a href="#Raft知识点" class="headerlink" title="Raft知识点"></a>Raft知识点</h1><p>网课讲的有些慢哈哈，我直接看博客学习了：<a href="https://zhuanlan.zhihu.com/p/404315977">https://zhuanlan.zhihu.com/p/404315977</a></p><p>在Raft中，节点的状态一共三种，follower，candidate和leader，每个节点在加入时都会默认成为follower。</p><p>follower并不主动发出消息，它所做的操作如下：</p><ul><li><p>收到leader的heartbeat，维持follower状态。如果之前没识别到leader或识别了别的leader，则更新。</p></li><li><p>如果一段时间electionTime内没有收到heartbeat，则认为leader已经嘎了，将自己的任期term加1，成为candidate，并向其它成员发起投票请求。</p></li><li><p>接收到别的candidate的投票请求，依据先来后到原则，只给一个candidate投票。candidate的term以及日志index必须大于自己，否则不会投票。（这边我暂时不是很确定是大于还是大于等于）（会不会有自己的任期是3，有一个任期为4的candidate的request过来之后，又有一个任期为5的candidate的request。这个时候应该还是要投票吧？所以一张票的限制应该是以任期为单位的？）</p></li><li><p>接收到客户端的请求后，转发给leader。（这边也有一个问题，对于新加入的节点，它还没认识到集群中的leader，这里的请求是直接丢弃还是按下不表）</p></li></ul><p>candidate是一种临时状态，它所做的操作如下：</p><ul><li><p>向其它follower发起请求，需要传递自己的任期号term和日志进度index。</p></li><li><p>如果收到了多数成员的赞成票，则自己成为leader（因为一个follower最多投一次票，看上去多数赞成票只能有一个，但是不同节点维护的peer状态可能产生偏差，导致对“多数”产生误解，生成两个甚至多个leader。raft对这一问题的要求是，一个term内只能有leader。（所以具体怎么控制的呢？））</p></li><li><p>如果收到了别的leader的heartbeat，则转变回follower状态。（那如果在另一个leader的heartbeat到达前，自己也变成了leader怎么办？（有时候就是有这么巧合））</p></li><li><p>candidate有一个随机的选举时限，超过时限还没胜出则宣布失败，重新变回follower。随机是为了避免陷入某种选票瓜分的死局。（随机多少也要具体调整）</p></li></ul><p>leader我们暂时不考虑它处理客户端请求的问题，只考虑它在选举过程中的操作：</p><ul><li>定期向其它节点发送heartbeat</li></ul><p>以上，可以看见还是有很多疑惑的点的，还有没写出来的比如peer列表怎么维护等等，写lab的过程中就会慢慢想明白的吧。</p><p>接下来应该就是看代码了。这次我希望能够看得仔细一点吧，因为后面还有2B，2C，2D是承接Lab2A进行下去的。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Study </category>
+          
+          <category> Distributed System </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Notes </tag>
+            
+            <tag> Distributed System </tag>
+            
+            <tag> Lab </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MIT 6.824 Distributed System Lab1</title>
       <link href="/posts/10022.html"/>
       <url>/posts/10022.html</url>
@@ -78,9 +109,9 @@
       
         <tags>
             
-            <tag> Study </tag>
-            
             <tag> Computer Graphics </tag>
+            
+            <tag> Study </tag>
             
             <tag> Homework </tag>
             
@@ -109,9 +140,9 @@
       
         <tags>
             
-            <tag> Computer Network </tag>
-            
             <tag> Study </tag>
+            
+            <tag> Computer Network </tag>
             
             <tag> Notes </tag>
             
@@ -443,9 +474,9 @@
       
         <tags>
             
-            <tag> Computer Network </tag>
-            
             <tag> Study </tag>
+            
+            <tag> Computer Network </tag>
             
             <tag> Notes </tag>
             
@@ -622,22 +653,22 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/custom.css"/>
-      <url>/css/custom.css</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[/* @font-face {  font-family: Candyhome;  src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/Candyhome.ttf);  font-display: swap;  font-weight: lighter;} */@font-face {    font-family: ZhuZiAYuanJWD;    src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/ZhuZiAWan.woff2);    font-display: swap;    font-weight: lighter;  }    body {    font-family: "ZhuZiAYuanJWD";  }  div#menus {    font-family: "ZhuZiAYuanJWD";  }  h1#site-title {    font-family: ZhuZiAYuanJWD;    font-size: 3em !important;  }  a.article-title,  a.blog-slider__title,  a.categoryBar-list-link,  h1.post-title {    font-family: ZhuZiAYuanJWD;  }    .iconfont {    font-family: "iconfont" !important;    font-size: 3em;    /* 可以定义图标大小 */    font-style: normal;    -webkit-font-smoothing: antialiased;    -moz-osx-font-smoothing: grayscale;  }    /* 时间轴生肖icon */  svg.icon {    /* 这里定义svg.icon，避免和Butterfly自带的note标签冲突 */    width: 1em;    height: 1em;    /* width和height定义图标的默认宽度和高度*/    vertical-align: -0.15em;    fill: currentColor;    overflow: hidden;  }    .icon-zhongbiao::before {    color: #f7c768;  }    /* bilibli番剧插件 */  #article-container .bangumi-tab.bangumi-active {    background: var(--anzhiyu-theme);    color: var(--anzhiyu-ahoverbg);    border-radius: 10px;  }  a.bangumi-tab:hover {    text-decoration: none !important;  }  .bangumi-button:hover {    background: var(--anzhiyu-theme) !important;    border-radius: 10px !important;    color: var(--anzhiyu-ahoverbg) !important;  }  a.bangumi-button.bangumi-nextpage:hover {    text-decoration: none !important;  }  .bangumi-button {    padding: 5px 10px !important;  }    a.bangumi-tab {    padding: 5px 10px !important;  }  svg.icon.faa-tada {    font-size: 1.1em;  }  .bangumi-info-item {    border-right: 1px solid #f2b94b;  }  .bangumi-info-item span {    color: #f2b94b;  }  .bangumi-info-item em {    color: #f2b94b;  }    /* 解决artitalk的图标问题 */  #uploadSource > svg {    width: 1.19em;    height: 1.5em;  }    /*top-img黑色透明玻璃效果移除，不建议加，除非你执着于完全一图流或者背景图对比色明显 */  #page-header:not(.not-top-img):before {    background-color: transparent !important;  }    /* 首页文章卡片 */  #recent-posts > .recent-post-item {    background: rgba(255, 255, 255, 0.9);  }    /* 首页侧栏卡片 */  #aside-content .card-widget {    background: rgba(255, 255, 255, 0.9);  }    /* 文章页面正文背景 */  div#post {    background: rgba(255, 255, 255, 0.9);  }    /* 分页页面 */  div#page {    background: rgba(255, 255, 255, 0.9);  }    /* 归档页面 */  div#archive {    background: rgba(255, 255, 255, 0.9);  }    /* 标签页面 */  div#tag {    background: rgba(255, 255, 255, 0.9);  }    /* 分类页面 */  div#category {    background: rgba(255, 255, 255, 0.9);  }    /*夜间模式伪类遮罩层透明*/  [data-theme="dark"] #recent-posts > .recent-post-item {    background: #121212;  }    [data-theme="dark"] .card-widget {    background: #121212 !important;  }    [data-theme="dark"] div#post {    background: #121212 !important;  }    [data-theme="dark"] div#tag {    background: #121212 !important;  }    [data-theme="dark"] div#archive {    background: #121212 !important;  }    [data-theme="dark"] div#page {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: transparent !important;  }  /* 页脚透明 */  #footer {    background: transparent !important;  }    /* 头图透明 */  #page-header {    background: transparent !important;  }    #rightside > div > button {    border-radius: 5px;  }    /* 滚动条 */    ::-webkit-scrollbar {    width: 10px;    height: 10px;  }    ::-webkit-scrollbar-thumb {    background-color: #3b70fc;    border-radius: 2em;  }    ::-webkit-scrollbar-corner {    background-color: transparent;  }    ::-moz-selection {    color: #fff;    background-color: #3b70fc;  }    /* 音乐播放器 */    /* .aplayer .aplayer-lrc {    display: none !important;  } */    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    transition: all 0.3s;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    transition: all 0.3s;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }    .aplayer.aplayer-fixed {    z-index: 999999 !important;  }    /* 评论框  */  .vwrap {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 30px 0px;  }    /* 设置评论框 */    .vcard {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 0px 0px;  }    /* md网站下划线 */  #article-container a:hover {    text-decoration: none !important;  }    #article-container #hpp_talk p img {    display: inline;  }    /* 404页面 */  #error-wrap {    position: absolute;    top: 40%;    right: 0;    left: 0;    margin: 0 auto;    padding: 0 1rem;    max-width: 1000px;    transform: translate(0, -50%);  }    #error-wrap .error-content {    display: flex;    flex-direction: row;    justify-content: center;    align-items: center;    margin: 0 1rem;    height: 18rem;    border-radius: 8px;    background: var(--card-bg);    box-shadow: var(--card-box-shadow);    transition: all 0.3s;  }    #error-wrap .error-content .error-img {    box-flex: 1;    flex: 1;    height: 100%;    border-top-left-radius: 8px;    border-bottom-left-radius: 8px;    background-color: #3b70fc;    background-position: center;    background-size: cover;  }    #error-wrap .error-content .error-info {    box-flex: 1;    flex: 1;    padding: 0.5rem;    text-align: center;    font-size: 14px;    font-family: Titillium Web, "PingFang SC", "Hiragino Sans GB", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;  }  #error-wrap .error-content .error-info .error_title {    margin-top: -4rem;    font-size: 9em;  }  #error-wrap .error-content .error-info .error_subtitle {    margin-top: -3.5rem;    word-break: break-word;    font-size: 1.6em;  }  #error-wrap .error-content .error-info a {    display: inline-block;    margin-top: 0.5rem;    padding: 0.3rem 1.5rem;    background: var(--btn-bg);    color: var(--btn-color);  }    #body-wrap.error .aside-list {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    bottom: 0px;    position: absolute;    padding: 1rem;    width: 100%;    overflow: scroll;  }    #body-wrap.error .aside-list .aside-list-group {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    max-width: 1200px;    margin: 0 auto;  }    #body-wrap.error .aside-list .aside-list-item {    padding: 0.5rem;  }    #body-wrap.error .aside-list .aside-list-item img {    width: 100%;    object-fit: cover;    border-radius: 12px;  }    #body-wrap.error .aside-list .aside-list-item .thumbnail {    overflow: hidden;    width: 230px;    height: 143px;    background: var(--anzhiyu-card-bg);    display: flex;  }    #body-wrap.error .aside-list .aside-list-item .content .title {    -webkit-line-clamp: 2;    overflow: hidden;    display: -webkit-box;    -webkit-box-orient: vertical;    line-height: 1.5;    justify-content: center;    align-items: flex-end;    align-content: center;    padding-top: 0.5rem;    color: white;  }    #body-wrap.error .aside-list .aside-list-item .content time {    display: none;  }    /* 代码框主题 */  #article-container figure.highlight {    border-radius: 10px;  }]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title></title>
+      <link href="/css/custom.css"/>
+      <url>/css/custom.css</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[/* @font-face {  font-family: Candyhome;  src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/Candyhome.ttf);  font-display: swap;  font-weight: lighter;} */@font-face {    font-family: ZhuZiAYuanJWD;    src: url(https://npm.elemecdn.com/anzhiyu-blog@1.1.6/fonts/ZhuZiAWan.woff2);    font-display: swap;    font-weight: lighter;  }    body {    font-family: "ZhuZiAYuanJWD";  }  div#menus {    font-family: "ZhuZiAYuanJWD";  }  h1#site-title {    font-family: ZhuZiAYuanJWD;    font-size: 3em !important;  }  a.article-title,  a.blog-slider__title,  a.categoryBar-list-link,  h1.post-title {    font-family: ZhuZiAYuanJWD;  }    .iconfont {    font-family: "iconfont" !important;    font-size: 3em;    /* 可以定义图标大小 */    font-style: normal;    -webkit-font-smoothing: antialiased;    -moz-osx-font-smoothing: grayscale;  }    /* 时间轴生肖icon */  svg.icon {    /* 这里定义svg.icon，避免和Butterfly自带的note标签冲突 */    width: 1em;    height: 1em;    /* width和height定义图标的默认宽度和高度*/    vertical-align: -0.15em;    fill: currentColor;    overflow: hidden;  }    .icon-zhongbiao::before {    color: #f7c768;  }    /* bilibli番剧插件 */  #article-container .bangumi-tab.bangumi-active {    background: var(--anzhiyu-theme);    color: var(--anzhiyu-ahoverbg);    border-radius: 10px;  }  a.bangumi-tab:hover {    text-decoration: none !important;  }  .bangumi-button:hover {    background: var(--anzhiyu-theme) !important;    border-radius: 10px !important;    color: var(--anzhiyu-ahoverbg) !important;  }  a.bangumi-button.bangumi-nextpage:hover {    text-decoration: none !important;  }  .bangumi-button {    padding: 5px 10px !important;  }    a.bangumi-tab {    padding: 5px 10px !important;  }  svg.icon.faa-tada {    font-size: 1.1em;  }  .bangumi-info-item {    border-right: 1px solid #f2b94b;  }  .bangumi-info-item span {    color: #f2b94b;  }  .bangumi-info-item em {    color: #f2b94b;  }    /* 解决artitalk的图标问题 */  #uploadSource > svg {    width: 1.19em;    height: 1.5em;  }    /*top-img黑色透明玻璃效果移除，不建议加，除非你执着于完全一图流或者背景图对比色明显 */  #page-header:not(.not-top-img):before {    background-color: transparent !important;  }    /* 首页文章卡片 */  #recent-posts > .recent-post-item {    background: rgba(255, 255, 255, 0.9);  }    /* 首页侧栏卡片 */  #aside-content .card-widget {    background: rgba(255, 255, 255, 0.9);  }    /* 文章页面正文背景 */  div#post {    background: rgba(255, 255, 255, 0.9);  }    /* 分页页面 */  div#page {    background: rgba(255, 255, 255, 0.9);  }    /* 归档页面 */  div#archive {    background: rgba(255, 255, 255, 0.9);  }    /* 标签页面 */  div#tag {    background: rgba(255, 255, 255, 0.9);  }    /* 分类页面 */  div#category {    background: rgba(255, 255, 255, 0.9);  }    /*夜间模式伪类遮罩层透明*/  [data-theme="dark"] #recent-posts > .recent-post-item {    background: #121212;  }    [data-theme="dark"] .card-widget {    background: #121212 !important;  }    [data-theme="dark"] div#post {    background: #121212 !important;  }    [data-theme="dark"] div#tag {    background: #121212 !important;  }    [data-theme="dark"] div#archive {    background: #121212 !important;  }    [data-theme="dark"] div#page {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: #121212 !important;  }    [data-theme="dark"] div#category {    background: transparent !important;  }  /* 页脚透明 */  #footer {    background: transparent !important;  }    /* 头图透明 */  #page-header {    background: transparent !important;  }    #rightside > div > button {    border-radius: 5px;  }    /* 滚动条 */    ::-webkit-scrollbar {    width: 10px;    height: 10px;  }    ::-webkit-scrollbar-thumb {    background-color: #3b70fc;    border-radius: 2em;  }    ::-webkit-scrollbar-corner {    background-color: transparent;  }    ::-moz-selection {    color: #fff;    background-color: #3b70fc;  }    /* 音乐播放器 */    /* .aplayer .aplayer-lrc {    display: none !important;  } */    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {    left: -66px !important;    transition: all 0.3s;    /* 默认情况下缩进左侧66px，只留一点箭头部分 */  }    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {    left: 0 !important;    transition: all 0.3s;    /* 鼠标悬停是左侧缩进归零，完全显示按钮 */  }    .aplayer.aplayer-fixed {    z-index: 999999 !important;  }    /* 评论框  */  .vwrap {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 30px 0px;  }    /* 设置评论框 */    .vcard {    box-shadow: 2px 2px 5px #bbb;    background: rgba(255, 255, 255, 0.3);    border-radius: 8px;    padding: 30px;    margin: 30px 0px 0px 0px;  }    /* md网站下划线 */  #article-container a:hover {    text-decoration: none !important;  }    #article-container #hpp_talk p img {    display: inline;  }    /* 404页面 */  #error-wrap {    position: absolute;    top: 40%;    right: 0;    left: 0;    margin: 0 auto;    padding: 0 1rem;    max-width: 1000px;    transform: translate(0, -50%);  }    #error-wrap .error-content {    display: flex;    flex-direction: row;    justify-content: center;    align-items: center;    margin: 0 1rem;    height: 18rem;    border-radius: 8px;    background: var(--card-bg);    box-shadow: var(--card-box-shadow);    transition: all 0.3s;  }    #error-wrap .error-content .error-img {    box-flex: 1;    flex: 1;    height: 100%;    border-top-left-radius: 8px;    border-bottom-left-radius: 8px;    background-color: #3b70fc;    background-position: center;    background-size: cover;  }    #error-wrap .error-content .error-info {    box-flex: 1;    flex: 1;    padding: 0.5rem;    text-align: center;    font-size: 14px;    font-family: Titillium Web, "PingFang SC", "Hiragino Sans GB", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;  }  #error-wrap .error-content .error-info .error_title {    margin-top: -4rem;    font-size: 9em;  }  #error-wrap .error-content .error-info .error_subtitle {    margin-top: -3.5rem;    word-break: break-word;    font-size: 1.6em;  }  #error-wrap .error-content .error-info a {    display: inline-block;    margin-top: 0.5rem;    padding: 0.3rem 1.5rem;    background: var(--btn-bg);    color: var(--btn-color);  }    #body-wrap.error .aside-list {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    bottom: 0px;    position: absolute;    padding: 1rem;    width: 100%;    overflow: scroll;  }    #body-wrap.error .aside-list .aside-list-group {    display: flex;    flex-direction: row;    flex-wrap: nowrap;    max-width: 1200px;    margin: 0 auto;  }    #body-wrap.error .aside-list .aside-list-item {    padding: 0.5rem;  }    #body-wrap.error .aside-list .aside-list-item img {    width: 100%;    object-fit: cover;    border-radius: 12px;  }    #body-wrap.error .aside-list .aside-list-item .thumbnail {    overflow: hidden;    width: 230px;    height: 143px;    background: var(--anzhiyu-card-bg);    display: flex;  }    #body-wrap.error .aside-list .aside-list-item .content .title {    -webkit-line-clamp: 2;    overflow: hidden;    display: -webkit-box;    -webkit-box-orient: vertical;    line-height: 1.5;    justify-content: center;    align-items: flex-end;    align-content: center;    padding-top: 0.5rem;    color: white;  }    #body-wrap.error .aside-list .aside-list-item .content time {    display: none;  }    /* 代码框主题 */  #article-container figure.highlight {    border-radius: 10px;  }]]></content>
       
     </entry>
     
