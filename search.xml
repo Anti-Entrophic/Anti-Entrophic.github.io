@@ -134,9 +134,9 @@
       
         <tags>
             
-            <tag> Study </tag>
-            
             <tag> Computer Graphics </tag>
+            
+            <tag> Study </tag>
             
             <tag> Homework </tag>
             
@@ -165,9 +165,9 @@
       
         <tags>
             
-            <tag> Computer Network </tag>
-            
             <tag> Study </tag>
+            
+            <tag> Computer Network </tag>
             
             <tag> Notes </tag>
             
@@ -499,9 +499,9 @@
       
         <tags>
             
-            <tag> Computer Network </tag>
-            
             <tag> Study </tag>
+            
+            <tag> Computer Network </tag>
             
             <tag> Notes </tag>
             
@@ -678,9 +678,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -689,9 +689,9 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       

@@ -268,7 +268,7 @@
   </url>
   
   <url>
-    <loc>https://anti-entrophic.github.io/tags/Computer-Network/</loc>
+    <loc>https://anti-entrophic.github.io/tags/Computer-Graphics/</loc>
     <lastmod>2025-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -282,21 +282,28 @@
   </url>
   
   <url>
-    <loc>https://anti-entrophic.github.io/tags/Notes/</loc>
-    <lastmod>2025-03-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://anti-entrophic.github.io/tags/Computer-Graphics/</loc>
-    <lastmod>2025-03-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://anti-entrophic.github.io/tags/Homework/</loc>
+    <lastmod>2025-03-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/tags/NLP/</loc>
+    <lastmod>2025-03-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/tags/Computer-Network/</loc>
+    <lastmod>2025-03-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/tags/Notes/</loc>
     <lastmod>2025-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -311,13 +318,6 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Lab/</loc>
-    <lastmod>2025-03-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://anti-entrophic.github.io/tags/NLP/</loc>
     <lastmod>2025-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -375,6 +375,13 @@
   </url>
   
   <url>
+    <loc>https://anti-entrophic.github.io/categories/Study/Computer-Graphics/</loc>
+    <lastmod>2025-03-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://anti-entrophic.github.io/categories/Study/NLP/</loc>
     <lastmod>2025-03-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -389,13 +396,6 @@
   </url>
   
   <url>
-    <loc>https://anti-entrophic.github.io/categories/Study/Neural-Network/</loc>
-    <lastmod>2025-03-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Distributed-System/</loc>
     <lastmod>2025-03-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -403,7 +403,7 @@
   </url>
   
   <url>
-    <loc>https://anti-entrophic.github.io/categories/Study/Computer-Graphics/</loc>
+    <loc>https://anti-entrophic.github.io/categories/Study/Neural-Network/</loc>
     <lastmod>2025-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
