@@ -234,31 +234,6 @@
   </entry>
   
   <entry>
-    <title>spacy库介绍</title>
-    <link href="https://anti-entrophic.github.io/posts/10016.html"/>
-    <id>https://anti-entrophic.github.io/posts/10016.html</id>
-    <published>2023-11-02T11:54:16.000Z</published>
-    <updated>2023-11-15T15:55:28.491Z</updated>
-    
-    <content type="html"><![CDATA[<p>好久不写东西了，最近比较忙，还是边学边写比较好，不然事后很难再提起精神去总结。</p><p>本篇我会先介绍一下spacy的基本用法，然后尽量能够展示一些工程上的代码，方便学习使用。</p><h1 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h1><p>除了一般的安装spacy这个库，还需要安装一下你需要使用的模型，比如说英语任务就下载 <code>en_core_web_sm</code></p><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install spacy</span><br><span class="line">python -m spacy download en_core_web_sm</span><br></pre></td></tr></table></figure><p>随后在python文件中，就可以轻松地导入使用，用法如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> spacy</span><br><span class="line">nlp = spacy.load(<span class="string">&quot;en_core_web_sm&quot;</span>)</span><br><span class="line">text = <span class="string">&quot;SpaCy is a popular NLP library. I love it.&quot;</span></span><br><span class="line">doc = nlp(text)</span><br></pre></td></tr></table></figure><p>doc对象中会保留句子的诸多处理信息，详情见下</p><h1 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h1><h2 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h2><p>其中，token.text就是分词的结果，token.pos_是词性，token.dep_是依赖关系</p><p>有些可能比较难理解，之后会配合例子，如果用到了就具体介绍一下</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> token <span class="keyword">in</span> doc:</span><br><span class="line">    <span class="built_in">print</span>(token.text, token.pos_, token.dep_)</span><br></pre></td></tr></table></figure><p>结果：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SpaCy PROPN nsubj</span><br><span class="line">is AUX ROOT</span><br><span class="line">a DET det</span><br><span class="line">popular ADJ amod</span><br><span class="line">NLP NOUN compound</span><br><span class="line">library NOUN attr</span><br><span class="line">. PUNCT punct</span><br><span class="line">I PRON nsubj</span><br><span class="line">love VERB ROOT</span><br><span class="line">it PRON dobj</span><br><span class="line">. PUNCT punct</span><br></pre></td></tr></table></figure><p>英语分词模型中一些词性标签示例：</p><ul><li>“NOUN”：名词</li><li>“VERB”：动词</li><li>“ADJ”：形容词</li><li>“ADV”：副词</li><li>“PRON”：代词</li><li>“DET”：冠词</li><li>“ADP”：介词</li><li>“CONJ”：连词</li></ul><p>依赖关系标签示例：</p><ul><li>“nsubj”：主语</li><li>“dobj”：直接宾语</li><li>“prep”：介词短语修饰</li><li>“amod”：形容词修饰</li><li>“conj”：连接词成分</li><li>“root”：句子的根</li></ul><h2 id="分句"><a href="#分句" class="headerlink" title="分句"></a>分句</h2><h3 id="sent-text"><a href="#sent-text" class="headerlink" title="sent.text"></a>sent.text</h3><p>spacy也可以把长文本分成多个短句来处理：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> sent <span class="keyword">in</span> doc.sents:</span><br><span class="line">    <span class="built_in">print</span>(sent.text)</span><br></pre></td></tr></table></figure><p>结果：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SpaCy is a popular NLP library.</span><br><span class="line">I love it.</span><br></pre></td></tr></table></figure></p><h3 id="sent-root"><a href="#sent-root" class="headerlink" title="sent.root"></a>sent.root</h3><p>当然，sent中还保留了更多句子相关的信息，比如说可以使用 <code>sent.root</code> ，找到句子中的根词（通常是句子的主要动词或核心单词）</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> sent <span class="keyword">in</span> doc.sents:</span><br><span class="line">    <span class="built_in">print</span>(sent.root)</span><br></pre></td></tr></table></figure><p>结果：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">is</span><br><span class="line">love</span><br></pre></td></tr></table></figure></p><p>还可以进一步通过 <code>sent.root.children</code> ，访问根词的直接子词，这每一个字词又是之前的token对象，包含了 <code>pos_</code>、<code>dep_</code> 等属性，可以拿来进一步分析句子成分</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> sent <span class="keyword">in</span> doc.sents:</span><br><span class="line">    <span class="keyword">for</span> child <span class="keyword">in</span> sent.root.children:</span><br><span class="line">        <span class="built_in">print</span>(child.text, child.pos_, child.dep_)</span><br></pre></td></tr></table></figure><p>结果：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SpaCy PROPN nsubj</span><br><span class="line">library NOUN attr</span><br><span class="line">. PUNCT punct</span><br><span class="line">I PRON nsubj</span><br><span class="line">it PRON dobj</span><br><span class="line">. PUNCT punct</span><br></pre></td></tr></table></figure></p><p>那比如说我就可以提取出句子中的主要主语对吧，判断一下 <code>if child.dep_ == &quot;nsubj&quot;</code> 即可</p><h3 id="sent-noun-chunks"><a href="#sent-noun-chunks" class="headerlink" title="sent.noun_chunks"></a>sent.noun_chunks</h3><p>还有一些功能，比如说我可以找到句子中的名词短语</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> sent <span class="keyword">in</span> doc.sents:</span><br><span class="line">    <span class="keyword">for</span> phrase <span class="keyword">in</span> sent.noun_chunks:</span><br><span class="line">        <span class="built_in">print</span>(phrase)</span><br></pre></td></tr></table></figure><p>结果：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SpaCy</span><br><span class="line">a popular NLP library</span><br><span class="line">I</span><br><span class="line">it</span><br></pre></td></tr></table></figure></p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>主要接触的基本上就这些，根据具体使用场景自行使用</p>]]></content>
-    
-    
-    <summary type="html">介绍一个NLP的分词处理工具</summary>
-    
-    
-    
-    <category term="Study" scheme="https://anti-entrophic.github.io/categories/Study/"/>
-    
-    <category term="NLP" scheme="https://anti-entrophic.github.io/categories/Study/NLP/"/>
-    
-    
-    <category term="NLP" scheme="https://anti-entrophic.github.io/tags/NLP/"/>
-    
-    <category term="TOOLS" scheme="https://anti-entrophic.github.io/tags/TOOLS/"/>
-    
-  </entry>
-  
-  <entry>
     <title>NLP论文精读（四） Transformer</title>
     <link href="https://anti-entrophic.github.io/posts/10015.html"/>
     <id>https://anti-entrophic.github.io/posts/10015.html</id>
@@ -535,6 +510,27 @@
     <category term="Notes" scheme="https://anti-entrophic.github.io/tags/Notes/"/>
     
     <category term="Neural Network" scheme="https://anti-entrophic.github.io/tags/Neural-Network/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自定义页面</title>
+    <link href="https://anti-entrophic.github.io/posts/10004.html"/>
+    <id>https://anti-entrophic.github.io/posts/10004.html</id>
+    <published>2023-10-14T05:17:52.000Z</published>
+    <updated>2023-10-14T05:37:46.175Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hexo &amp; butterfly 会自动按照其设置指定的方式对markdown文件进行渲染，生成对应的博客页面。</p><p>不过可能除了写博客，我们还希望能在博客上部署一些小页面小功能，butterfly也是支持的。</p><p>我们可以在 <code>/source</code> 文件夹下新建一个html文件夹，将我们写好的页面（html、css、javascript）一起放进去。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">source</span><br><span class="line">    |-- html</span><br><span class="line">          |-- index.html  # 主要的小工具总览页面</span><br><span class="line">          |-- Tool1  # 各种不同的小工具</span><br><span class="line">          |-- Tool2</span><br><span class="line">          |-- ...</span><br></pre></td></tr></table></figure><p>在 <code>_config.yml</code> ，我们需要指定hexo让其跳过对html文件夹下内容的默认渲染：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">skip_render:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;html/**&quot;</span>  </span><br></pre></td></tr></table></figure><p>最后，我们可以在menu栏添加一个Tool图标，会首先跳转到一个总览页面，专门用于存放自己的小工具：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">Tools:</span> <span class="string">/html/index.html</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-archive</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">介绍如何在博客上部署自定义页面</summary>
+    
+    
+    
+    <category term="Hexo &amp; Butterfly tutorial" scheme="https://anti-entrophic.github.io/categories/Hexo-Butterfly-tutorial/"/>
+    
+    
+    <category term="Hexo &amp; Butterfly tutorial" scheme="https://anti-entrophic.github.io/tags/Hexo-Butterfly-tutorial/"/>
     
   </entry>
   
