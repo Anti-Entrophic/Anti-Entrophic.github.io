@@ -209,62 +209,6 @@
     
     
     <entry>
-      <title>LLaMA.Tokenizer：Byte Pair Encoding &amp; SentencePiece</title>
-      <link href="/posts/4a17b156.html"/>
-      <url>/posts/4a17b156.html</url>
-      
-        <content type="html"><![CDATA[<div class="note success simple"><p>没写完，，，勿看</p></div><p>10017</p><p>Tokenization是所有NLP任务的第一步，有许多不同的实现方法。今天主要介绍LLaMA中采用的tokenizer：Byte Pair Encoding，实现方法用的是Google提供的分词工具SentencePiece。</p><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>简单来说，BPE就是，限定一个目标词表数量上限，然后在给定的语料库中进行训练，算法会不断将高词频的词组合在一起（比如说“机器”和“学习”组成“机器学习”），直到达到设定的词表数量上限。</p><p>词表的生成是从字符level开始的，假设我们有一个corpus：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[5] low_  # [5] 表示出现频数，即数量</span><br><span class="line">[2] lowest_</span><br><span class="line">[6] newer_</span><br><span class="line">[3] wider_</span><br><span class="line">[2] new_</span><br></pre></td></tr></table></figure><p>注意一定要将空格也记为一个字符，因为est_和est是不一样的，前者代表的是lowest这种词的结尾，而后者则不作为结尾，可能出现在像estate这种词中。</p><p>| 字符 | 频次 |<br>| …  | … |<br>| _ | 18|</p><h2 id="LLaMA代码"><a href="#LLaMA代码" class="headerlink" title="LLaMA代码"></a>LLaMA代码</h2><p>首先我们需要下载LLaMA的Tokenizer看一下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> LlamaTokenizer</span><br><span class="line"></span><br><span class="line">base_model = <span class="string">&#x27;decapoda-research/llama-7b-hf&#x27;</span></span><br><span class="line">tokenizer = LlamaTokenizer.from_pretrained(base_model)</span><br></pre></td></tr></table></figure><p>会显示以下warning是因为，huggingface.transformers改过一次LlamaTokenizer的名字，和用之前库训练的模型中保存的信息对不上了，不用管</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. </span><br><span class="line">The tokenizer class you load from this checkpoint is &#x27;LLaMATokenizer&#x27;. </span><br><span class="line">The class this function is called from is &#x27;LlamaTokenizer&#x27;.</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Study </category>
-          
-          <category> NLP </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> NLP </tag>
-            
-            <tag> TOOLS </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>NLP论文精读（四） Transformer</title>
-      <link href="/posts/10015.html"/>
-      <url>/posts/10015.html</url>
-      
-        <content type="html"><![CDATA[<p>写得太好了，强烈建议看这篇博文：<a href="https://wmathor.com/index.php/archives/1438/">https://wmathor.com/index.php/archives/1438/</a></p><p>论文链接：<a href="https://arxiv.org/pdf/1706.03762.pdf">https://arxiv.org/pdf/1706.03762.pdf</a></p><p>太懒了一直没写完，一直在拿huggingface的transformers库做也不太关心具体的实现，感觉不太好。。</p><p>有时间了一定重头把这些模型都好好记录一下。</p><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/23/bfebc9f96242e7d87ff581d1632f97e5.png" style="width:400px;"/></div></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdm.sunbangyan.cn/2023/10/23/e01d28d62bf8197e404271711981b962.png" style="width:400px;"/></div></div><h1 id="Positional-Encoding"><a href="#Positional-Encoding" class="headerlink" title="Positional Encoding"></a>Positional Encoding</h1><p>RNN在编码上下文关系的时候，需要逐字迭代进行forward，这是非常耗时的。Transformer 摈弃了 RNN 的结构，所以首先，它需要一种别的方式来表征位置信息。</p><p>原论文中使用了数学方法来为每个字生成一个位置向量Positional Encoding，维度与词向量相同，都是embedding_dimension。这样，我们之后可以将位置向量与词向量相加，从而将位置信息编码进入向量中，让模型得以学习。</p><h2 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h2><p>Positional Encoding的设计方法比较不一般。我们先从容易想到的形式开始，看看它们有什么缺点：</p><p>第一种最容易想到的是，对每个字按位置分配一个[0,1]之间的数，其中0给第一个字，1给最后一个字。这样做的问题在于，如果有一个20字的短文本和40字的长文本，假设在短文本中有两个字的位置编码相差为0.05，而在长文本中也有两个字的位置编码相差为0.05。那么，在短文本中，这两个字其实是相邻的，而在长文本中，这两个字中间却相隔了一个字。同样的值却因为句子长度的不同而表现出不同的含义，这是不太合适的。</p><p>第二种是线性地为每个字分配1，2，3…这样的值，但是这样值可能会变得太大，过度影响词向量及模型表现。容易想到位置向量和字向量相加后，最后一个值会比第一个值大很多。</p><p>综上，Positional Encoding的理想设计应当满足以下三个条件：</p><ul><li><p>它应该为每个字输出唯一的编码</p></li><li><p>不同长度的句子之间，任何两个字之间的差值应该保持一致</p></li><li><p>它的值应该是有界的</p></li></ul><h2 id="论文设计"><a href="#论文设计" class="headerlink" title="论文设计"></a>论文设计</h2><p>论文中使用了 sin 和 cos 函数的线性变换来提供给模型位置信息:</p>$$\begin{array}{l}PE(pos,2i) = sin(\frac{pos}{10000^{\frac{2i}{d_{model}}}}) \\\\PE(pos,2i+1) = cos(\frac{pos}{10000^{\frac{2i}{d_{model}}}})\end{array}$$<p>上式中 $pos$ 指的是一句话中某个字的位置，取值范围是 <code>[0,sequence_length)</code> ；$i$ 指的是字向量的维度序号，取值范围是 <code>[0,embedding_size/2]</code> ；$d_{model}$ 就是 embedding_size</p><p>它很像是之前提到的第二种设计方法，只不过比起朴素的1，2，3，这里使用有界的三角函数。同时，把一个数字扩展到位置向量embedding_size的维度。</p><p>更具体的数学讨论可以见 <a href="https://spaces.ac.cn/archives/8231">https://spaces.ac.cn/archives/8231</a> ，还是很有收获的。</p><h2 id="未来发展"><a href="#未来发展" class="headerlink" title="未来发展"></a>未来发展</h2><p>原始Transformer中的Positional Encoding是纯数学公式计算得到的。</p><p>从BERT开始，模型会使用需要训练的embedding层。</p><p>最近的模型如LLaMA采用的是 <a href="https://arxiv.org/pdf/2104.09864.pdf">https://arxiv.org/pdf/2104.09864.pdf</a> 中提出的旋转位置编码（RoPE）来提升模型架构性能，之后有机会介绍。</p><h1 id="Self-Attention-Mechanism"><a href="#Self-Attention-Mechanism" class="headerlink" title="Self Attention Mechanism"></a>Self Attention Mechanism</h1><p>所以模型第一步，我们首先需要对于输入的整个句子 $X$ ，通过 Word Embedding 得到该句子中每个字的词向量，并通过 Positional Encoding 得到每个字的位置向量，将二者相加，得到每个字的表征向量。记第 $t$ 个字的向量为 $x_t$</p><p>回忆一下Attention的作用 <a href="https://anti-entrophic.github.io/posts/10014.html">https://anti-entrophic.github.io/posts/10014.html</a> ，在seq2seq的任务中，encoding会将整个输入句子编码成为一个背景词向量。而在decoding的过程中，我们使用attention，让其在生成内容时，能够更多地关注到当前需要生成的内容与原文本中不同位置的字的相关关系。</p><p>在Transformer中，我们使用 self-attention，在encoder中即将一句话中字与字之间的关系编码。</p><p>我们定义三个矩阵 $W_Q, W_K, W_V$ ，使用这三个矩阵分别对所有的字向量进行三次线性变换，于是所有字向量又衍生出三个新的向量 $q_t,k_t,v_t$。我们将所有的 $q_t$ 向量拼成一个大矩阵，记作查询矩阵 $Q$，将所有的 $k_t$ 向量拼成一个大矩阵，记作键矩阵 $K$，将所有的 $v_t$ 向量拼成一个大矩阵，记作值矩阵 $V$（见下图）</p><p>以处理第一个字为例，我们需要先用它的查询向量 $q_1$ 去乘以各个词的键向量，就像是在查询和各个词的关联性。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">            [<span class="number">0</span>, <span class="number">4</span>, <span class="number">2</span>]</span><br><span class="line">[<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>] x [<span class="number">1</span>, <span class="number">4</span>, <span class="number">3</span>] = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">4</span>]</span><br><span class="line">            [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure><p>之后还需要将得到的值经过 softmax，使得它们的和为 1（见下图）</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/11/08/d9f19e16846d90d41ee3a1d156aaa6d0.png" style="width:400px;"/></div></div><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">softmax([2, 4, 4]) = [0.0, 0.5, 0.5]</span><br></pre></td></tr></table></figure><p>有了权重之后，将权重其分别乘以对应字的值向量 $v_t$（见下图）</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0.0 * [1, 2, 3] = [0.0, 0.0, 0.0]</span><br><span class="line">0.5 * [2, 8, 0] = [1.0, 4.0, 0.0]</span><br><span class="line">0.5 * [2, 6, 3] = [1.0, 3.0, 1.5]</span><br></pre></td></tr></table></figure><p>最后将这些权重化后的值向量求和，得到第一个字的输出（见下图）</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  [0.0, 0.0, 0.0]</span><br><span class="line">+ [1.0, 4.0, 0.0]</span><br><span class="line">+ [1.0, 3.0, 1.5]</span><br><span class="line">-----------------</span><br><span class="line">= [2.0, 7.0, 1.5]</span><br></pre></td></tr></table></figure><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picst.sunbangyan.cn/2023/11/08/ce6a1a93139b0e21aaa6d04827a6950d.png" style="width:400px;"/></div></div><p>对其它的输入向量也执行相同的操作，即可得到通过 self-attention 后的所有输出</p><h2 id="矩阵计算"><a href="#矩阵计算" class="headerlink" title="矩阵计算"></a>矩阵计算</h2><p>上面介绍的方法需要一个循环遍历所有的字 $x_t$ ，不过显然这个是可以转换成矩阵计算的形式的，从而一次计算出所有时刻的输出。</p><p>第一步我们即可得到一口气得到 Q、K、V 三个矩阵。其中X即为embedding后的句子字向量矩阵，第 $t$ 行是第 $t$ 个字的词向量表示。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/11/08/38a0cda5a6c39d1d2673bab8e3077369.png" style="width:400px;"/></div></div><p>随后将上述计算过程简化。注意这里有一步除以 $\sqrt d_k$ 的trick，这个 $d_k$ 就是 $k$ 向量的dimension，也就是embedding_size。这样可以帮助模型收敛，，不过不太明白这步的motivation。。。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Study </category>
-          
-          <category> NLP </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> NLP </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>NLP论文精读（三） Attention机制</title>
       <link href="/posts/10014.html"/>
       <url>/posts/10014.html</url>
@@ -425,7 +369,7 @@
     
     
     <entry>
-      <title>NLP论文精读（一） Word2Vec</title>
+      <title>Word2Vec</title>
       <link href="/posts/10008.html"/>
       <url>/posts/10008.html</url>
       
