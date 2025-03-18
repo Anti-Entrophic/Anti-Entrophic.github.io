@@ -159,12 +159,12 @@
     <link href="https://anti-entrophic.github.io/posts/10019.html"/>
     <id>https://anti-entrophic.github.io/posts/10019.html</id>
     <published>2023-11-22T14:01:21.000Z</published>
-    <updated>2023-12-11T08:29:57.370Z</updated>
+    <updated>2025-03-18T06:11:17.101Z</updated>
     
     <content type="html"><![CDATA[<p>该说不说，对我们学校大部分课程的Lab都非常失望，连简单的实验文档都写不好，还需要学生自己摸索怎么做，浪费我那么多时间。</p><p>记录一下自己在安装mininet过程中遇到的问题，非常非常多，希望能帮到后来的同学。</p><p>应该会有很多图，希望都能加载出来。</p><h1 id="安装虚拟机"><a href="#安装虚拟机" class="headerlink" title="安装虚拟机"></a>安装虚拟机</h1><p>本次mininet需要用到图形界面，WSL本人试过了并不支持，无奈只能转向VirtualBox进行实验。</p><p>去VirtualBox官网下载即可：<a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p><p>我是windows系统，直接点windows host下载即可。下载完后安装。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/11/22/d847fbc3124ed53e25aed79901f8ed26.jpeg" style="width:400px;"/></div></div><p>下载完后打开应该是这样：（我因为已经建好了所以列表里会有一个Ubuntu，原始状态应该是空的）</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picst.sunbangyan.cn/2023/11/22/d3b4657d59d70bc5d2ca1999fae0005f.jpeg" style="width:800px;"/></div></div><p>这个时候我们需要先去下载一个Ubuntu镜像，在 <a href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/20.04/">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/20.04/</a> 这里即可下载，选择 ubuntu-20.04.6-desktop-amd64.iso</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/11/22/a259e2bfd08beb71fad51b4c18bc3768.jpeg" style="width:400px;"/></div></div><p>下载完后我们回到VirtualBox，点击右上方蓝色的新建</p><p>进去以后界面如下，设置一个名称（Ubuntu就可以），文件夹在想要的位置自己建一个，然后虚拟光盘选择我们刚才下载的文件。下一步</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/11/22/415d13eb9426abb55c23cdbbd4bf05f6.jpeg" style="width:800px;"/></div></div><p>下一步自己设置用户名和密码（请记住）。然后下面这个增强功能要勾选！（截图中没有选上）</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/11/22/04cb6d27ce0073cd853d42217eab62fd.jpeg" style="width:800px;"/></div></div><p>之后是分配内存和空间，默认即可（感觉空间不用那么多）</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/11/22/0b60d8486932d0d87d22fadfcdd0de05.jpeg" style="width:400px;"/></div></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/11/22/0b8f435b83c5e52744ddcb9eabe106a5.jpeg" style="width:400px;"/></div></div><p>然后它就会开始初始化系统，等待一段时间即可。</p><h1 id="配置Ubuntu"><a href="#配置Ubuntu" class="headerlink" title="配置Ubuntu"></a>配置Ubuntu</h1><h2 id="呼出命令行"><a href="#呼出命令行" class="headerlink" title="呼出命令行"></a>呼出命令行</h2><p>随后就可以进入Ubuntu界面，那么，该如何呼出命令行呢？</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/11/22/146af73c4b003f2be0f83e70a8ae9032.jpeg" style="width:400px;"/></div></div><p>按下键盘上的windows键，输入terminal即可。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdm.sunbangyan.cn/2023/11/22/a4718c0bb76ea6a428a0bb204e805c9e.jpeg" style="width:400px;"/></div></div><p>但是你会发现只有一行terminal的文字出现在左上角，随后无事发生。这里就是我遇到的第一个坑了。解决方法参考：<a href="https://www.cnblogs.com/lifuqiang/articles/17167367.html">https://www.cnblogs.com/lifuqiang/articles/17167367.html</a></p><p>我们首先输入CTRL + ALT + F3，然后会要求我们登录，用户名输入root，密码输入自己之前设的那个</p><p>随后，依次输入命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/default</span><br><span class="line">sudo nano locale</span><br></pre></td></tr></table></figure><p>打开一个配置文件，将第一行改为 <code>LANG=en_US.UTF-8</code></p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picst.sunbangyan.cn/2023/11/22/37e17dd85531240de5b51dc37f3c1a6c.jpeg" style="width:800px;"/></div></div><p>按 CTRL+X，然后 Y，回车，然后再enter退出编辑</p><p>随后，再输入命令 <code>sudo locale-gen --purge</code>， 配置我们刚刚修改的设置</p><p>然后输入命令 <code>reboot</code> 重启虚拟机，现在我们就可以windows键打开搜索，输入terminal然后启动了。（原来乱码的日期也恢复了）</p><h2 id="给用户sudo权限"><a href="#给用户sudo权限" class="headerlink" title="给用户sudo权限"></a>给用户sudo权限</h2><p>参考：<a href="https://blog.csdn.net/Moelimoe/article/details/105292219">https://blog.csdn.net/Moelimoe/article/details/105292219</a></p><p>目前你创建的用户是没有超级权限的，而mininet的使用又必须要超级权限，之后会遇到各种问题。干脆直接给用户超级权限好了。</p><p>首先打开命令行，<code>su root</code> 进入root用户，然后输入命令 <code>sudo adduser &lt;user_id&gt; sudo</code> ，填入自己的用户名即可，之后你的账号就有sudo权限了，操作也不用进root。</p><h1 id="配置mininet"><a href="#配置mininet" class="headerlink" title="配置mininet"></a>配置mininet</h1><h2 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h2><p>刚配好的环境什么也没有，git也需要安装，命令行输入 <code>sudo apt install git</code></p><p>然后 <code>git clone https://gitee.com/derekwin/mininet.git</code> ，原仓库下载会卡住，并且有一些怪问题，这边我们利用别人的镜像源（参考：<a href="https://zhuanlan.zhihu.com/p/576832894）">https://zhuanlan.zhihu.com/p/576832894）</a></p><h2 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h2><p>想不到吧，pip也没有，我们还需要先安装pip，否则之后会报错。</p><p>命令： <code>sudo apt-get install python3-pip</code></p><h2 id="安装mininet"><a href="#安装mininet" class="headerlink" title="安装mininet"></a>安装mininet</h2><p>随后，我们需要输入命令 <code>PYTHON=python3 mininet/util/install.sh -a</code>，指定python3是因为较新版本的ubuntu默认只有python3环境，且没有/usr/bin/python，之后安装时会报错。</p><p>这步有可能因为网络问题卡住而获取失败，我的建议是多试几次。没什么办法。</p><p>安装过程比较长，需要等待</p><p>出现Enjoy Mininet!就是成功了</p><p>之后再输入一行命令 <code>sudo apt-get install mininet</code>，一切大功告成。</p><h2 id="下载iperf3"><a href="#下载iperf3" class="headerlink" title="下载iperf3"></a>下载iperf3</h2><p>后续实验还需要两个小插件，我们输入 <code>sudo apt-get install iperf3</code> 安装</p><p>还有一个iperf3-plotter，但是助教给的git根本download不下来（<code>git clone git://github.com/ekfoury/iperf3_plotter.git</code>），很难蚌。</p><p>可以直接去 <a href="https://github.com/ekfoury/iperf3_plotter.git">https://github.com/ekfoury/iperf3_plotter.git</a> 下载压缩包，解压</p><p>随后我们回到VirtualBox的管理页面，在我们配置的Ubuntu环境下，我们首先需要修改一下设置。修改设置需要在关闭虚拟机的情况下启动</p><p>在”设置-&gt;存储”中，我们需要对空的”控制器:IDE”下添加一个盘，点击右侧的”属性-&gt;分配光驱”右边的那个小图标，选择”选择虚拟盘”，找到VirtualBox安装时自带的一个虚拟盘即可</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/11/22/e57a184a662d19a18808481cca0bc9f3.jpeg" style="width:800px;"/></div></div><p>之后退回管理页面，我们需要先启动虚拟机。然后我们就可以在右下角输入用户名密码登录，并且传文件。左边是windows下的文件系统，右边是ubuntu中的。我们选择需要的文件，点击中间的图标中下面那个，就可以把文件传到虚拟机中了。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/11/22/99c0d3389c8071cdf4d9ab1cee89cd2a.jpeg" style="width:800px;"/></div></div><p>随后在虚拟系统中命令行进入文件夹iperf3_plotter-master，然后 <code>sudo make</code>，就可以了</p><h1 id="END"><a href="#END" class="headerlink" title="END"></a>END</h1><p>之后的实验部分比较简单，就不另外记录了，引导也还可以。</p>]]></content>
     
     
-    <summary type="html">保姆级教程，跟着做必成功。</summary>
+    <summary type="html">保姆级教程。</summary>
     
     
     
@@ -219,29 +219,6 @@
     
     
     <summary type="html">大名鼎鼎的Attention</summary>
-    
-    
-    
-    <category term="Study" scheme="https://anti-entrophic.github.io/categories/Study/"/>
-    
-    <category term="NLP" scheme="https://anti-entrophic.github.io/categories/Study/NLP/"/>
-    
-    
-    <category term="NLP" scheme="https://anti-entrophic.github.io/tags/NLP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NLP论文精读（二） seq2seq</title>
-    <link href="https://anti-entrophic.github.io/posts/10013.html"/>
-    <id>https://anti-entrophic.github.io/posts/10013.html</id>
-    <published>2023-10-22T15:03:17.000Z</published>
-    <updated>2023-11-06T13:32:31.273Z</updated>
-    
-    <content type="html"><![CDATA[<p>这次学个简单一点的知识。参考：<a href="https://wmathor.com/index.php/archives/1432/">https://wmathor.com/index.php/archives/1432/</a></p><p>假如有一个机器翻译的任务：</p><blockquote><p>英语：They are watching</p><p>法语：lls regardent</p></blockquote><p>seq2seq的方法就是利用了两个RNN，分别是对应输入序列的编码器和输出序列的解码器。</p><p>在解码阶段有两种选择，后续会介绍</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/10/22/cafabd89e6c6a72dffeb51abd91137ed.png" style="width:400px;"/></div></div><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/22/fb1c2b642a2633e3193ce4d4c81af572.png" style="width:400px;"/></div></div><h1 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h1><p>在encoder这步的作用是把一个不定长的输入序列转化成一个定长的背景词向量 $c$ ，该背景词向量 $c$ 包含了输入序列的信息。</p><p>设在 $t$ 时刻，输入为 $x_t$，神经元的隐藏状态为 $h_t$ ，则有 $h_t=f(h_{t-1},x_t)$ </p><p>更具体地，设 $x_t$ 的维度是 (batch_size, feature_size)，$h_t$ 的维度是 (batch_size, hidden_size)， 每一个时刻的输出 $o_t$ 的维度是 (batch_size, output_size)。这里如果是nlp任务的画，output_size就应该等于feature_size，都是字的embedding的长度；如果是别的什么分类任务的话，可以有不同的取值。</p><p>然后还要一些权重矩阵，我们这里假设 $h_t = tanh(W \cdot h_{t-1} + )$</p><p>$c$ 就是与所有隐藏状态相关的一个函数：$c=q(h_1,…,h_T)$ ，当然，最简单的函数就是直接让 $c = h_T$</p><p>通常我们会在输入序列最后加上一个特殊字符 ‘eos’ 表示序列的终结。</p><h1 id="解码器"><a href="#解码器" class="headerlink" title="解码器"></a>解码器</h1><p>上文提到了两种decode方式，一种是直接把背景向量 $c$ 送到decoder中，一种是让语义向量 $c$ 参与序列所有时刻的运算</p><p>不管怎么样，我们能通过decoder得到一个输出序列：$y_1, y_2, …, y_{T’}$ ，而真实的输出序列是 $y_1’, …, y_{T’}’$ ，设decoder在 $t$ 时刻的隐藏状态是 $s_t$</p><p>自然，我们想要最大化联合概率函数 $P(y_1’, …, y_{T’}’) = \prod_{i=1}^{T’} P(y_i’) = \prod_{i=1}^{T’} g(y_{i-1}’, s_i,c)$ ,其中 $g$ 是decoder的算子。</p><p>维度问题可能有点混乱。。。。</p><p>看后一种decoder方式吧，那每个RNN单元应该有三个输入，一个是背景词向量 $c$ ，一个是上一次的隐状态 $s_0$ ，一个是上一次的预测输出的embedding，拼起来</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>总之就比较简单，还有一些诸如Teacher Forcing, Beam Search的优化。可以参考：<a href="https://zhuanlan.zhihu.com/p/194308943">https://zhuanlan.zhihu.com/p/194308943</a></p><p>下一章讲attention机制 ૮₍ ˃ ⤙ ˂ ₎ა</p>]]></content>
-    
-    
-    <summary type="html">简单的encoder-decoder</summary>
     
     
     
@@ -434,38 +411,6 @@
   </entry>
   
   <entry>
-    <title>BP神经网络与反向传播算法</title>
-    <link href="https://anti-entrophic.github.io/posts/10005.html"/>
-    <id>https://anti-entrophic.github.io/posts/10005.html</id>
-    <published>2023-10-14T08:31:31.000Z</published>
-    <updated>2023-10-17T03:22:36.506Z</updated>
-    
-    <content type="html"><![CDATA[<p>本文还不是很完善</p><p>简单推导一下反向传播算法的公式</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picst.sunbangyan.cn/2023/10/14/r3efwk.png" alt="多层前馈神经网络示例。" style="width:400px;"/></div><span class="image-caption">多层前馈神经网络示例。</span></div><p>设激活函数为sigmoid函数，误差函数采用均方误差，正向传播得到的结果为 $\hat{\boldsymbol{y}}$，真实值为y。</p><h1 id="最后一层参数"><a href="#最后一层参数" class="headerlink" title="最后一层参数"></a>最后一层参数</h1><p>设隐层 $b_i$ 到输出层 $y_j$ 的参数为 $w_{ij} $</p><p>以更新 $w_{11}$ 为例，现在已经得到了均方误差 $E$ :</p><script type="math/tex; mode=display">E = \frac{1}{2} \sum_{i=1}^n (\hat{y_i} - y_i)^2</script><p>用梯度下降最小化均方误差更新隐层到输出层参数，由链式法则</p><script type="math/tex; mode=display">\frac{\partial E}{\partial w_{11}} = \frac{\partial E}{\partial \hat{y_1}} \cdot \frac{\partial \hat{y_1}}{\partial \beta_{1}} \cdot \frac{\partial \beta_1}{\partial w_{11}}</script><script type="math/tex; mode=display">\begin{equation}\left\{    \begin{array}{ll}        \frac{\partial E}{\partial \hat{y_1}} = \hat{y_1}-y_1 & \\        \frac{\partial \hat{y_1}}{\partial \beta_{1}} = \hat{y_1} (1- \hat{y_1}) & 对sigmoid求导 \\    \frac{\partial \beta_1}{\partial w_{11}} = b_1    \end{array}\right. \notag\end{equation}</script><p>所以 $\Delta w_{11} = b_1\hat{y_1}(1-\hat{y_1})(\hat{y_1}-y_1)$ </p><p>令 $\boldsymbol{g_i} = \hat{y_1}(1-\hat{y_1})(\hat{y_1}-y_1)$</p><h1 id="隐层之间的参数"><a href="#隐层之间的参数" class="headerlink" title="隐层之间的参数"></a>隐层之间的参数</h1><p>考虑</p><script type="math/tex; mode=display">\frac{\partial E}{\partial v_{11}} = \frac{\partial E}{\partial b_1} \cdot \frac{\partial b_1}{\partial \alpha_{1}} \cdot \frac{\partial \alpha_1}{\partial v_{11}}</script><p>其中</p><script type="math/tex; mode=display">\begin{equation}\left\{    \begin{array}{ll}        \frac{\partial E}{\partial b_1} & =  \frac{\partial E}{\partial \beta_1} \cdot \frac{\partial \beta_1}{\partial b_1} + \frac{\partial E}{\partial \beta_2} \cdot \frac{\partial \beta_2}{\partial b_1} + \frac{\partial E}{\partial \beta_3} \cdot \frac{\partial \beta_3}{\partial b_1}\\        \frac{\partial b_1}{\partial \alpha_{1}} & = b_1 (1- b_1) & sigmoid \\    \frac{\partial \alpha_1}{\partial v_{11}} & = x_1    \end{array}\right. \notag\end{equation}</script><p>代入可得 $\Delta v_{11} = x_1b_1(1-b_1)\sum_{i=1}^3 g_iw_{1i}$</p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最后隐层到输出层和隐层之间梯度更新公式是不一样的，都是正常使用链式法则求导出来的。</p><p>隐层之间的公式是相同的，如果是多层网络的话也是同样的推导过程，把变量换成对应的前一层的内容即可。</p><p>有时间的话，希望能推一个一般性的递推公式出来。网上都找不到完整证明。。</p><p>希望能有一个向量化的公式啊</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;本文还不是很完善&lt;/p&gt;
-&lt;p&gt;简单推导一下反向传播算法的公式&lt;/p&gt;
-&lt;div class=&quot;img-wrap&quot;&gt;&lt;div class=&quot;img-bg&quot;&gt;&lt;img class=&quot;img&quot; src=&quot;https://picst.sunbangyan.cn/2023/10/1</summary>
-      
-    
-    
-    
-    <category term="Study" scheme="https://anti-entrophic.github.io/categories/Study/"/>
-    
-    <category term="Neural Network" scheme="https://anti-entrophic.github.io/categories/Study/Neural-Network/"/>
-    
-    
-    <category term="Study" scheme="https://anti-entrophic.github.io/tags/Study/"/>
-    
-    <category term="Notes" scheme="https://anti-entrophic.github.io/tags/Notes/"/>
-    
-    <category term="Neural Network" scheme="https://anti-entrophic.github.io/tags/Neural-Network/"/>
-    
-  </entry>
-  
-  <entry>
     <title>自定义页面</title>
     <link href="https://anti-entrophic.github.io/posts/10004.html"/>
     <id>https://anti-entrophic.github.io/posts/10004.html</id>
@@ -525,6 +470,43 @@
     
     
     <category term="Hexo &amp; Butterfly tutorial" scheme="https://anti-entrophic.github.io/tags/Hexo-Butterfly-tutorial/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博客时间线</title>
+    <link href="https://anti-entrophic.github.io/posts/d87f7e0c.html"/>
+    <id>https://anti-entrophic.github.io/posts/d87f7e0c.html</id>
+    <published>2023-10-12T12:05:47.000Z</published>
+    <updated>2023-10-14T05:15:50.815Z</updated>
+    
+    <content type="html"><![CDATA[<div class="timeline undefined"><div class='timeline-item headline'><div class='timeline-item-title'><div class='item-circle'><p>2023</p></div></div></div><div class='timeline-item'><div class='timeline-item-title'><div class='item-circle'><p>10-13</p></div></div><div class='timeline-item-content'><p>完成博客基础建设与部署</p></div></div></div>]]></content>
+    
+    
+    <summary type="html">建站时间线~</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://anti-entrophic.github.io/posts/4a17b156.html"/>
+    <id>https://anti-entrophic.github.io/posts/4a17b156.html</id>
+    <published>2023-10-12T12:01:19.973Z</published>
+    <updated>2023-10-13T06:03:23.139Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
+      
+    
+    
+    
     
   </entry>
   
