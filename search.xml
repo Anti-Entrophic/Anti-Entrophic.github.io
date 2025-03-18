@@ -209,33 +209,6 @@
     
     
     <entry>
-      <title>NLP论文精读（三） Attention机制</title>
-      <link href="/posts/10014.html"/>
-      <url>/posts/10014.html</url>
-      
-        <content type="html"><![CDATA[<p>参考：<a href="https://wmathor.com/index.php/archives/1450/">https://wmathor.com/index.php/archives/1450/</a></p><p>上回说到：<a href="https://anti-entrophic.github.io/posts/10013.html">https://anti-entrophic.github.io/posts/10013.html</a></p><p>其中的样例是英语——&gt;法语的机器翻译：</p><blockquote><p>英语：They are watching</p><p>法语：lls regardent</p></blockquote><p>我们可以想到，在生成目标语句的时候，’lls’ 应该更多地依赖于 ‘They are’ 来生成，而 ‘regardent’ 则更多地依赖于 ‘watching’</p><p>但是在seq2seq的设计中，所有的输入序列影响都被整合为了一个统一的背景词向量 $c$ ，尤其是当输入很长时，这会损失很多细节，影响模型的表现</p><p>Attention机制的目的就是希望在decoder时，能够利用不同的词背景向量，或者说，更相关的词背景向量。</p><p>相关论文：<a href="https://arxiv.org/pdf/1409.0473.pdf">https://arxiv.org/pdf/1409.0473.pdf</a></p><h1 id="模型解释"><a href="#模型解释" class="headerlink" title="模型解释"></a>模型解释</h1><p>简单来说就是，在decoder中，计算出往下传递的隐藏状态 $s_i$ 后，我们需要拿 $s_i$ 去和encoder的隐藏状态 $h_i$，计算相关性后加权平均得到一个动态变化的背景词向量 $c_i$</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picdl.sunbangyan.cn/2023/10/22/88f7bbfcd29cea0bcaffe1a0e160e62d.png" style="width:400px;"/></div></div><p>我们取 $s_0$ 简单的在数值上就等于最后一个隐状态 $h_m$</p><p>随后，我们需要这个词向量 $s_0$ 和所有隐藏状态 $h_i$ 计算一个相关性 ${\alpha}_i = align(h_i,s_0)$</p><p>计算得到 $m$ 个相关性参数 ${\alpha}_i$ 后，将这些值与 $h_i$ 作加权求和，即：</p><script type="math/tex; mode=display">c_0 = \sum_{i=1}^m {\alpha}_ih_i={\alpha}_1 h_1 + ... + {\alpha}_m h_m</script><p>这样就可以反映出不同的影响力</p><p>随后我们会算出新的隐藏状态 $s_1$ 以及输出 $x_1’$，再加权算出 $c_1$，一起送到下一个单元中，依次类推，直到生成终止符结束。</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/22/0e2bff808b7921740feb0173ba328bc1.png" style="width:400px;"/></div></div><h1 id="相关性计算函数align-的设计"><a href="#相关性计算函数align-的设计" class="headerlink" title="相关性计算函数align()的设计"></a>相关性计算函数align()的设计</h1><p>比较主流的，目前 Transformer 中的 Attention 设计是</p><div class="img-wrap"><div class="img-bg"><img class="img" src="https://picss.sunbangyan.cn/2023/10/22/143d2c67d696231324d72ef40e212d99.png" style="width:400px;"/></div></div><p>嗯，完全不懂为什么Q，K，V要这样设计。。去看看别的文章学习一下</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Study </category>
-          
-          <category> NLP </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> NLP </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>PyTorch学习笔记（三） LSTM</title>
       <link href="/posts/10012.html"/>
       <url>/posts/10012.html</url>
