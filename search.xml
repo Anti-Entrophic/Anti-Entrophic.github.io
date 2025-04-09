@@ -4,31 +4,6 @@
   
     
     <entry>
-      <title>Lagrangian relaxation and dual problem</title>
-      <link href="/posts/10033.html"/>
-      <url>/posts/10033.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="拉格朗日松弛"><a href="#拉格朗日松弛" class="headerlink" title="拉格朗日松弛"></a>拉格朗日松弛</h1><p>考虑一个一般形式的约束优化问题：</p><script type="math/tex; mode=display">\begin{aligned}\text{min} \quad &f(x) \\\text{s.t.} \quad &g_i(x) \leq 0,\quad i=1, ...,m \\&x \in X\end{aligned}</script><p>其中：</p><ul><li><p>$f(x)$ 是目标函数，</p></li><li><p>$g_i(x)\leq0$ 是<strong>难处理</strong>的约束（如非线性、整数约束等），</p></li><li><p>$X$ 是<strong>容易处理</strong>的约束集合（如线性约束、连续变量等）。</p></li></ul><p>为了简化求解，我们将难处理的约束 $g_i(x) \leq 0$ 从约束条件中移除，并引入拉格朗日乘子 $\lambda_i \geq 0$ 将其加入目标函数，得到拉格朗日松弛问题。</p><script type="math/tex; mode=display">L(\lambda) = \mathop{\min}\limits_{x\in X} \Big \{ f(x) + \sum_{i=1}^m \lambda_i g_i(x) \Big \}</script><p>其中：</p><ul><li><p>$\lambda_i \geq 0 $ 是拉格朗日乘子</p></li><li><p>$L(\lambda)$ 是对偶函数</p></li></ul><p>可以证明，$L(\lambda)$ 是原问题的下界，因此对原问题的求解转化为通过对偶问题找到一个<strong>最紧下界</strong>，即求解：</p><script type="math/tex; mode=display">\mathop{\max}\limits_{\lambda \geq 0}L(\lambda)</script><h1 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h1><p>证明非常简单。因为</p><script type="math/tex; mode=display">\sum_{i=1}^m \lambda_i g_i(x) \leq 0</script><p>所以</p><script type="math/tex; mode=display">L(x, \lambda) = f(x) + \sum_{i=1}^m \lambda_i g_i(x) \leq f(x)</script><p>而</p><script type="math/tex; mode=display">L(\lambda) \leq L(x, \lambda) \leq f(x)</script><p>所以对于原问题的最优解 $x^*$，总有：</p><script type="math/tex; mode=display">L(\lambda) \leq f(x^*)</script><p>综上</p><script type="math/tex; mode=display">L^* = \mathop{\max}\limits_{\lambda \geq 0} L(\lambda) \leq f(x^*)</script><h1 id="Slater条件"><a href="#Slater条件" class="headerlink" title="Slater条件"></a>Slater条件</h1><p>如果原问题是​​凸优化问题​​且满足​​Slater条件​，则​​强对偶性​​成立，即：</p><script type="math/tex; mode=display">L^* = f(x^*)</script>]]></content>
-      
-      
-      <categories>
-          
-          <category> Math </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Math </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Continuous-time Model vs Discrete-time Model</title>
       <link href="/posts/10032.html"/>
       <url>/posts/10032.html</url>
