@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Sparsemax</title>
+      <link href="/posts/10035.html"/>
+      <url>/posts/10035.html</url>
+      
+        <content type="html"><![CDATA[<p>介绍一篇修改softmax的文章，题目是：</p><p><a href="https://arxiv.org/pdf/1602.02068" title="950引">[ICML 2016] From Softmax to Sparsemax: A Sparse Model of Attention and Multi-Label Classification</a></p><p>它允许softmax非平滑输出，某些位置的prob直接为0</p><h1 id="method"><a href="#method" class="headerlink" title="method"></a>method</h1><p>原来的softmax公式是通过下面的计算得到概率分布</p><script type="math/tex; mode=display">\text{softmax}_i(z) = \frac{e^{z_i}}{\sum_j e^{z_j}}</script><p>现在，作者考虑直接将隐状态向一个 $K-1$ 维的单纯形投影，求得的 $p$ 即是softmax的结果</p><script type="math/tex; mode=display">\begin{aligned}\Delta^{K-1} &:=\{p\in \mathbb{R}^K | 1^Tp=1, p \geq 0\} \\\text{sparsemax}(z) &:= \mathop{\arg\max}\limits_{p \in \Delta^{K-1}} ||p-z||^2\end{aligned}</script><h2 id="为什么是K-1维"><a href="#为什么是K-1维" class="headerlink" title="为什么是K-1维"></a>为什么是K-1维</h2><p>因为有 $1^Tp=1$ 的限制，导致自由度减1</p><p>和 $x+y+z=1$ 表示的是一个平面而不是三维空间是一个道理</p><h2 id="如何求解"><a href="#如何求解" class="headerlink" title="如何求解"></a>如何求解</h2><p>将原问题转化为一个优化问题：</p><script type="math/tex; mode=display">\begin{aligned}\text{min} \quad & ||p-z||^2 \\s.t. \quad & 1^Tp=1 \\& p \geq 0\end{aligned}</script><p>考虑求解其拉格朗日对偶问题：</p><script type="math/tex; mode=display">L(p, \lambda, \mu) = \frac{1}{2} ||p-z||^2 - \lambda^Tp + \mu(1^Tp-1)</script><p>这里系数 $\frac{1}{2}$ 是为了方便求导后消去系数</p><p>考虑KKT条件：</p><script type="math/tex; mode=display">\left\{\begin{aligned}\nabla_p L(p^*, \lambda^*, \mu^*) &= p^*-z-\lambda^*+\mu^*1 \qquad&(1)\\ 1^Tp^* &= 1 &(2)\\ p^* &\geq 0   &(3)\\\lambda^* &\geq 0  &(4)\\\lambda^*p^* &= 0  &(5)\end{aligned}\right.</script><p>对于 $p_i^<em> &gt; 0$，由于式(5)，此时必有 $\lambda_i^</em>=0$，所以由式(1)，得：</p><script type="math/tex; mode=display">p_i^* = z_i - \mu, \quad s.t.\quad p_i^* > 0</script><p>由式(2)，得：</p><script type="math/tex; mode=display">\begin{aligned}\sum_{i \in K}p_i^* &= 0 + \sum_{i \in S(z)}p_i^* \\1 &= \sum_{i \in S(z)}(z_i - \mu) \\\mu &= \frac{\sum_{i \in S(z)}z_i - 1}{|S(z)|}\end{aligned}</script><p>其中，$S(z) = \{j \in K \, | \,\, p_j^*&gt;0\}$</p><p>由此，我们知道了如何从 $z$ 得到 $p$，即：</p><script type="math/tex; mode=display">p = \text{sparsemax}(z) = [z - \mu]_+</script><p>求出 $\mu$ 的关键，是求出多大 $|S(z)|$ 才能正好满足：</p><ul><li><p>$z_j^* - \mu &gt; 0, \quad \forall j \in S(z)$</p></li><li><p>$z_j^* - \mu \leq 0, \quad \forall j \notin S(z)$</p></li></ul><p>注意 $\mu$ 不随着 $|S(z)|$ 的增加而单调的，所以不能<strong>二分</strong>求解，朴素地用 $O(K)$ 的复杂度遍历寻找 $\mu$</p><div class="note success flat"><p>但是 $\Delta \mu$ 是单调的，所以理应有更快速的搜索方法（暂时没必要？） </p></div><h2 id="具体例子"><a href="#具体例子" class="headerlink" title="具体例子"></a>具体例子</h2><p>假设我们有一个隐状态 $[1.5,2,0.5]^T$，计算过程如下：</p><p>对所有元素大小排序 $2&gt;1.5&gt;0.5$</p><p>遍历 $|S(z)|$，从 $|S(z)|=1$ 开始，求出 $\mu = \frac{2-1}{1} = 1$</p><p>验证是否满足条件：</p><script type="math/tex; mode=display">\left\{\begin{aligned}2 - 1 > 0 \\1.5 - 1 < 0 \\0.5 - 1 < 0\end{aligned}\right.</script><p>不满足，继续搜，$|S(z)|=2$，$\mu = \frac{2+1.5-1}{2} = 1.25$</p><p>验证是否满足条件：</p><script type="math/tex; mode=display">\left\{\begin{aligned}2 - 1.25 > 0 \\1.5 - 1.25 > 0 \\0.5 - 1.25 < 0\end{aligned}\right.</script><p>满足了，所以 $\text{sparsemax}(z) = [0.25, 0.75, 0]$</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Model Structure </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Model Structure </tag>
+            
+            <tag> softmax </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Continuous-time Model vs Discrete-time Model</title>
       <link href="/posts/10032.html"/>
       <url>/posts/10032.html</url>
