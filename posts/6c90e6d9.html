@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Mathematical Structure of Mamba | 不会魔法的小圆</title><meta name="robots" content="noindex"><meta name="author" content="不会魔法的小圆"><meta name="copyright" content="不会魔法的小圆"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="State Space Model">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mathematical Structure of Mamba">
+<meta property="og:url" content="https://anti-entrophic.github.io/posts/6c90e6d9.html">
+<meta property="og:site_name" content="不会魔法的小圆">
+<meta property="og:description" content="State Space Model">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png">
+<meta property="article:published_time" content="2025-03-23T08:50:10.000Z">
+<meta property="article:modified_time" content="2025-04-25T08:32:16.930Z">
+<meta property="article:author" content="不会魔法的小圆">
+<meta property="article:tag" content="Mamba">
+<meta property="article:tag" content="Model Structure">
+<meta property="article:tag" content="HiPPO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://anti-entrophic.github.io/posts/6c90e6d9.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Mathematical Structure of Mamba',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-04-25 16:32:16'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="不会魔法的小圆" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png')"><nav id="nav"><span id="blog-info"><a href="/" title="不会魔法的小圆"><span class="site-name">不会魔法的小圆</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Mathematical Structure of Mamba</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-23T08:50:10.000Z" title="发表于 2025-03-23 16:50:10">2025-03-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-25T08:32:16.930Z" title="更新于 2025-04-25 16:32:16">2025-04-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Model-Structure/">Model Structure</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Mathematical Structure of Mamba"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="note success flat"><p>本篇博客即将废弃，正在拆分中。主要的难点在于头图不好找。</p>
+<p>已拆分:</p>
+<p><a href="https://anti-entrophic.github.io/posts/10038.html" title="Part I of Mathematical Structure of Mamba - Hippo">Part I of Mathematical Structure of Mamba - Hippo</a></p>
+<p><a href="https://anti-entrophic.github.io/posts/10039.html" title="Part II of Mathematical Structure of Mamba - S4">Part II of Mathematical Structure of Mamba - S4</a></p>
+<p>待拆分：</p>
+<p>Part III of Mathematical Structure of Mamba - S4D</p>
+<p>Part IV of Mathematical Structure of Mamba - Mamba</p>
+<p>Part V of Mathematical Structure of Mamba - Mamba2</p>
+</div>
+<p>下面这些都还没整理完呢</p>
+<h1 id="COLM-24-Mamba-Linear-Time-Sequence-Modeling-with-Selective-State-Spaces"><a href="#COLM-24-Mamba-Linear-Time-Sequence-Modeling-with-Selective-State-Spaces" class="headerlink" title="[COLM 24] Mamba: Linear-Time Sequence Modeling with Selective State Spaces"></a>[COLM 24] Mamba: Linear-Time Sequence Modeling with Selective State Spaces</h1><h2 id="为什么我们需要离散化"><a href="#为什么我们需要离散化" class="headerlink" title="为什么我们需要离散化"></a>为什么我们需要离散化</h2><div class="note warning flat"><p>个人看法</p>
+</div>
+<p>这个问题很关键，它直接决定了Mamba的改进目标。</p>
+<p>试想一下，以文本为例，我们的输入输出都是离散的模态，那所谓的连续究竟是在何处呢？是模型内部的状态演化。上述的一系列以SSM为动力学建模的模型，都假设了模型存在一个连续的状态。但这实际上有保证吗？</p>
+<p>考虑 $h(t’) = h(t) + x(t)$，对于离散的冲击 $x(t)$，$h(t)$ 显然就无法保持连续了。所以，需要对该更新方程进行离散化，在离散方程 $h_{t+1} = \bar{A}h_t + \bar{B}x_t$ 上的冲击 $x_t$，其实被隐式地理解为了在区间 $[t, t+1)$内的持续影响。</p>
+<p>这一步是否合理有待商榷，毕竟把离散冲击当成持续影响这一步本身就有点抽象。在mamba中，为了解决这一个问题而提出的方法是，构建输入依赖的离散采样率 $\Delta$，通过预测 $\Delta_k$ 动态调整离散化区间的长度：</p>
+<ul>
+<li><p>若 $\Delta_k$ 较小，系统更频繁地响应输入，接近原来的离散冲击。</p>
+</li>
+<li><p>若 $\Delta_k$ 较大，系统将输入“平滑扩散”到更长区间</p>
+</li>
+</ul>
+<p>所以理论上，它在某些时刻应该是不能保证连续的，只是想了办法让脉冲的影响可控。</p>
+<h3 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h3><p>经xr哥提醒，开头的token embedding可能是离散的，但是到中间层时，hidden state可能已经比较连续了。我记得S4的续作H3就有结合transformer和SSM，难道就是开头用transformer，中间用SSM？这样就可以减少离散脉冲对理论结构的影响了。所以Jamba这种混合模型，就该是开头transformer，中间SSM？</p>
+<p>感觉mamba不同层之间的 $\Delta$ 应该会有显著差异吧</p>
+<p>后续要再去钻研下</p>
+<h3 id="卷积操作"><a href="#卷积操作" class="headerlink" title="卷积操作"></a>卷积操作</h3><p>在mamba源码中，有一段卷积操作，在我看来也是为了让数据更加平滑</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mamba_ssm/ops/triton/ssd_combined.py</span></span><br><span class="line">xBC_conv = rearrange(</span><br><span class="line">    causal_conv1d_cuda.causal_conv1d_fwd(rearrange_and_update_stride(xBC, <span class="string">&quot;b s d -&gt; b d s&quot;</span>),</span><br><span class="line">                                          conv1d_weight, conv1d_bias, seq_idx, <span class="literal">None</span>, <span class="literal">None</span>, activation <span class="keyword">in</span> [<span class="string">&quot;silu&quot;</span>, <span class="string">&quot;swish&quot;</span>]),</span><br><span class="line">    <span class="string">&quot;b d s -&gt; b s d&quot;</span></span><br><span class="line">)</span><br><span class="line">x, B, C = torch.split(xBC_conv, [dim, ngroups * dstate, ngroups * dstate], dim=-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>这里被卷的是 $x$, $B$, $C$ 三个向量/矩阵。我其实没太get到为什么要卷，比如说</p>
+<ul>
+<li><p>$B$ 矩阵为什么要卷，$x$ 不是已经卷过了吗，是为了配合 $x$ 吗？</p>
+</li>
+<li><p>$C$ 矩阵为什么要卷？明明 $C$ 矩阵是和latent state交互的…</p>
+</li>
+<li><p>$D$ 矩阵为什么不卷，它和 $B$ 的地位不是一样的吗？或者说，为什么 $D$ 没有必要 $(D) \rightarrow (B,L,D)$</p>
+</li>
+</ul>
+<p>现在只能直观地理解一下：用局部信息比单点信息更好。我还没找到卷积操作的出处，应该是比mamba更早的SSM工作提出的。</p>
+<h3 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h3><p>文章提出要对线性层额外乘一个参数 $d_expand$，来增强Mamba块的影响。</p>
+<p>$\Delta$ 被初始化为 [0.001, 0.1]</p>
+<h2 id="零阶保持离散化"><a href="#零阶保持离散化" class="headerlink" title="零阶保持离散化"></a>零阶保持离散化</h2><p>见我的另一篇博文 <a href="https://anti-entrophic.github.io/posts/10032.html" title="介绍了零阶保持离散化">Continuous-time Model vs Discrete-time Model</a>，这个比 S4 更有道理。</p>
+<h1 id="ICLR-24-Mamba-2-Transformers-are-SSMs-Generalized-Models-and-Efficient-Algorithms"><a href="#ICLR-24-Mamba-2-Transformers-are-SSMs-Generalized-Models-and-Efficient-Algorithms" class="headerlink" title="[ICLR 24] Mamba 2: Transformers are SSMs - Generalized Models and Efficient Algorithms"></a>[ICLR 24] Mamba 2: Transformers are SSMs - Generalized Models and Efficient Algorithms</h1><p>mamba2 主要是做了工程优化。我们直接阅读mamba2的源码，来理解它的设计思路</p>
+<p>对于输入 $u$，其维度为 $(B, L, D)$，需要经过线性层变换得到 $z$, $x$, $b$, $c$, $dt$，其中：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+z &= d\_inner \times u \\
+x &= d\_inner \times u \\
+B &= ngroups \times d\_state \times u \\
+C &= ngroups \times d\_state \times u \\
+\Delta t &= \text{softplus(}nheads \times u\text{)}
+\end{aligned}</script><p>其中，softplus 是激活函数 $log(1+e^x)$，因为 $\Delta t$ 需要是正的。 </p>
+<p>xBC 需要作为一个整体在 sequence level 进行一维因果卷积。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>组会内部分享报告 《A Gentle Introduction to HiPPO🦛 and its Friends》</p>
+<!-- flag of hidden posts --></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io">不会魔法的小圆</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io/posts/6c90e6d9.html">https://anti-entrophic.github.io/posts/6c90e6d9.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://anti-entrophic.github.io" target="_blank">不会魔法的小圆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Mamba/">Mamba</a><a class="post-meta__tags" href="/tags/Model-Structure/">Model Structure</a><a class="post-meta__tags" href="/tags/HiPPO/">HiPPO</a></div><div class="post_share"><div class="social-share" data-image="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/10038.html" title="Part I of Mathematical Structure of Mamba - Hippo"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-23</div><div class="title">Part I of Mathematical Structure of Mamba - Hippo</div></div></a></div><div><a href="/posts/10039.html" title="Part II of Mathematical Structure of Mamba - S4"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-23</div><div class="title">Part II of Mathematical Structure of Mamba - S4</div></div></a></div><div><a href="/posts/10040.html" title="Part III of Mathematical Structure of Mamba - S4D"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-25</div><div class="title">Part III of Mathematical Structure of Mamba - S4D</div></div></a></div><div><a href="/posts/10032.html" title="Continuous-time Model vs Discrete-time Model"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJTTmf1Ek0-hwAB6K-MTYKhFAS65kiTkgACb7ExG8W0qEcgM-UKzdhEWQEAAwIAA3gAAzYE.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-08</div><div class="title">Continuous-time Model vs Discrete-time Model</div></div></a></div><div><a href="/posts/10035.html" title="Sparsemax"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJTTmf1Ek0-hwAB6K-MTYKhFAS65kiTkgACb7ExG8W0qEcgM-UKzdhEWQEAAwIAA3gAAzYE.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-11</div><div class="title">Sparsemax</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">不会魔法的小圆</div><div class="author-info__description">不会魔法的小圆，博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Anti-Entrophic"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">图床爆炸了 会马上修的呜呜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#COLM-24-Mamba-Linear-Time-Sequence-Modeling-with-Selective-State-Spaces"><span class="toc-number">1.</span> <span class="toc-text">[COLM 24] Mamba: Linear-Time Sequence Modeling with Selective State Spaces</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E7%A6%BB%E6%95%A3%E5%8C%96"><span class="toc-number">1.1.</span> <span class="toc-text">为什么我们需要离散化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Update"><span class="toc-number">1.1.1.</span> <span class="toc-text">Update</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E6%93%8D%E4%BD%9C"><span class="toc-number">1.1.2.</span> <span class="toc-text">卷积操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%BB%86%E8%8A%82"><span class="toc-number">1.1.3.</span> <span class="toc-text">论文细节</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%B6%E9%98%B6%E4%BF%9D%E6%8C%81%E7%A6%BB%E6%95%A3%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">零阶保持离散化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ICLR-24-Mamba-2-Transformers-are-SSMs-Generalized-Models-and-Efficient-Algorithms"><span class="toc-number">2.</span> <span class="toc-text">[ICLR 24] Mamba 2: Transformers are SSMs - Generalized Models and Efficient Algorithms</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/10040.html" title="Part III of Mathematical Structure of Mamba - S4D"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Part III of Mathematical Structure of Mamba - S4D"/></a><div class="content"><a class="title" href="/posts/10040.html" title="Part III of Mathematical Structure of Mamba - S4D">Part III of Mathematical Structure of Mamba - S4D</a><time datetime="2025-04-25T08:28:02.000Z" title="发表于 2025-04-25 16:28:02">2025-04-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10035.html" title="Sparsemax"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJTTmf1Ek0-hwAB6K-MTYKhFAS65kiTkgACb7ExG8W0qEcgM-UKzdhEWQEAAwIAA3gAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sparsemax"/></a><div class="content"><a class="title" href="/posts/10035.html" title="Sparsemax">Sparsemax</a><time datetime="2025-04-11T06:20:42.000Z" title="发表于 2025-04-11 14:20:42">2025-04-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10032.html" title="Continuous-time Model vs Discrete-time Model"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJTTmf1Ek0-hwAB6K-MTYKhFAS65kiTkgACb7ExG8W0qEcgM-UKzdhEWQEAAwIAA3gAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Continuous-time Model vs Discrete-time Model"/></a><div class="content"><a class="title" href="/posts/10032.html" title="Continuous-time Model vs Discrete-time Model">Continuous-time Model vs Discrete-time Model</a><time datetime="2025-04-08T06:21:42.000Z" title="发表于 2025-04-08 14:21:42">2025-04-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10039.html" title="Part II of Mathematical Structure of Mamba - S4"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Part II of Mathematical Structure of Mamba - S4"/></a><div class="content"><a class="title" href="/posts/10039.html" title="Part II of Mathematical Structure of Mamba - S4">Part II of Mathematical Structure of Mamba - S4</a><time datetime="2025-03-23T08:50:12.000Z" title="发表于 2025-03-23 16:50:12">2025-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10038.html" title="Part I of Mathematical Structure of Mamba - Hippo"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Part I of Mathematical Structure of Mamba - Hippo"/></a><div class="content"><a class="title" href="/posts/10038.html" title="Part I of Mathematical Structure of Mamba - Hippo">Part I of Mathematical Structure of Mamba - Hippo</a><time datetime="2025-03-23T08:50:11.000Z" title="发表于 2025-03-23 16:50:11">2025-03-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By 不会魔法的小圆</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
