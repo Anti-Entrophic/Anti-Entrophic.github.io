@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>组合数学（一）容斥原理、二项式反演与第二类斯特林数</title>
+      <link href="/posts/10045.html"/>
+      <url>/posts/10045.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="二项式反演"><a href="#二项式反演" class="headerlink" title="二项式反演"></a>二项式反演</h1><p>记 $f_n$ 表示恰好使用 $n$ 个不同元素形成特定结构的方案数，$g_n$ 表示从 $n$ 个不同元素中选出 $i\geq 0$ 个元素形成特定结构的总方案数。</p><p>若已知 $f_n$ 求 $g_n$，那么显然有：</p><script type="math/tex; mode=display">g_n = \sum_{i=0}^{n} \binom{n}{i}f_i</script><p>若已知 $g_n$ 求 $f_n$，则被称为 <strong>二项式反演</strong>，公式为：</p><script type="math/tex; mode=display">f_n = \sum_{i=0}^{n} \binom{n}{i} (-1)^{n-i} g_i</script><h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><p>对右式代入 $g_n = \sum_{i=0}^{n} \binom{n}{i}f_i$，得到</p><script type="math/tex; mode=display">\begin{aligned}\sum_{i=0}^{n} \binom{n}{i} (-1)^{n-i} g_i &= \sum_{i=0}^{n} \binom{n}{i} (-1)^{n-i} [\sum_{j=0}^i \binom{i}{j}f_j] \\&= \sum_{i=0}^{n} \sum_{j=0}^i \binom{n}{i} \binom{i}{j} (-1)^{n-i} f_j\end{aligned}</script><p>交换 $i$ 和 $j$ 的枚举顺序，得到</p><script type="math/tex; mode=display">\begin{aligned}\sum_{i=0}^{n} \sum_{j=0}^i \binom{n}{i} \binom{i}{j} (-1)^{n-i} f_j &= \sum_{j=0}^{n}\sum_{i=j}^n \binom{n}{i} \binom{i}{j} (-1)^{n-i} f_j \\&= \sum_{j=0}^{n} f_j \sum_{i=j}^{n} \binom{n}{i} \binom{i}{j} (-1)^{n-i}\end{aligned}</script><p>由于 $\binom{n}{i} \binom{i}{j} = \binom{n}{j} \binom{n-j}{i-j}$。这个很好理解，相当于是 $n$ 里取 $i$ 个，再 $i$ 里取 $j$ 个。现在是直接取 $j$ 个，然后从剩下的 $n-j$ 个里取剩下的 $i-j$ 个。总之得到</p><script type="math/tex; mode=display">\begin{aligned}\sum_{j=0}^{n} f_j \sum_{i=j}^{n} \binom{n}{i} \binom{i}{j} (-1)^{n-i} &= \sum_{j=0}^{n} f_j \sum_{i=j}^{n} \binom{n}{j} \binom{n-j}{i-j} (-1)^{n-i} \\ &= \sum_{j=0}^{n} \binom{n}{j} f_j \sum_{i=j}^{n} \binom{n-j}{i-j} (-1)^{n-i}\end{aligned}</script><p>令 $k = i - j$，则 $i = k+ j$，上式转换为：</p><script type="math/tex; mode=display">\begin{aligned}\sum_{j=0}^{n} \binom{n}{j} f_j \sum_{i=j}^{n} \binom{n-j}{i-j} (-1)^{n-i} &= \sum_{j=0}^{n} \binom{n}{j} f_j \sum_{k=0}^{n-j} \binom{n-j}{k} (-1)^{n-j-k}1^k \\&= \sum_{j=0}^n \binom{n}{j} f_j (-1+1)^{n-j}\end{aligned}</script><p>当且仅当 $n=j$ 时不为 $0$</p><script type="math/tex; mode=display">\sum_{j=0}^n \binom{n}{j} f_j (-1+1)^{n-j} = f_j</script><p>证毕</p><h1 id="第二类斯特林数（Stirling-Number）"><a href="#第二类斯特林数（Stirling-Number）" class="headerlink" title="第二类斯特林数（Stirling Number）"></a>第二类斯特林数（Stirling Number）</h1><p>第二类斯特林数 $S(n,k)$ 表示将 $n$ 个两两不同的元素，划分为 $k$ 个互不区分的非空子集的方案数。</p><h2 id="递推式"><a href="#递推式" class="headerlink" title="递推式"></a>递推式</h2><script type="math/tex; mode=display">S(n, k) = S(n-1, k-1) + kS(n-1, k)</script><p>考虑用组合意义来证明</p><p>当我们插入一个新元素时，有两种方案：</p><ul><li><p>将新元素单独放入一个子集，有 $S(n-1, k-1)$ 种方案</p></li><li><p>将新元素放入一个现有的非空子集，有 $kS(n-1, k)$ 种方案</p></li></ul><p>相加即得</p><h2 id="通项公式"><a href="#通项公式" class="headerlink" title="通项公式"></a>通项公式</h2><script type="math/tex; mode=display">S(n, m) = \sum_{i=0}^m \frac{(-1)^{m-i}i^n}{i!(m-i)!}</script><p>使用容斥原理证明该公式。设将 $n$ 个两两不同的元素，划分到 $i$ 个两两不同的集合（允许空集）的方案数为 $G_i$， 将 $n$ 个两两不同的元素，划分到 $i$ 个两两不同的非空集合（不允许空集）的方案数为 $F_i$</p><p>根据定义，有</p><script type="math/tex; mode=display">\begin{aligned}G_i &= i^n \\G_i &= \sum_{j=0}^i \binom{i}{j} F_j\end{aligned}</script><p>根据二项式反演，有：</p><script type="math/tex; mode=display">\begin{aligned}F_i &= \sum_{j=0}^i (-1)^{i-j} \binom{i}{j} G_j \\ &= \sum_{j=0}^i (-1)^{i-j} \binom{i}{j} j^n \\&= \sum_{j=0}^i \frac{i!(-1)^{i-j}j^n}{j!(i-j)!}\end{aligned}</script><p>而第二类斯特林数要求的集合之间是互不区分的，因此 $F_i$ 是 $S(n, i)$ 的 $i!$ 倍，所以：</p><script type="math/tex; mode=display">S(n, m) = \frac{F_m}{m!} = \sum_{i=0}^m \frac{(-1)^{m-i}i^n}{i!(m-i)!}</script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Math </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Math </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Gamma Function</title>
       <link href="/posts/10044.html"/>
       <url>/posts/10044.html</url>
@@ -48,31 +73,6 @@
             <tag> Mamba </tag>
             
             <tag> Model Structure </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>组合数学（一）容斥原理、二项式反演与第二类斯特林数</title>
-      <link href="/posts/10045.html"/>
-      <url>/posts/10045.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="二项式反演"><a href="#二项式反演" class="headerlink" title="二项式反演"></a>二项式反演</h1><p>记 $f_n$ 表示恰好使用 $n$ 个不同元素形成特定结构的方案数，$g_n$ 表示从 $n$ 个不同元素中选出 $i\geq 0$ 个元素形成特定结构的总方案数。</p><p>若已知 $f_n$ 求 $g_n$，则显然有：</p><script type="math/tex; mode=display">g_n = \sum_{i=0}^{n} \binom{n}{i}f_i</script><p>若已知 $g_n$ 求 $f_n$，则被称为 <strong>二项式反演</strong>，公式为：</p><script type="math/tex; mode=display">f_n = \sum_{i=0}^{n} \binom{n}{i} (-1)^{n-i} g_i</script><h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><p>对右式代入 $g_n = \sum_{i=0}^{n} \binom{n}{i}f_i$，得到</p><script type="math/tex; mode=display">\begin{aligned}\sum_{i=0}^{n} \binom{n}{i} (-1)^{n-i} g_i &= \sum_{i=0}^{n} \binom{n}{i} (-1)^{n-i} [\sum_{j=0}^i \binom{i}{j}f_j] \\&= \sum_{i=0}^{n} \sum_{j=0}^i \binom{n}{i} \binom{i}{j} (-1)^{n-i} f_j\end{aligned}</script><p>交换 $i$ 和 $j$ 的枚举顺序，得到</p><script type="math/tex; mode=display">\begin{aligned}\sum_{i=0}^{n} \sum_{j=0}^i \binom{n}{i} \binom{i}{j} (-1)^{n-i} f_j &= \sum_{j=0}^{n}\sum_{i=j}^n \binom{n}{i} \binom{i}{j} (-1)^{n-i} f_j \\&= \sum_{j=0}^{n} f_j \sum_{i=j}^{n} \binom{n}{i} \binom{i}{j} (-1)^{n-i}\end{aligned}</script><p>由于 $\binom{n}{i} \binom{i}{j} = \binom{n}{j} \binom{n-j}{i-j}$。这个很好理解，相当于是 $n$ 里取 $i$ 个，再 $i$ 里取 $j$ 个。现在是直接取 $j$ 个，然后从剩下的 $n-j$ 个里取剩下的 $i-j$ 个。总之得到</p><script type="math/tex; mode=display">\begin{aligned}\sum_{j=0}^{n} f_j \sum_{i=j}^{n} \binom{n}{i} \binom{i}{j} (-1)^{n-i} &= \sum_{j=0}^{n} f_j \sum_{i=j}^{n} \binom{n}{j} \binom{n-j}{i-j} (-1)^{n-i} \\ &= \sum_{j=0}^{n} \binom{n}{j} f_j \sum_{i=j}^{n} \binom{n-j}{i-j} (-1)^{n-i}\end{aligned}</script><p>令 $k = i - j$，则 $i = k+ j$，上式转换为：</p><script type="math/tex; mode=display">\begin{aligned}\sum_{j=0}^{n} \binom{n}{j} f_j \sum_{i=j}^{n} \binom{n-j}{i-j} (-1)^{n-i} &= \sum_{j=0}^{n} \binom{n}{j} f_j \sum_{k=0}^{n-j} \binom{n-j}{k} (-1)^{n-j-k}1^k \\&= \sum_{j=0}^n \binom{n}{j} f_j (-1+1)^{n-j}\end{aligned}</script><p>当且仅当 $n=j$ 时不为 $0$</p><script type="math/tex; mode=display">\sum_{j=0}^n \binom{n}{j} f_j (-1+1)^{n-j} = f_j</script><p>证毕</p><h1 id="第二类斯特林数（Stirling-Number）"><a href="#第二类斯特林数（Stirling-Number）" class="headerlink" title="第二类斯特林数（Stirling Number）"></a>第二类斯特林数（Stirling Number）</h1><p>第二类斯特林数 $S(n,k)$ 表示将 $n$ 个两两不同的元素，划分为 $k$ 个互不区分的非空子集的方案数。</p><h2 id="递推式"><a href="#递推式" class="headerlink" title="递推式"></a>递推式</h2><script type="math/tex; mode=display">S(n, k) = S(n-1, k-1) + kS(n-1, k)</script><p>考虑用组合意义来证明</p><p>当我们插入一个新元素时，有两种方案：</p><ul><li><p>将新元素单独放入一个子集，有 $S(n-1, k-1)$ 种方案</p></li><li><p>将新元素放入一个现有的非空子集，有 $kS(n-1, k)$ 种方案</p></li></ul><p>相加即得</p><h2 id="通项公式"><a href="#通项公式" class="headerlink" title="通项公式"></a>通项公式</h2><script type="math/tex; mode=display">S(n, m) = \sum_{i=0}^m \frac{(-1)^{m-i}i^n}{i!(m-i)!}</script><p>使用容斥原理证明该公式。设将 $n$ 个两两不同的元素，划分到 $i$ 个两两不同的集合（允许空集）的方案数为 $G_i$， 将 $n$ 个两两不同的元素，划分到 $i$ 个两两不同的非空集合（不允许空集）的方案数为 $F_i$</p><p>根据定义，有</p><script type="math/tex; mode=display">\begin{aligned}G_i &= i^n \\G_i &= \sum_{j=0}^i \binom{i}{j} F_j\end{aligned}</script><p>根据二项式反演，有：</p><script type="math/tex; mode=display">\begin{aligned}F_i &= \sum_{j=0}^i (-1)^{i-j} \binom{i}{j} G_j \\ &= \sum_{j=0}^i (-1)^{i-j} \binom{i}{j} j^n \\&= \sum_{j=0}^i \frac{i!(-1)^{i-j}j^n}{j!(i-j)!}\end{aligned}</script><p>而第二类斯特林数要求的集合之间是互不区分的，因此 $F_i$ 是 $S(n, i)$ 的 $i!$ 倍，所以：</p><script type="math/tex; mode=display">S(n, m) = \frac{F_m}{m!} = \sum_{i=0}^m \frac{(-1)^{m-i}i^n}{i!(m-i)!}</script>]]></content>
-      
-      
-      <categories>
-          
-          <category> Math </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Math </tag>
             
         </tags>
       
