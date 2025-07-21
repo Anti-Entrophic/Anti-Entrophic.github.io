@@ -6,7 +6,7 @@
   <link href="https://anti-entrophic.github.io/atom.xml" rel="self"/>
   
   <link href="https://anti-entrophic.github.io/"/>
-  <updated>2025-07-21T08:17:47.870Z</updated>
+  <updated>2025-07-04T05:22:25.484Z</updated>
   <id>https://anti-entrophic.github.io/</id>
   
   <author>
@@ -15,33 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Muon（一）</title>
-    <link href="https://anti-entrophic.github.io/posts/10047.html"/>
-    <id>https://anti-entrophic.github.io/posts/10047.html</id>
-    <published>2025-07-21T08:04:41.000Z</published>
-    <updated>2025-07-21T08:17:47.870Z</updated>
-    
-    <content type="html"><![CDATA[<p>参考苏神：<a href="https://spaces.ac.cn/archives/10592">https://spaces.ac.cn/archives/10592</a></p><h1 id="Muon-与-AdamW-的对比"><a href="#Muon-与-AdamW-的对比" class="headerlink" title="Muon 与 AdamW 的对比"></a>Muon 与 AdamW 的对比</h1><h2 id="Muon-的更新规则"><a href="#Muon-的更新规则" class="headerlink" title="Muon 的更新规则"></a>Muon 的更新规则</h2><p>对于矩阵参数 $W \in \mathbb{R}^{n \times m}$，更新公式如下</p><script type="math/tex; mode=display">\begin{aligned}M_t &= \beta M_{t-1} + G_t \\W_t &= W_{t-1} - \eta_t [\text{msign}(M_t) + \lambda W_{t-1}]\end{aligned}</script><p>其中，我们设动量矩阵的SVD分解为 $\text{SVD}(M) = U, \Sigma, V^T$，则 $\text{msign}(M) = U_{[:, :r]}V_{[:, :r]}^T$</p><p>易知 $U \in \mathbb{R}^{n \times n}, \Sigma \in \mathbb{R}^{n \times m}, V \in \mathbb{R}^{m \times m}$，$r$ 是矩阵的秩 （还是求稳定秩？）</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;参考苏神：&lt;a href=&quot;https://spaces.ac.cn/archives/10592&quot;&gt;https://spaces.ac.cn/archives/10592&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Muon-与-AdamW-的对比&quot;&gt;&lt;a href=&quot;#Muon-与</summary>
-      
-    
-    
-    
-    <category term="Optimizer" scheme="https://anti-entrophic.github.io/categories/Optimizer/"/>
-    
-    
-    <category term="Optimizer" scheme="https://anti-entrophic.github.io/tags/Optimizer/"/>
-    
-    <category term="Linear Algebra" scheme="https://anti-entrophic.github.io/tags/Linear-Algebra/"/>
-    
-  </entry>
   
   <entry>
     <title>GaLore</title>
@@ -514,6 +487,32 @@
     
     
     <category term="Neural Network" scheme="https://anti-entrophic.github.io/tags/Neural-Network/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nunjucks Error expected variable end解决办法</title>
+    <link href="https://anti-entrophic.github.io/posts/10009.html"/>
+    <id>https://anti-entrophic.github.io/posts/10009.html</id>
+    <published>2023-10-17T04:36:19.000Z</published>
+    <updated>2023-10-17T11:57:12.674Z</updated>
+    
+    <content type="html"><![CDATA[<p>在文章中写latex代码的时候，可能会遇到报错：Nunjucks Error expected variable end</p><p>比如下面这段</p><figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>&#123;equation&#125;</span><br><span class="line">    <span class="keyword">\begin</span>&#123;array&#125;&#123;ll&#125;</span><br><span class="line">        p(w<span class="built_in">_</span>j|w<span class="built_in">_</span>i) <span class="built_in">&amp;</span>= y<span class="built_in">_</span>j <span class="keyword">\\</span></span><br><span class="line">                   <span class="built_in">&amp;</span>= <span class="keyword">\frac</span>&#123;e<span class="built_in">^</span>&#123;u<span class="built_in">_</span>j&#125;&#125;&#123;<span class="keyword">\sum</span><span class="built_in">_</span>&#123;k <span class="keyword">\in</span> V&#125; e<span class="built_in">^</span>&#123;u<span class="built_in">_</span>k&#125;&#125;   <span class="keyword">\\</span></span><br><span class="line">                   <span class="built_in">&amp;</span>= <span class="keyword">\frac</span>&#123; e<span class="built_in">^</span>&#123;&#123;W&#x27;<span class="built_in">_</span>j&#125;<span class="built_in">^</span>T <span class="keyword">\cdot</span> W<span class="built_in">_</span>I&#125; &#125; &#123;<span class="keyword">\sum</span><span class="built_in">_</span>&#123;k <span class="keyword">\in</span> V&#125; e<span class="built_in">^</span>&#123; &#123;W&#x27;<span class="built_in">_</span>k&#125;<span class="built_in">^</span>T <span class="keyword">\cdot</span> W<span class="built_in">_</span>I&#125; &#125; <span class="keyword">\\</span></span><br><span class="line">    <span class="keyword">\end</span>&#123;array&#125; <span class="keyword">\notag</span></span><br><span class="line"><span class="keyword">\end</span>&#123;equation&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure><p>查阅资料后是因为，Hexo使用Nunjucks渲染帖子，用 <code>&#123; &#123; &#125; &#125;</code> 或 <code>&#123;% %&#125;</code> 包装的内容将被解析，并可能导致问题。</p><p>可以使用下列标签包裹敏感字段，避免被Nunjucks错误解析。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% endraw%&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;在文章中写latex代码的时候，可能会遇到报错：Nunjucks Error expected variable end&lt;/p&gt;
+&lt;p&gt;比如下面这段&lt;/p&gt;
+&lt;figure class=&quot;highlight latex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutt</summary>
+      
+    
+    
+    
+    <category term="Hexo &amp; Butterfly tutorial" scheme="https://anti-entrophic.github.io/categories/Hexo-Butterfly-tutorial/"/>
+    
+    
+    <category term="Hexo &amp; Butterfly tutorial" scheme="https://anti-entrophic.github.io/tags/Hexo-Butterfly-tutorial/"/>
     
   </entry>
   

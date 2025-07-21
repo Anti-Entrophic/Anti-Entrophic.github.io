@@ -4,33 +4,6 @@
   
     
     <entry>
-      <title>Muon（一）</title>
-      <link href="/posts/10047.html"/>
-      <url>/posts/10047.html</url>
-      
-        <content type="html"><![CDATA[<p>参考苏神：<a href="https://spaces.ac.cn/archives/10592">https://spaces.ac.cn/archives/10592</a></p><h1 id="Muon-与-AdamW-的对比"><a href="#Muon-与-AdamW-的对比" class="headerlink" title="Muon 与 AdamW 的对比"></a>Muon 与 AdamW 的对比</h1><h2 id="Muon-的更新规则"><a href="#Muon-的更新规则" class="headerlink" title="Muon 的更新规则"></a>Muon 的更新规则</h2><p>对于矩阵参数 $W \in \mathbb{R}^{n \times m}$，更新公式如下</p><script type="math/tex; mode=display">\begin{aligned}M_t &= \beta M_{t-1} + G_t \\W_t &= W_{t-1} - \eta_t [\text{msign}(M_t) + \lambda W_{t-1}]\end{aligned}</script><p>其中，我们设动量矩阵的SVD分解为 $\text{SVD}(M) = U, \Sigma, V^T$，则 $\text{msign}(M) = U_{[:, :r]}V_{[:, :r]}^T$</p><p>易知 $U \in \mathbb{R}^{n \times n}, \Sigma \in \mathbb{R}^{n \times m}, V \in \mathbb{R}^{m \times m}$，$r$ 是矩阵的秩 （还是求稳定秩？）</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Optimizer </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Optimizer </tag>
-            
-            <tag> Linear Algebra </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>GaLore</title>
       <link href="/posts/10046.html"/>
       <url>/posts/10046.html</url>
