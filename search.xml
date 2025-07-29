@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>记一次电脑 0xc0000005 宕机的排查</title>
+      <link href="/posts/10048.html"/>
+      <url>/posts/10048.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="Introductory-Chapter"><a href="#Introductory-Chapter" class="headerlink" title="Introductory Chapter"></a>Introductory Chapter</h1><p>望周知，鄙人最近斥巨资配置了一台海景房，摆在宿舍里享受单身生活。😋</p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK062iIW9skUVLkCKasA2kG5v339FM_AAKkrzEbmXFJRH_WyIuKP2pcAQADAgADdwADNgQ.jpg" width="200px" /><p style="font-size: 10px;">爽</p></center><p>然而，天有不测风云，从某天开始电脑突然变得神神鬼鬼，关键表现就是不定期会出现和 explorer 的交互卡住，包括呼出任务管理器等功能。</p><p>我一开始也没去管，虽然心里有各种各样的猜测，比如最近有安装了虚拟机 docker 用 cpu 炼小丹，是不是一训几个小时给锻炼坏了；又或者是技嘉的某某驱动又发生兼容性问题了；再或者是公司强行安装的入网安全小助手发生了内存泄漏云云。总的来说，还不至于影响日常使用。</p><p>直到某一天，电脑在抛出了一个错误后彻底宕机了。</p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK07miIXD5j9pzz4OkGhXZzRy98cwbYAAKnrzEbmXFJRB1fWIk2ojNxAQADAgADeQADNgQ.png" width="400px" /><p style="font-size: 10px;">急</p></center><p>这下好了，不得不直面这一问题了。好在强制重启后电脑仍能正常运行，让我有机会排查发生了什么。</p><h1 id="硬件排查"><a href="#硬件排查" class="headerlink" title="硬件排查"></a>硬件排查</h1><p>首先联网搜索一下这个 <code>0xc0000005</code> 是什么问题，可以搜到是内存相关的报错，并且有一系列无头案例，无法确定问题。</p><p>随后，我决定先从硬件查起，最有可能导致错误的是<strong>SSD</strong>或<strong>内存条</strong>出现了故障。不过老实说，我对自己买的东西品控还是比较放心的，最后也是理所当然的通过排查。</p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK08WiIXQ4oLVVWoJm0ol2bvt4wLz1XAAKrrzEbmXFJRFFzlSHVU4p0AQADAgADeQADNgQ.png" width="400px" /><p style="font-size: 10px;">赢</p></center><p>内存排查则是通过 windows 自带的内存诊断工具 <code>mdsched.exe</code>。教程提到需要选择<strong>重新启动并检查问题</strong>，重启后在 <strong>事件查看器</strong> 中查看详细报告。</p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK082iIXXDLF84SDgpnjJpxTUAIWvTSAAJGrjEbJU9ARHif5DcpuT9oAQADAgADeAADNgQ.png" width="400px" /><p style="font-size: 10px;">典</p></center><p>此时，我的电脑已经是菠萝菠萝哒了，有点担心重启后发生更怪的事情，所以缓了一下。不过，事件查看器倒是提醒我了如何排查问题的源头。</p><h1 id="系统日志"><a href="#系统日志" class="headerlink" title="系统日志"></a>系统日志</h1><p>呼出windows事件查看器，在 <code>windows日志 - 系统</code> 里看一下宕机前的记录，能发现在宕机的30分钟前开始频繁地报错 <code>等待 GraphicsPerfSvc 服务的连接超时(30000 毫秒)。</code>，并在我最后一次 <code>Alt + Tab</code> 后切换到桌面的时候彻底宕机，报错 <code>弹出应用程序: 任务切换: explorer.exe - 系统错误: Exception Processing Message 0xc0000005 - Unexpected parameters</code></p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK0_GiIYB8ZutYoVBmGNuJQucDcPzGBAAK2rzEbmXFJRD9G8WSPTfQmAQADAgADdwADNgQ.png" width="400px" /><p style="font-size: 10px;">麻</p></center><p>显然，是图形相关的功能报错了，并产生了一系列连锁反应，首当其冲的嫌疑人就是显卡驱动。不过，我还留心了一下之前电脑卡住的表现，与 GCC（技嘉主板控制中心） 和 小红车 交互时都有卡顿的发生。考虑到这个问题是最近发生的，可能是它们中的某一个带来了问题。</p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK09WiIXiFXdQ_CR0uVPEOPjzAhDJOOAAKvrzEbmXFJREV1mt-eYOW8AQADAgADeQADNgQ.png" width="400px" /><p style="font-size: 10px;">孝</p></center><p>我依次卸载了 GCC，并把 小红车、GameViewer 这些程序的开机自动启动关闭。在注意到小红车开机自启动旁边的<strong>设置管理员权限</strong>的选项时，突然灵光乍现，我之前在设置 Snipaste 的开机自启动选项时给了它管理员权限！</p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK092iIXl6E8Z39Z6BZSqfgmFSupjbCAAKxrzEbmXFJRNtjvV4IlSjmAQADAgADeAADNgQ.png" width="400px" /><p style="font-size: 10px;">乐</p></center><p>进到安装目录正准备卸载，顿时绷不住了，原来我把 Snipaste 装成了 x86 版本。装回正确的 x64 版本后，至今无事发生。</p><h1 id="复盘"><a href="#复盘" class="headerlink" title="复盘"></a>复盘</h1><p>回头再看，这个报错实在是太合理了。我意外地错误安装了 Snipaste 的 32位 版本，而 Snipaste 提供的一些功能（例如全局监控、自动锁定不同窗口等）可能需求注册一些底层hook。</p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK0-miIX7LYYAEzRSVZTavHu5WwyUMaAAK0rzEbmXFJRLjmGliNu-sHAQADAgADdwADNgQ.jpg" width="400px" /><p style="font-size: 10px;">蚌</p></center><p>特别是我给了 Snipaste 管理员权限，导致这些 32位 的钩子深入到了不该在的地方，引发了兼容性错误，进一步导致 GraphicsPerfSvc 服务宕机。时间一长，影响了太多核或线程导致卡顿、甚至宕机；或者发生了某次致命的寻址错误，直接一击毙命。</p><p>网络上有各种形形色色的 <code>0xc0000005</code> 的报错反馈，希望能给到其他人一点帮助 —— 如果不是驱动、硬件问题，就要特别留心那些给了管理员权限的软件。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Windows </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Muon</title>
       <link href="/posts/10047.html"/>
       <url>/posts/10047.html</url>
