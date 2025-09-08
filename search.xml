@@ -29,33 +29,6 @@
     
     
     <entry>
-      <title>Embedding 层 Weight Decay 探究</title>
-      <link href="/posts/a0f00d84.html"/>
-      <url>/posts/a0f00d84.html</url>
-      
-        <content type="html"><![CDATA[<p>近来训模型的时候一直在考虑一个问题，embedding层究竟有没有必要加weight decay？考虑到embedding层的稀疏性，如果有一些比较稀有的token一直没有激活，却总是莫名其妙地被乘以 $(1-\eta \lambda)$，那其实是不利于模型表达的。特别在训练学科专项数据时，这一影响有被放大的风险。</p><h1 id="为什么要加-weight-decay"><a href="#为什么要加-weight-decay" class="headerlink" title="为什么要加 weight decay"></a>为什么要加 weight decay</h1><p>从谱范数的定义出发，即有：</p><script type="math/tex; mode=display">\frac{||W(x_2-x_1)||_2}{||x_2-x_1||_2} \leq ||W||_2 \leq ||W||_F</script><p>因此，如果我们希望 $||x_2-x_1||$ 较小时 $Wx$ 的变化量尽量小，那么就要限制住 $||W||_2$，那么不妨往 Loss 里加入一个正则项 $||W||_2^2$</p><p>如果我们采用 F 范数，那么得到我们所熟知的 weight decay 形式</p><script type="math/tex; mode=display">\begin{aligned}\nabla_W J(W) &= \nabla_W L(W) + \nabla_W (\frac{\eta}{2} ||W||_F^2) \\&= G_t + \lambda W_{t-1} \\W_t &= W_{t-1} - \eta (G_t + \lambda W_{t-1})\end{aligned}</script><p>经过上一篇 <a href="https://anti-entrophic.github.io/posts/10047.html" title="Muon 优化器赏析">muon</a> 的学习，我们自然会考虑，如果尝试更紧的谱范数约束，会怎么样？这个已经有前人工作讨论过了，并且经过了<a href="https://kexue.fm/archives/10648" title="从谱范数梯度到新式权重衰减的思考 by 苏剑林">苏神的总结</a>，这里就不展开了。  </p><h2 id="对于-embedding-层"><a href="#对于-embedding-层" class="headerlink" title="对于 embedding 层"></a>对于 embedding 层</h2><p>显然，上面的分析并不适合embedding层，因为embedding层实际上只是一个查表而已，输入是一个one-hot向量，似乎和其它参数有本质区别，倒是输出的 lmhead 可能是符合讨论假设的，似乎应该不该同等看待。muon 不适用于 embedding 层似乎也很合理，因为它就没有什么矩阵性质，只是凑巧凑在了一起而已。然而，目前的 weight decay 似乎还是将 embedding 考虑进去的，因此考虑尝试一下效果。</p><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>Adam 的 weight decay 可以参考 <code>pytorch/torch/optim/adam.py#L675</code></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> weight_decay != <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">if</span> decoupled_weight_decay:</span><br><span class="line">        <span class="comment"># Perform stepweight decay</span></span><br><span class="line">        torch._foreach_mul_(device_params, <span class="number">1</span> - lr * weight_decay)</span><br></pre></td></tr></table></figure><h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a href="https://kexue.fm/archives/7681" title="L2正则没有想象那么好？可能是“权重尺度偏移”惹的祸 by 苏剑林">L2正则没有想象那么好？可能是“权重尺度偏移”惹的祸</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Optimizer </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Optimizer </tag>
-            
-            <tag> LLM </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Muon</title>
       <link href="/posts/10047.html"/>
       <url>/posts/10047.html</url>
