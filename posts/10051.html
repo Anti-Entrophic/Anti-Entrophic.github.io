@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Functional Analysis 1 - Dual Space Solution of Optimal Control | 不会魔法的小圆</title><meta name="author" content="不会魔法的小圆"><meta name="copyright" content="不会魔法的小圆"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="A Tribute to an Inspiring Class">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Functional Analysis 1 - Dual Space Solution of Optimal Control">
+<meta property="og:url" content="https://anti-entrophic.github.io/posts/10051.html">
+<meta property="og:site_name" content="不会魔法的小圆">
+<meta property="og:description" content="A Tribute to an Inspiring Class">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBEBVpFdb5eZBTDcAdRbQtI9fysO78eAACJgtrGwpMsERnl8zPwsyLFwEAAwIAA3cAAzYE.jpg">
+<meta property="article:published_time" content="2025-11-13T05:54:01.000Z">
+<meta property="article:modified_time" content="2025-11-13T13:03:03.750Z">
+<meta property="article:author" content="不会魔法的小圆">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Optimization">
+<meta property="article:tag" content="Functional Analysis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBEBVpFdb5eZBTDcAdRbQtI9fysO78eAACJgtrGwpMsERnl8zPwsyLFwEAAwIAA3cAAzYE.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://anti-entrophic.github.io/posts/10051.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Functional Analysis 1 - Dual Space Solution of Optimal Control',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-11-13 21:03:03'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="不会魔法的小圆" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBEBVpFdb5eZBTDcAdRbQtI9fysO78eAACJgtrGwpMsERnl8zPwsyLFwEAAwIAA3cAAzYE.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="不会魔法的小圆"><span class="site-name">不会魔法的小圆</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Functional Analysis 1 - Dual Space Solution of Optimal Control</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-13T05:54:01.000Z" title="发表于 2025-11-13 13:54:01">2025-11-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-13T13:03:03.750Z" title="更新于 2025-11-13 21:03:03">2025-11-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Math/">Math</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Functional Analysis 1 - Dual Space Solution of Optimal Control"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>记录一下我在 SJTU 上的一堂好课 《Applied Functional Analysis》，前半学期是由 <a target="_blank" rel="noopener" href="https://tobiasdiez.de/" title="Home Page">Diez Tobias</a> 教授讲授的 ，在很多地方给了我很大的启发。虽然我也没受过什么科班的数学训练，但是这门课很大程度上打开了我的视野，给了我另一个从泛函角度分析数学问题的视角（<code>nn.module</code> 当然可以视作一种泛函）。</p>
+<p>本篇 blog 记录了本学期 Tobias 教授最后一堂课中的一个 example question，很有意思。</p>
+<h1 id="Setting"><a href="#Setting" class="headerlink" title="Setting"></a>Setting</h1><p>考虑这样一个火箭升空问题：我们需要设定一个最小消耗的燃料方案，来保证火箭能够到达指定高度 $h$。为了建模该问题，我们设火箭的升空力为 $F(t)$，所处高度为 $y(t)$，一个简化的模型是：</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{aligned}
+my(t)'' &= F(t) - mg \\
+y(0) &= 0 = y'(0) \\
+y(T) &= h
+\end{aligned}
+\right.</script><p>并且假设燃料消耗量为 $\int_0^T |F(t)|\text{d}t$. 这里当然做了很多简化，比如说应该是 $m(t)$ 而不是 $m$，不过不重要，只是考虑这样一种setting。</p>
+<p>则对牛二积分可得：</p>
+<script type="math/tex; mode=display">
+my(t)' - my(0)' = \int_0^t F(\tau)\text{d}\tau - mgt = my(t)'</script><p>对上式，我们再进行一次积分。注意到 </p>
+<script type="math/tex; mode=display">
+\frac{d}{dt} \int_0^t (t-\tau) F(\tau)dt = (t-\tau)F(\tau) \big|_{\tau=t} + \int_0^t \frac{\partial}{\partial t} [(t-\tau)F(\tau)]d\tau = 0 + \int_0^tF(\tau)d\tau</script><p>或者分步积分也行。总之积分结果为</p>
+<script type="math/tex; mode=display">
+my(t) = \int_0^t (t-\tau) F(\tau)d\tau - \frac{mg}{2}t^2</script><p>代入 $t=T$ 时刻的约束，得</p>
+<script type="math/tex; mode=display">
+mh = \int_0^T (T-\tau) F(\tau)d\tau - \frac{mg}{2}T^2</script><p>以上就是我们的约束条件，整个问题可以转化为这样一个问题：</p>
+<p>对于一个固定的时间 $T$，找到一个预算方案 $F \in \mathbb{L}^1([0,  T])$，使得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\text{minimize} &\, &\int_0^T|F(\tau)|\text{d}\tau = \|F\|_1 \\
+&\text{subject to } &\, &mh = \int_0^T (T-\tau) F(\tau)d\tau - \frac{mg}{2}T^2
+\end{aligned}</script><p>若我们从泛函的角度去理解该问题，则可以考虑一个 Hilbert Space $\mathcal{H}$，令 $w = \{T-\tau\} \in \mathcal{H}$, $u=\{F(\tau)\} \in \mathcal{H}$ and $c  = mh + \frac{mg}{2}T^2 \neq 0 \in \mathbb{R}$，将问题转化为 </p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\text{minimize} &\, &\|u\| \\
+&\text{subject to } &\, &\langle w| u \rangle = c
+\end{aligned}</script><p>以上，就是整个问题的定义，接下来的任务就是考虑怎么求解该问题。</p>
+<div class="note success flat"><p>读者可能不熟悉泛函分析，所谓 Hilbert Space 可以理解为，带有内积诱导的范数（$L^2$范数）的 Banach Space，我们常用的几何视角可以安全地搬到 Hilbert Space 上考虑。</p>
+<p>为了处理内积，我们选择将问题放在 $\mathcal{H}$ 中。但这会导致一个问题，我们的优化目标是 $|F|_1$ 而非 $|F|_2$，本质上是不一样的。此问题先暂时按下不表，后续我们会看到如何将其放到 Dual Space 上处理。 </p>
+</div>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><h2 id="寻找解空间"><a href="#寻找解空间" class="headerlink" title="寻找解空间"></a>寻找解空间</h2><p>一个看似很简单的方法是使用 Cauchy-Schwarz 不等式，$\langle w| u \rangle = c \leq |w| |u|$，所以 $|u| \geq \frac{c}{|w|}$，直接秒了。但是我们后续会发现，它没法进一步将 $|\cdot|_2$ 解扩展到 $|\cdot|_1$了；并且 Cauchy-Schwarz 假设 $w$ 与 $u$ 是continous的，解空间被限制在 $\mathbb{L}^1$ 的子集 $\mathbb{C}([0, T])$ 上。</p>
+<p>仍然回到泛函分析的视角，来看看怎么理解该问题。</p>
+<p>考虑一个简单的 $(a, b, c)^T \cdot (x, y, z) = m$ 的问题，它对应的即是一个三维空间中的平面方程 $ax + by + cz = m$，法向量是 $(a, b, c)$</p>
+<p>对于我们的 $\langle w| u \rangle = c$ 约束也是一样的，$u$ 的解空间也是一个超平面，法向量是 $w$，我们需要解决这样两个问题：</p>
+<ul>
+<li><p>这个超平面上有点吗？解是否存在？</p>
+</li>
+<li><p>我们如何描述这个超平面？</p>
+</li>
+</ul>
+<p>我们在法向量 $w$ 对应的直线 $\text{span}(w)$ 上建立一个线性泛函 $\alpha \in \mathcal{H}^\mid$，使得 $\alpha(w) = c$. 应用 Hahn-Banach 定理，我们将其扩展到定义在整个 $\mathcal{H}$ 上的线性泛函 $\alpha_0$，它仍然满足 $\alpha_0(w) = c$</p>
+<p>应用 Riesz 表示定理，将线性泛函与内积联系起来，即必然存在一个唯一的 $u_0 \in \mathcal{H}$，使得 $\forall v \in \mathcal{H}, \alpha_0(v) = \langle v | u_0 \rangle$。将其应用在向量 $w$ 上，我们可以得到 </p>
+<script type="math/tex; mode=display">
+\alpha_0(w) = \langle w | u_0 \rangle = c</script><p>因此，$u_0$ 就是我们构造出来的一个，对应于约束 $\langle w | u \rangle = c$ 的可行解。</p>
+<p>以此为锚点，我们可以简化问题：</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{aligned}
+\langle w | u \rangle &= c \\
+\langle w | u_0 \rangle &= c
+\end{aligned}
+\right.</script><script type="math/tex; mode=display">
+\Rightarrow \langle w | u - u_0 \rangle = 0</script><p>所以，我们将原问题 “寻找 $u$，使得 $\langle w | u \rangle = c$” 转化为了 寻找 $u-u_0$，使得  $u-u_0\in w^{\perp}$”。我们只需要找到一个合法解，然后就可以表示整个解空间了。在这个解空间里，我们可以再考虑去找到 $|\cdot|_1 $ 最小的可行解。</p>
+<h2 id="对偶空间嵌入"><a href="#对偶空间嵌入" class="headerlink" title="对偶空间嵌入"></a>对偶空间嵌入</h2><p>然而，上述推导是有问题的。首先，我们找到的解空间是 $\mathbb{L}^2$ 空间的一个子空间，很多 $\mathbb{L}^1$ 中的解早在我们将问题搬入 Hilbert Space 的那一刻就已经被扔掉了。</p>
+<p>其次，我们之前推导全部建立在 Hilbert Space 的假设上，However，$\mathbb{L}^1([0, T])$ 恰恰不是一个 Hilbert Space，Riesz 表示定理等在此情况下都会失效，所以推导过程其实也是不成立的。</p>
+<p>我们考虑将所有 $F \in \mathbb{L}^1([0, T])$ 嵌入到对偶空间 $\mathbb{L}^1([0, T])^\mid = \mathbb{L}^\infty([0, T])$ 上去处理，定义 </p>
+<script type="math/tex; mode=display">
+\mathcal{F}(g) = \int_0^T F(\tau)g(\tau)\text{d}\tau， \mathcal{F}(\cdot) \in (\mathbb{L}^\infty([0, T]))^\mid</script><p>我们最小化的目标可以从 $|F|_1$ 转化为 $|\mathcal{F}|^\mid = \sup \{|\mathcal{F}(g)|: g \in \mathbb{L}^\infty([0, T]), |g|_\infty = 1 \}$</p>
+<p>该问题的性质如下：</p>
+<ul>
+<li><p>该嵌入是单射（injective）的：因为如果 $\int_0^TF(\tau)g(\tau)\text{d}\tau = 0$ 对所有 $g$ 成立，则 $F$ 必须是零函数。否则我们很容易针对任意一点 $F(t_0) \neq 0$ 构造一个 bump function 来使其积分不为 0。</p>
+</li>
+<li><p>该嵌入是保范数（perserving the norm）的，可以证明 $|\mathcal{F}|^\mid = |F|_1$（通过分别证明 $|\mathcal{F}|^\mid \leq |F|_1$ 与 $|\mathcal{F}|^\mid \geq |F|_1$， 这是最关键的证明，后续补一下，笔记有点不清楚……）</p>
+</li>
+<li><p>该嵌入不是满射（not surjective）的，对偶空间要大的多</p>
+</li>
+</ul>
+<p>以上性质保证了，最小化 $|F|_1$ 的原目标，我们可以通过最小化泛函 $\mathcal{F}$ 的范数 $|\mathcal{F}|^\mid$ 来实现。并且，它的解空间实际上是大于实际的解空间 $\mathbb{L}^1$ 的（也就是说，我们还有可能找到 $\mathbb{L}^1$ 之外的解）</p>
+<p>而我们的约束条件 $\int_0^T (T-\tau) F(\tau)d\tau = c$ 可以看作是 “由 $F$ 诱导的线性泛函 $\mathcal{F}$， 作用在函数 $w$ 上” 的结果，要求 $\mathcal{F}(w) = c$</p>
+<p>我们的目标是：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\text{minimize} &\, & \|\mathcal{F}\|^\mid \\
+&\text{subject to } &\, &\mathcal{F}(w) = c
+\end{aligned}</script><p>看起来很简单是不是？实际上就是很简单，根据 Hahn-Banach 定理的推论，我们能立刻知道所求的 $|\mathcal{F}_{min}| = \frac{|c|}{|w|_\infty} = \frac{|c|}{T}$，这就是我们所求的最小燃料消耗量。</p>
+<p>但是方案呢？根据 Holder 不等式：</p>
+<script type="math/tex; mode=display">
+|\mathcal{F}(w)| = |\int_0^T F(\tau)w(\tau)\text{d}\tau| \leq \|F\|_1 \|w\|_\infty</script><p>实际上我们考虑的就是取等的情况，$|\int_0^T F(\tau)w(\tau)\text{d}\tau| = |F|_1 |w|_\infty$，这要求我们将函数 $F(\tau)$ 的全部能量集中在 $w(\tau)$ 最大的那一点上。而 $w(\tau)$ 最大的一点即是 $t=0$ 时 $w(0) = T$</p>
+<p>也就是说，推力 $F$ 需要集中在 $t=0$ 时施加，它是一个 $\delta$ 函数</p>
+<script type="math/tex; mode=display">
+F(t) = A \cdot \delta(t)</script><p>代入约束条件，即可求得 $A = \frac{c}{T}$，也即 $F(t) = (\frac{mh}{T} + \frac{mgT}{2}) \delta(t)$</p>
+<p>该方案的燃料消耗量 $|F|_1 = |\frac{c}{T}|$，和我们应用 Hahn-Banach 推论找到的最小值吻合。</p>
+<p>严格来说，$\delta$ 函数并不是一个 $L^1$ 函数（这里不展开），这也符合我们的对偶空间嵌入策略，找到了一个 $L^1$ 之外的更好的广义解。这个解也有很好的物理解释：我们一开始就加速到最快，之后都用最快的速度来飞行。这是在这个极度简化的物理模型下的特殊情况（没有阻力、不考虑燃料的重力等等）。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上，是一个物理与泛函分析结合的例子。回到我的学习领域深度学习，我们也常常面临这种“预算分配”的问题：学习率的scheduler，batch size 的 scheduler 引出的 token 量的分配，等等。</p>
+<p>深度学习最大的问题是，我们没有牛顿定律这样的金科玉律，根本没有办法预言我们当前的分配会产生什么样的后果。只能后验地根据 Hessian、RMS Norm 等观测值，来推测目前的 “飞行轨迹” 进行到了哪一步。硬要建模的话，我了解的也就只有 朗之万动力学 那一种；但很多实践已经证明了，朗之万动力学是有缺陷的。“有缺陷”指的是，它与 LLM 的归纳偏置不符，例如我的一个很大感触就是，噪音肯定不能建模为高斯噪声，至少也是某种重尾分布。</p>
+<p>But who knows，这些问题牵涉的变量太多了，并且实验需要大量资源，太穷了。只能等待着某位超级智者，未来有一天能解决深度学习领域的终极问题吧。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io">不会魔法的小圆</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io/posts/10051.html">https://anti-entrophic.github.io/posts/10051.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://anti-entrophic.github.io" target="_blank">不会魔法的小圆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Math/">Math</a><a class="post-meta__tags" href="/tags/Optimization/">Optimization</a><a class="post-meta__tags" href="/tags/Functional-Analysis/">Functional Analysis</a></div><div class="post_share"><div class="social-share" data-image="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBEBVpFdb5eZBTDcAdRbQtI9fysO78eAACJgtrGwpMsERnl8zPwsyLFwEAAwIAA3cAAzYE.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/0.html" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.postimg.cc/jjg5jyxg/24f2a50832664c3e6ad70d44eb4918831955897084-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-12</div><div class="title">Hessian 谱的 &quot;Bulk + Spikes&quot; 结构</div></div></a></div><div><a href="/posts/10045.html" title="组合数学（一）容斥原理、二项式反演与第二类斯特林数"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJ2G2gnR44ZR5IVCpSJNqFPZ17oq8AQAALcrjEbridARbBjjr_Y20WKAQADAgADeQADNgQ.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-16</div><div class="title">组合数学（一）容斥原理、二项式反演与第二类斯特林数</div></div></a></div><div><a href="/posts/10044.html" title="Gamma Function"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJ2GGgnRq-Z2cv6ym0lAhDy88sCDLLNAALZrjEbridARVdPdtlKckJoAQADAgADeQADNgQ.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-16</div><div class="title">Gamma Function</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">不会魔法的小圆</div><div class="author-info__description">不会魔法的小圆，博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Anti-Entrophic"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">图床爆炸了 会马上修的呜呜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%8F%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">序言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Setting"><span class="toc-number">2.</span> <span class="toc-text">Setting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Solution"><span class="toc-number">3.</span> <span class="toc-text">Solution</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E8%A7%A3%E7%A9%BA%E9%97%B4"><span class="toc-number">3.1.</span> <span class="toc-text">寻找解空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E5%81%B6%E7%A9%BA%E9%97%B4%E5%B5%8C%E5%85%A5"><span class="toc-number">3.2.</span> <span class="toc-text">对偶空间嵌入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/10051.html" title="Functional Analysis 1 - Dual Space Solution of Optimal Control"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBEBVpFdb5eZBTDcAdRbQtI9fysO78eAACJgtrGwpMsERnl8zPwsyLFwEAAwIAA3cAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Functional Analysis 1 - Dual Space Solution of Optimal Control"/></a><div class="content"><a class="title" href="/posts/10051.html" title="Functional Analysis 1 - Dual Space Solution of Optimal Control">Functional Analysis 1 - Dual Space Solution of Optimal Control</a><time datetime="2025-11-13T05:54:01.000Z" title="发表于 2025-11-13 13:54:01">2025-11-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/0.html" title="无题">无题</a><time datetime="2025-10-23T11:53:21.510Z" title="发表于 2025-10-23 19:53:21">2025-10-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.postimg.cc/jjg5jyxg/24f2a50832664c3e6ad70d44eb4918831955897084-1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"/></a><div class="content"><a class="title" href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构">Hessian 谱的 &quot;Bulk + Spikes&quot; 结构</a><time datetime="2025-09-12T05:19:18.000Z" title="发表于 2025-09-12 13:19:18">2025-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10049.html" title="Scaling Law"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAALnomjBPhQpXJnyAkyrgUy8YmHElybxAALJrjEbZjEIRo61j_3lZgZMAQADAgADeQADNgQ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Scaling Law"/></a><div class="content"><a class="title" href="/posts/10049.html" title="Scaling Law">Scaling Law</a><time datetime="2025-08-21T11:07:32.000Z" title="发表于 2025-08-21 19:07:32">2025-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10048.html" title="记一次电脑 0xc0000005 宕机的排查"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAK1A2iIYdwV6oVXqkQZCRi1hw0ikP-oAAK7rzEbmXFJRNZokz8CjsBKAQADAgADeQADNgQ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记一次电脑 0xc0000005 宕机的排查"/></a><div class="content"><a class="title" href="/posts/10048.html" title="记一次电脑 0xc0000005 宕机的排查">记一次电脑 0xc0000005 宕机的排查</a><time datetime="2025-07-29T05:50:33.000Z" title="发表于 2025-07-29 13:50:33">2025-07-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By 不会魔法的小圆</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
