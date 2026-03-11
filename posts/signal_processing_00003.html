@@ -1,0 +1,394 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Modern Signal Processing - Chapter III | 不会魔法的小圆</title><meta name="robots" content="noindex"><meta name="author" content="不会魔法的小圆"><meta name="copyright" content="不会魔法的小圆"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="复习期末考试ing，诶真不想学啊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modern Signal Processing - Chapter III">
+<meta property="og:url" content="https://anti-entrophic.github.io/posts/signal_processing_00003.html">
+<meta property="og:site_name" content="不会魔法的小圆">
+<meta property="og:description" content="复习期末考试ing，诶真不想学啊">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg">
+<meta property="article:published_time" content="2025-12-29T06:09:58.000Z">
+<meta property="article:modified_time" content="2026-03-11T08:41:20.856Z">
+<meta property="article:author" content="不会魔法的小圆">
+<meta property="article:tag" content="Signal Processing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://anti-entrophic.github.io/posts/signal_processing_00003.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Modern Signal Processing - Chapter III',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-03-11 16:41:20'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="不会魔法的小圆" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="不会魔法的小圆"><span class="site-name">不会魔法的小圆</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Modern Signal Processing - Chapter III</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-29T06:09:58.000Z" title="发表于 2025-12-29 14:09:58">2025-12-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-11T08:41:20.856Z" title="更新于 2026-03-11 16:41:20">2026-03-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Signal-Processing/">Signal Processing</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Modern Signal Processing - Chapter III"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="同态信号处理"><a href="#同态信号处理" class="headerlink" title="同态信号处理"></a>同态信号处理</h1><p>我们之前整的都是线性模型。但有一些信号不是加性关系，例如乘性 $x(n) = s(n) \cdot n(n)$ 和 卷积 $x(n) = s(n) * h(n)$，我们需要一种方法把它打开，就称作同态信号处理。</p>
+<h1 id="乘法同态系统"><a href="#乘法同态系统" class="headerlink" title="乘法同态系统"></a>乘法同态系统</h1><p>假设 $x(n) = x_1(n)^{\alpha} \cdot x_2(n)^{\beta}$，一般的处理方法就取对数。经典的例子如：</p>
+<ul>
+<li>信号经过衰落信道：<script type="math/tex; mode=display">
+y(t) = s(t) \cdot f(t)</script></li>
+</ul>
+<p>其中 $f(t)$ 是衰落因子</p>
+<ul>
+<li>调幅波<script type="math/tex; mode=display">
+y(t) = (A + m(t)) \cos (\omega_c t)</script></li>
+</ul>
+<p>通过同态滤波，可以在不解调的情况下分析调制信号 $m(t)$ 的特性</p>
+<ul>
+<li>图像信号模型<script type="math/tex; mode=display">
+x(u,v) = x_i(u, v) \cdot x_r(u, v)</script>一幅图像可以建模为 光照分量 $x_i(u,v)$ 和 反射分量 $x_r(u,v)$ 的乘积。光照分量通常是缓慢变换的低频信号，反射分量则是反映物体材质和细节的高频分量。</li>
+</ul>
+<p>通过取对数，把图像变为 “ln(光照) + ln(反射)”</p>
+<p>然后通过一个高通滤波器，就可以滤掉低频的光照分量，只留下高频的反射分量。</p>
+<h1 id="卷积同态系统"><a href="#卷积同态系统" class="headerlink" title="卷积同态系统"></a>卷积同态系统</h1><p>先用 Z 变换把卷积变成乘法</p>
+<script type="math/tex; mode=display">
+Z[x_1(n) * x_2(n)] = X_1(z) \cdot X_2(z)</script><p>然后再取对数</p>
+<script type="math/tex; mode=display">
+\ln[X_1(z) \cdot X_2(z)] = \ln[X_1(z)] + \ln[X_2(z)]</script><p>注意还需要一步逆 Z 变换</p>
+<script type="math/tex; mode=display">
+Z^{-1}\{\ln[X_1(z)] + \ln[X_2(z)]\}</script><p>这一整套 $Z \rightarrow \ln \rightarrow Z^{-1}$ 的操作得到的信号 $\hat{x}(n)$ 就叫做复倒谱。逆过程是 $Z \rightarrow exp \rightarrow Z^{-1}$</p>
+<p>经典例子如：</p>
+<ul>
+<li>语音信号分析</li>
+</ul>
+<p>语音信号可以被建模为激励源 $e(n)$ 和 声道响应 $h(n)$ 的卷积</p>
+<script type="math/tex; mode=display">
+x(n) = e(n) * h(n)</script><p>激励源是声带振动产生的脉冲串，变化快，在倒谱域属于高频率（高倒频率，Quefrency）</p>
+<p>声道是嘴、鼻腔形状决定的滤波器，变化慢，在倒谱域属于低频率。</p>
+<p>这是语音识别中提取声道特征的理论基础。</p>
+<ul>
+<li>消除混响/回波</li>
+</ul>
+<p>带有回声的信号可以建模为原始信号 $s(n)$ 与回声滤波器 $h(n)$ 的卷积。</p>
+<script type="math/tex; mode=display">
+h(n) = \delta(n) + \alpha_1 \delta(n-n_1) + \alpha_2 \delta(n-n_2) + \dots</script><p>这里 $\delta(n)$ 代表原始声音，$\alpha_k \delta(n-n_k)$ 代表在时刻 $n_k$ 到达的、强度为 $\alpha_k$ 的回声。</p>
+<p>对接收到的信号 $x(n)$ 做复倒谱变换，得到 $\hat{x}(n) = \hat{s}(n) + \hat{h}(n)$。则回声滤波器 $h(n)$ 的倒谱 $\hat{h}(n)$ 是一系列<strong>有规律的脉冲串</strong>，出现在 $n_1, 2n_1, 3n_1, \dots$ 等位置。</p>
+<p>原始信号的倒谱 $\hat{s}(n)$ 通常集中在低倒频率区域，可以设计一个梳状滤波器或一系列带阻滤波器，在倒谱域里精确地“梳掉”那些由回声产生的、有规律的脉冲，同时保留原始信号的倒谱。</p>
+<p>最后再通过逆变换，就能得到一个去除了回声的干净信号。</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>例：某录音信号 $x(n)$ 包含原始语音 $s(n)$ 和一个简单的单次强回声，数学模型为：</p>
+<script type="math/tex; mode=display">
+x(n) = s(n) + 0.5s(n-50)</script><p>求该回声系统的复倒谱 $\hat{h}(n)$ 的形式</p>
+<p>解：</p>
+<p>这一题，我们可以把它看作输入信号 $s(n)$ 和回声系统 $h(n)$ 的卷积。</p>
+<script type="math/tex; mode=display">
+x(n) = s(n) * \underbrace{[\delta(n) + 0.5\delta(n-50)]}_{h(n)}</script><p>先做 Z 变换</p>
+<script type="math/tex; mode=display">
+X(z) = S(z) + 0.5z^{-50}S(z) = S(z) (1 + 0.5z^{-50})</script><p>果然卷积变乘法了。再令 $H(z) = 1 + 0.5z^{-50}$，取对数并泰勒：</p>
+<script type="math/tex; mode=display">
+\hat{H}(z) = \ln(1 + 0.5z^{-50}) = 0.5 z^{-50} - \frac{1}{2} (0.5z^{-50})^2 + \cdots</script><p>求逆 Z 变化，复倒谱 $\hat{h}(n)$ 就是 $z^{-n}$ 前面的系数，等于说只在 $n=50, 100,150, \cdots$ 处有非零值，且幅度随 $n$ 迅速衰减。</p>
+<h1 id="复倒谱的定义"><a href="#复倒谱的定义" class="headerlink" title="复倒谱的定义"></a>复倒谱的定义</h1><p>复倒谱 $\hat{x}(n) = Z^{-1}\{[\ln [X(z)]]\}$</p>
+<h2 id="唯一性与连续性"><a href="#唯一性与连续性" class="headerlink" title="唯一性与连续性"></a>唯一性与连续性</h2><p>因为复数 $X(z)$ 可以写成极坐标形式 $X(z) = |X(z)|e^{j \arg[X(z)]}$，而相位 $\arg[X(z)]$ 是周期函数，转一圈值不变，所以 $e^{j \theta} = e^{j (\theta+ 2k\pi)}$</p>
+<p>这意味着取对数时，一个 $X(z)$ 可以对应无数个不同的 $\hat{X}(z)$</p>
+<p>所以为了保证唯一性，强行规定 $\hat{X}(z) = \ln |X(z)| + j \text{ARG}[X(z)]$，其中 $\text{ARG}[X(z)]$ 被限制在 $(-\pi, \pi]$</p>
+<p>但这会导致新的不连续性问题，当真实相位连续地从 $\pi$ 跨越到 $-\pi$ 时，$ARG[X(z)]$ 会发生一个 $2\pi$ 的跳变。</p>
+<p>这导致 $\hat{X}(z)$ 在单位圆上不再是 $\omega$ 的连续函数，这与信号是稳定因果的假设<strong>相违背</strong>。一个连续的频响不应该产生一个跳变的对数频响。</p>
+<h2 id="解析性"><a href="#解析性" class="headerlink" title="解析性"></a>解析性</h2><p>如果原始信号 $x(n)$ 是稳定且因果的，那么它的 Z 变换 $X(z)$ 的收敛域必须包含单位圆，并且 $X(z)$ 在单位圆上是解析的（可导的）</p>
+<p>同样地，如果我们想让倒谱 $\hat{x}(n)$ 也是稳定且因果的，那么它的 Z 变换 $\hat{X}(z) = \ln[X(z)]$ 也必须在单位圆上是解析的。</p>
+<p>所以 </p>
+<script type="math/tex; mode=display">
+\hat{X}(e^{j\omega}) = \ln |X(e^{j\omega})| + j \arg [X(e^{j\omega})]</script><p>其辐角 $\arg[]X(e^{j\omega})$ 和对数幅值 $\ln |X(e^{j\omega})|$ 都必须是 $\omega$ 的连续函数。</p>
+<ul>
+<li><p>对数幅值连续 $\Rightarrow |X(e^{j\omega})|\neq 0$，即 $X(z)$ 在单位圆上无零点。</p>
+</li>
+<li><p>辐角连续 $\Rightarrow$ 不能使用有跳变的主值 ARG</p>
+</li>
+</ul>
+<p>为了同时满足唯一性和连续性，必须定义一个连续的相位函数。</p>
+<h1 id="复倒谱的性质"><a href="#复倒谱的性质" class="headerlink" title="复倒谱的性质"></a>复倒谱的性质</h1><p>下面是一个有理 Z 变换 $X(z)$ 的通用因式分解形式：</p>
+<script type="math/tex; mode=display">
+X(z) = A z^r \frac{\prod_{k=1}^{m_i}(1-a_k z^{-1}) \prod_{k=1}^{m_o}(1-b_k z)}{\prod_{k=1}^{p_i}(1-c_k z^{-1}) \prod_{k=1}^{p_o}(1-d_k z)}</script><p>这个公式看起来吓人，但其实就是把一个系统函数拆成了几个标准部分：</p>
+<ul>
+<li>$A$: 增益常数。</li>
+<li>$z^r$: 延时/超前因子。</li>
+<li>$a_k, c_k$: <strong>单位圆内</strong>的零点和极点（对应因果稳定部分）。</li>
+<li>$b_k, d_k$: <strong>单位圆外</strong>的零点和极点（对应反因果部分）。</li>
+<li>$m_i, m_o, p_i, p_o$: 分别是圆内/外的零点/极点个数。</li>
+</ul>
+<p>取对数，得到：</p>
+<script type="math/tex; mode=display">
+\hat{X}(z) = \ln A + \ln z^r + \sum \ln(\dots) - \sum \ln(\dots)</script><p>对 $\hat{X}(z)$ 的每一项分别求逆 Z 变换，其中对于</p>
+<script type="math/tex; mode=display">
+\sum_{k=1}^{m_i}\ln (1 - a_k z^{-1}) - \sum_{k=1}^{m_i}\ln (1 - a_k z^{-1})</script><p>我们不妨先考虑某一项 $\ln (1 - \alpha z^{-1})$ 的逆 Z 变换。已知根据泰勒：</p>
+<script type="math/tex; mode=display">
+\ln(1-x) = -x - \frac{x^2}{2} - \frac{x^3}{3} -\cdots = -\sum_{n=1}^\infty \frac{x^n}{n}</script><p>对应</p>
+<script type="math/tex; mode=display">
+\ln(1-\alpha z^{-1}) = - \sum_{n=1}^\infty \frac{(\alpha z^{-1})^n}{n} = - \sum_{n=1}^\infty \frac{\alpha^n}{n} z^{-n}</script><p>复倒谱的定义就是 Z 变换的系数：</p>
+<script type="math/tex; mode=display">
+\hat{X}(z) = \sum_{n=-\infty}^\infty \hat{x}(n)z^{-n}</script><p>所以，对于单项的逆Z变换结果是 $\hat{x}(n) = -\frac{\alpha^n}{n}$</p>
+<p>代入原来的和式，得到复倒谱 $\hat{x}(n)$ 的解：</p>
+<script type="math/tex; mode=display">
+\hat{x}(n) = \left\{
+\begin{aligned}
+&\ln |A|, \quad & n=0 \\
+& -\sum_k \frac{a_k^n}{n} + \sum_k \frac{c_k^n}{n}, \quad & n > 0 & \quad \text{最小相位部分}\\
+& \sum_k \frac{b_k^{-n}}{n} - \sum_k \frac{d_k^{-n}}{n}, \quad & n < 0 & \quad \text{最大相位部分}
+\end{aligned}
+\right.</script><p>延时项 $\ln z^r = r \ln z$ 的逆 Z 变换比较特殊，会产生一个与信号无关的、衰减的交错序列。它与 $x(n)$ 无关，所以<strong>一般可以不考虑</strong>它的影响，或者通过预处理（如移位）消除 $z^r$ 这一项。</p>
+<p>从最终的公式，可以总结出几个性质：</p>
+<ol>
+<li><p>无限长特性：</p>
+<p>即使 $x(n)$ 是有限长，其倒谱总是无限长时间序列。</p>
+<p>只要原始信号有零点或极点（几乎所有信号都有），求对数后就会产生 $\frac{1}{n}$ 这样的项，导致倒谱序列无限延伸。</p>
+<p>倒谱的幅度至少按 $\frac{1}{|n|}$ 的速度衰减，这意味着其能量主要集中在低“倒频率”端（$n$ 较小的区域）。</p>
+</li>
+<li><p>因果性与相移类型：</p>
+<p>最小相移序列的复倒谱一定是因果序列，而最大相移序列的一定是逆因果序列。</p>
+<p>最小相移：所有零极点都在单位圆内。从公式可以看出，此时倒谱只有 $n&gt;0$ 的部分，是<strong>因果</strong>的。</p>
+<p>最大相移：所有零极点都在单位圆外。此时倒谱只有 $n&lt;0$ 的部分，是<strong>反因果</strong>的。</p>
+<p>混合相移：零极点内外都有，倒谱是双边的（$n&gt;0$ 和 $n&lt;0$ 都有值）。</p>
+</li>
+<li><p>周期性 (Periodicity)：</p>
+<p>间隔为 $N_p$ 的冲激序列的复倒谱仍然是一个间隔为 $N_p$ 的冲激序列。</p>
+<p>例如，时域的回声脉冲串，在倒谱域也表现为有规律的脉冲串，因此可以被识别并滤除。</p>
+</li>
+</ol>
+<h2 id="Example-1"><a href="#Example-1" class="headerlink" title="Example"></a>Example</h2><p>例：$X(z) = 5 \cdot (1-0.5z^{-1}) \cdot (1-2z)$，求复倒谱 $\hat{x}(n)$</p>
+<p>对比上面的标准形式：</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{aligned}
+A &= 5 \\
+a &= 0.5 \\
+b &= 2 \\
+\end{aligned}
+\right.</script><p>直接代公式就可以</p>
+<h1 id="复倒谱的计算"><a href="#复倒谱的计算" class="headerlink" title="复倒谱的计算"></a>复倒谱的计算</h1><p>用离散傅里叶变换来代替 Z 变换</p>
+<h2 id="混叠失真"><a href="#混叠失真" class="headerlink" title="混叠失真"></a>混叠失真</h2><p>DFT 得到的是频域的采样点，而不是连续的频域函数。IDFT 得到的结果 $\hat{x}_p(n)$ 实际上是真实倒谱 $\hat{x}(n)$ 的周期延拓叠加</p>
+<script type="math/tex; mode=display">
+\hat{x}_p(n) = \sum_{r=-\infty}^\infty \hat{x}(n+rN)</script><h2 id="相位展开"><a href="#相位展开" class="headerlink" title="相位展开"></a>相位展开</h2><p>$X(k) = X_r(k) + jX_i(k)$ 是 DFT 的输出，它有实部和虚部。计算对数幅值 $\ln |X(k)| = \frac{1}{2} \ln[X_r^2(k) + X_i^2(k)]$ 和 主值相位 $ARG[X(k)] = \arctan (\frac{X_i(k)}{X_r(k)})$</p>
+<p>但是 $\arctan$ 函数的输出是不连续的，我们令 $\arg [X(k)] = ARG[X(k)] + COR(k)$，其中 $\arg[X(k)]$ 是我们要的连续相位，$ARG[X(k)]$ 是 $\arctan$ 的输出，$COR(k)$ 就是我们需要一个校正相位</p>
+<p>校正相位的递推公式如下：</p>
+<script type="math/tex; mode=display">
+COR(k) =
+\begin{cases}
+COR(k-1) - 2\pi, & \text{如果 } ARG[X(k)] - ARG[X(k-1)] > \pi \\
+COR(k-1) + 2\pi, & \text{如果 } ARG[X(k)] - ARG[X(k-1)] < -\pi \\
+COR(k-1), & \text{其他情况}
+\end{cases}</script><p>从 $k=0$ 开始，$COR(0)$ 通常设为0，依次检查相邻两个主值相位的差。如果差值大于 $\pi$ ，说明发生了一次向下的跳变，需要在校正相位里减去 $2\pi$；如果差值小于 $-\pi$，需要加上 $2\pi$。</p>
+<h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example"></a>Example</h3><p>例：在计算复倒谱时，DFT计算出的主值相位序列 $ARG[X(k)]$ 的前四个点如下：$\{0.2\pi, 0.9\pi, -0.8\pi, -0.1\pi\}$，求解卷绕后的连续相位序列</p>
+<h2 id="复对数求导计算法"><a href="#复对数求导计算法" class="headerlink" title="复对数求导计算法"></a>复对数求导计算法</h2><p>$\hat{X}(z) = \ln [X(z)]$，两边对 $z$ 求导，再两边乘 $z$ 得</p>
+<script type="math/tex; mode=display">
+z\frac{d \hat{X}(z)}{dz} = \frac{z}{X(z)} \frac{d X(z)}{dz}</script><p>根据 Z 变换的性质 $Z^{-1}\{z \frac{dF(z)}{dz}\} = -nf(n)$，对上式做逆 Z 变换，得到：</p>
+<script type="math/tex; mode=display">
+-n\hat{x}(n) = \frac{1}{2\pi j} \oint_C \frac{1}{X(z)} \frac{dX(z)}{dz} z^{N-1} dz</script><p>将 $z$ 替换为 $e^{j\omega}$，将 Z 变换转化为傅里叶变换。</p>
+<script type="math/tex; mode=display">
+\hat{x}(n) = - \frac{1}{2\pi nj} \int_{-\pi}^{\pi} \frac{1}{X(e^{j\omega})} \frac{dX(e^{j\omega})}{d\omega} e^{j\omega n}d\omega</script><p>离散化的话就是：</p>
+<script type="math/tex; mode=display">
+\hat{x}(n) = - \frac{1}{2\pi nj} \sum_{k=0}^{N-1} \frac{1}{X(k)} \cdot \frac{dX(k)}{dk} e^{j \frac{2\pi}{N} kn}</script><h2 id="递推计算方法"><a href="#递推计算方法" class="headerlink" title="递推计算方法"></a>递推计算方法</h2><p>上述方法避免了复对数的计算，但付出的代价是产生了更严重的混叠失真。</p>
+<p>下面是一种基于时域递推的算法。</p>
+<p>从 Z 域微分性质出发：</p>
+<script type="math/tex; mode=display">
+z \frac{dX(z)}{dz} = z \frac{d\hat{X}(z)}{dz} \cdot X(z)</script><p>对两边进行逆 Z 变换（利用 $z \frac{dX}{dz} \leftrightarrow n x(n)$ 和时域卷积定理）：</p>
+<script type="math/tex; mode=display">
+n x(n) = \sum_{k=-\infty}^{\infty} k \hat{x}(k) \cdot x(n-k)</script><p>移项得到通用公式（当 $n \neq 0$）：</p>
+<script type="math/tex; mode=display">
+x(n) = \sum_{k=-\infty}^{\infty} \frac{k}{n} \hat{x}(k) x(n-k)</script><p>在我们没有相位信息的情况下，要考虑多种情况：</p>
+<h4 id="①-最小相位序列"><a href="#①-最小相位序列" class="headerlink" title="① 最小相位序列"></a>① 最小相位序列</h4><p>这是最常见的情况。</p>
+<ul>
+<li>条件： 当 $n&lt;0$ 时，$x(n)=0$ 且 $\hat{x}(n)=0$。</li>
+<li><p>递推公式：</p>
+<script type="math/tex; mode=display">\hat{x}(n) = \begin{cases} 
+\ln x(0), & n=0 \\
+\frac{x(n)}{x(0)} - \sum_{k=0}^{n-1} (\frac{k}{n}) \hat{x}(k) \frac{x(n-k)}{x(0)}, & n>0 \\
+0, & n<0 
+\end{cases}</script><p>意义： 只要知道当前的信号值 $x(n)$ 和之前的倒谱值 $\hat{x}(0) \dots \hat{x}(n-1)$，就能算出当前的 $\hat{x}(n)$。这非常适合计算机编程实现。</p>
+<p>最小相位序列是因果的（$n&lt;0$ 时为 0），其复倒谱也是因果的。</p>
+</li>
+</ul>
+<h4 id="②-最大相位序列"><a href="#②-最大相位序列" class="headerlink" title="② 最大相位序列"></a>② 最大相位序列</h4><ul>
+<li>条件： 序列是反因果的（主要能量集中在负半轴）。</li>
+<li>递推公式： 与最小相位类似，只是方向相反（$n&lt;0$）。<script type="math/tex; mode=display">
+\hat{x}(n) = \frac{x(n)}{x(0)} - \sum_{k=n+1}^{0} \frac{k}{n} \hat{x}(k) x(n-k), \quad n < 0</script>并且 $\hat{x}(n)=0$ 当 $n&gt;0$。</li>
+</ul>
+<hr>
+<h3 id="Example-3"><a href="#Example-3" class="headerlink" title="Example"></a>Example</h3><p>例：已知一个最小相位序列的前三个点为 $x(0)=2, x(1)=1, x(2)=0$，利用递推算法计算其复倒谱的前三个值 $\hat{x}(0),\hat{x}(1), \hat{x}(2)$</p>
+<p>利用公式, $n=0$ 时</p>
+<script type="math/tex; mode=display">
+\hat{x}(0) = \ln x(0) = \ln 2</script><p>当 $n=1$ 时：</p>
+<script type="math/tex; mode=display">
+\hat{x}(1) = \frac{x(1)}{x(0)} - (\frac{0}{1}\hat{x}(0)\frac{x(1)}{x(0)}) = \frac{1}{2}</script><p>当 $n=2$ 时：</p>
+<script type="math/tex; mode=display">
+\hat{x}(1) = \frac{x(2)}{x(0)} - (\frac{1}{2}\hat{x}(1)\frac{x(1)}{x(0)}) = -\frac{1}{8}</script><h3 id="有限长序列的解析解"><a href="#有限长序列的解析解" class="headerlink" title="有限长序列的解析解"></a>有限长序列的解析解</h3><p>如果信号可以被建模为有限个零极点形式（有理函数）：</p>
+<script type="math/tex; mode=display">
+X(z) = A \prod_{k=1}^{m_i} (1 - a_k z^{-1}) \prod_{k=1}^{m_o} (1 - b_k z)</script><ul>
+<li>第一部分乘积对应<strong>最小相位</strong>分量（零点 $a_k$ 在单位圆内）。</li>
+<li>第二部分乘积对应<strong>最大相位</strong>分量（零点 $1/b_k$ 在单位圆外）。</li>
+</ul>
+<p>可以直接写出复倒谱的解析式：</p>
+<script type="math/tex; mode=display">
+\hat{x}(n) = \begin{cases} 
+\ln A, & n=0 \\
+- \sum_{k=1}^{m_i} \frac{a_k^n}{n}, & n>0 \quad (\text{由单位圆内零点贡献}) \\
+\sum_{k=1}^{m_o} \frac{b_k^{-n}}{n}, & n<0 \quad (\text{由单位圆外零点贡献})
+\end{cases}</script><!-- flag of hidden posts --></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io">不会魔法的小圆</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io/posts/signal_processing_00003.html">https://anti-entrophic.github.io/posts/signal_processing_00003.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://anti-entrophic.github.io" target="_blank">不会魔法的小圆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Signal-Processing/">Signal Processing</a></div><div class="post_share"><div class="social-share" data-image="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">不会魔法的小圆</div><div class="author-info__description">不会魔法的小圆，博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Anti-Entrophic"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">图床爆炸了 会马上修的呜呜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%8C%E6%80%81%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">同态信号处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%98%E6%B3%95%E5%90%8C%E6%80%81%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">乘法同态系统</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%90%8C%E6%80%81%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">卷积同态系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">3.0.1.</span> <span class="toc-text">Example</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E5%80%92%E8%B0%B1%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">4.</span> <span class="toc-text">复倒谱的定义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%94%AF%E4%B8%80%E6%80%A7%E4%B8%8E%E8%BF%9E%E7%BB%AD%E6%80%A7"><span class="toc-number">4.1.</span> <span class="toc-text">唯一性与连续性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E6%80%A7"><span class="toc-number">4.2.</span> <span class="toc-text">解析性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E5%80%92%E8%B0%B1%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">5.</span> <span class="toc-text">复倒谱的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-1"><span class="toc-number">5.1.</span> <span class="toc-text">Example</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E5%80%92%E8%B0%B1%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="toc-number">6.</span> <span class="toc-text">复倒谱的计算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B7%E5%8F%A0%E5%A4%B1%E7%9C%9F"><span class="toc-number">6.1.</span> <span class="toc-text">混叠失真</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E4%BD%8D%E5%B1%95%E5%BC%80"><span class="toc-number">6.2.</span> <span class="toc-text">相位展开</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-2"><span class="toc-number">6.2.1.</span> <span class="toc-text">Example</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%AF%B9%E6%95%B0%E6%B1%82%E5%AF%BC%E8%AE%A1%E7%AE%97%E6%B3%95"><span class="toc-number">6.3.</span> <span class="toc-text">复对数求导计算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E6%8E%A8%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">6.4.</span> <span class="toc-text">递推计算方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A0-%E6%9C%80%E5%B0%8F%E7%9B%B8%E4%BD%8D%E5%BA%8F%E5%88%97"><span class="toc-number">6.4.0.1.</span> <span class="toc-text">① 最小相位序列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A1-%E6%9C%80%E5%A4%A7%E7%9B%B8%E4%BD%8D%E5%BA%8F%E5%88%97"><span class="toc-number">6.4.0.2.</span> <span class="toc-text">② 最大相位序列</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E9%95%BF%E5%BA%8F%E5%88%97%E7%9A%84%E8%A7%A3%E6%9E%90%E8%A7%A3"><span class="toc-number">6.4.1.</span> <span class="toc-text">有限长序列的解析解</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/10054.html" title="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBOtBpsT6hm7fkR0XkeeypUfkjnJGs7wACRwxrGxPiiUVIKfl97hVK5wEAAwIAA3cAAzoE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning"/></a><div class="content"><a class="title" href="/posts/10054.html" title="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning">Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning</a><time datetime="2026-03-11T10:06:51.000Z" title="发表于 2026-03-11 18:06:51">2026-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10052.html" title="Nesterov"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBECBpFeFx9Ab5RF14QUzlQEZ5CsqNbQACPgtrGwpMsEQKoOPxa0KecwEAAwIAA3cAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nesterov"/></a><div class="content"><a class="title" href="/posts/10052.html" title="Nesterov">Nesterov</a><time datetime="2025-11-13T13:45:37.000Z" title="发表于 2025-11-13 21:45:37">2025-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10051.html" title="Functional Analysis 1 - Dual Space Solution of Optimal Control"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBEBVpFdb5eZBTDcAdRbQtI9fysO78eAACJgtrGwpMsERnl8zPwsyLFwEAAwIAA3cAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Functional Analysis 1 - Dual Space Solution of Optimal Control"/></a><div class="content"><a class="title" href="/posts/10051.html" title="Functional Analysis 1 - Dual Space Solution of Optimal Control">Functional Analysis 1 - Dual Space Solution of Optimal Control</a><time datetime="2025-11-13T05:54:01.000Z" title="发表于 2025-11-13 13:54:01">2025-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.postimg.cc/jjg5jyxg/24f2a50832664c3e6ad70d44eb4918831955897084-1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"/></a><div class="content"><a class="title" href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构">Hessian 谱的 &quot;Bulk + Spikes&quot; 结构</a><time datetime="2025-09-12T05:19:18.000Z" title="发表于 2025-09-12 13:19:18">2025-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10049.html" title="Scaling Law"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAALnomjBPhQpXJnyAkyrgUy8YmHElybxAALJrjEbZjEIRo61j_3lZgZMAQADAgADeQADNgQ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Scaling Law"/></a><div class="content"><a class="title" href="/posts/10049.html" title="Scaling Law">Scaling Law</a><time datetime="2025-08-21T11:07:32.000Z" title="发表于 2025-08-21 19:07:32">2025-08-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 不会魔法的小圆</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

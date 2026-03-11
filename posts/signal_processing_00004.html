@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Modern Signal Processing - Chapter IV | 不会魔法的小圆</title><meta name="robots" content="noindex"><meta name="author" content="不会魔法的小圆"><meta name="copyright" content="不会魔法的小圆"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="复习期末考试ing，诶真不想学啊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modern Signal Processing - Chapter IV">
+<meta property="og:url" content="https://anti-entrophic.github.io/posts/signal_processing_00004.html">
+<meta property="og:site_name" content="不会魔法的小圆">
+<meta property="og:description" content="复习期末考试ing，诶真不想学啊">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg">
+<meta property="article:published_time" content="2025-12-29T14:54:52.000Z">
+<meta property="article:modified_time" content="2026-03-11T08:41:25.313Z">
+<meta property="article:author" content="不会魔法的小圆">
+<meta property="article:tag" content="Signal Processing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://anti-entrophic.github.io/posts/signal_processing_00004.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Modern Signal Processing - Chapter IV',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-03-11 16:41:25'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="不会魔法的小圆" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="不会魔法的小圆"><span class="site-name">不会魔法的小圆</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Modern Signal Processing - Chapter IV</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-29T14:54:52.000Z" title="发表于 2025-12-29 22:54:52">2025-12-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-11T08:41:25.313Z" title="更新于 2026-03-11 16:41:25">2026-03-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Signal-Processing/">Signal Processing</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Modern Signal Processing - Chapter IV"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="特征函数与高阶矩"><a href="#特征函数与高阶矩" class="headerlink" title="特征函数与高阶矩"></a>特征函数与高阶矩</h1><p>设随机变量 $x$ 有概率密度函数 $f(x)$，其特征函数定义为：</p>
+<script type="math/tex; mode=display">
+\Phi(\omega) = \int_{-\infty}^\infty f(x)e^{j\omega x} dx = \mathbb{E}[e^{j\omega x}]</script><h2 id="二维联合特征函数"><a href="#二维联合特征函数" class="headerlink" title="二维联合特征函数"></a>二维联合特征函数</h2><p>略</p>
+<h2 id="独立性"><a href="#独立性" class="headerlink" title="独立性"></a>独立性</h2><p>如果 $x$ 和 $y$ 是相互独立的，那么它们的概率联合密度可以拆分：$f(x, y) = f_x(x) f_y(y)$</p>
+<p>它们的联合特征函数也可以拆分：</p>
+<script type="math/tex; mode=display">
+\Phi(\omega_1, \omega_2) = \Phi_x(\omega_1) \cdot \Phi_y(\omega_2)</script><h1 id="矩"><a href="#矩" class="headerlink" title="矩"></a>矩</h1><p>$k$ 阶矩是：</p>
+<script type="math/tex; mode=display">
+m_k = \mathbb{E}[x^k] = \int_{-\infty}^\infty x^kf(x)dx</script><p>$k$ 阶中心矩是：</p>
+<script type="math/tex; mode=display">
+\mu_k = \mathbb{E}[(x-\eta)^k] = \int_{-\infty}^\infty (x-\eta)^kf(x)dx</script><p>其中 $\eta$ 为均值</p>
+<h2 id="特征函数与矩生成"><a href="#特征函数与矩生成" class="headerlink" title="特征函数与矩生成"></a>特征函数与矩生成</h2><script type="math/tex; mode=display">
+\Phi(\omega) = 1 + \sum_{k=1}^n \frac{m_k}{k!}(j\omega)^k + O(\omega^n)</script><p>因此特征函数实际上是由各个阶的矩作为系数拼起来的多项式。由上式显然有</p>
+<script type="math/tex; mode=display">
+m_k = (-j)^k \frac{d^k \Phi(\omega)}{d\omega^k} \big|_{\omega=0} = (-j)^k \Phi^(k)(0)</script><p>也就是说对特征函数求 $k$ 次导就能算出 $k$ 阶矩</p>
+<h1 id="第二特征函数与累积量"><a href="#第二特征函数与累积量" class="headerlink" title="第二特征函数与累积量"></a>第二特征函数与累积量</h1><p>定义第二特征函数 $\Psi(\omega) = \ln \Phi(\omega)$</p>
+<p>第二特征函数展开的系数是累积量</p>
+<script type="math/tex; mode=display">
+\Psi(\omega) = \sum_{k=1}^n \frac{C_k}{k!} (j\omega)^k + O(\omega^n)</script><p>对函数求 $k$ 阶导得：</p>
+<script type="math/tex; mode=display">
+C_k = (-j)^k \frac{d^k \Psi(\omega)}{d\omega^k} \big|_{\omega = 0} = (-j)^k \Psi^(k)(0)</script><p>对于高斯分布，它的 $k \geq 3$ 阶累积量全部恒等于零，所以如果我们算出一个信号的 3 阶或 4 阶累积量不为零，则可以断定不是高斯信号。</p>
+<p>并且，如果一组随机变量是相互独立的，那么它们的和的累积量，等于它们各自累积量的和，而矩没有这个性质</p>
+<h1 id="随机过程的-k-阶矩"><a href="#随机过程的-k-阶矩" class="headerlink" title="随机过程的 k 阶矩"></a>随机过程的 k 阶矩</h1><script type="math/tex; mode=display">
+m_{kx}(\tau_1, \cdots, \tau_{k-1}) = \mathbb{E}[x(n)\cdot x(n+\tau_1) \cdot \cdots \cdot x(n+\tau_{k-1})]</script><p>如二阶矩就是 $m_{2x}(\tau_1) = \mathbb{E}[x(n)x(n+\tau_1)]$</p>
+<h1 id="高阶矩谱与高阶累积量谱"><a href="#高阶矩谱与高阶累积量谱" class="headerlink" title="高阶矩谱与高阶累积量谱"></a>高阶矩谱与高阶累积量谱</h1><p>就像自相关函数的傅里叶变换是功率谱一样，高阶矩的傅里叶变换就是高阶矩谱</p>
+<p>k 阶矩谱为：</p>
+<script type="math/tex; mode=display">
+M_{kx}(\omega_1, \cdots) = \sum_{\tau_1 = -\infty}^\infty \cdots \sum_{\tau_{k-1} = -\infty}^\infty m_{kx}(\tau_1, \cdots) e^{-j\sum_{i=1}^{k-1} \omega_i \tau_i}</script><p>k 阶累积量谱也一样。这要求 k 阶量是绝对可和的。</p>
+<p>实际应用中，我们主要使用高阶累积量谱来处理非高斯信号。高阶累积量谱通常简称为高阶谱或多谱。</p>
+<p>例如 3 阶累积量 $C_{3x}(\tau_1, \tau_2)$ 对应双谱 $B_x(\omega_1, \omega_2)$</p>
+<p>对于高斯信号，双谱恒为0</p>
+<h1 id="高斯过程的高阶累积量"><a href="#高斯过程的高阶累积量" class="headerlink" title="高斯过程的高阶累积量"></a>高斯过程的高阶累积量</h1><p>高斯变量的 1 阶累积量 $C_1$ 就是均值，2 阶累积量 $C_2$ 就是方差</p>
+<p>高阶矩虽然存在，但它们只是方差的函数，不包含任何新信息。</p>
+<h1 id="M-C-公式"><a href="#M-C-公式" class="headerlink" title="M-C 公式"></a>M-C 公式</h1><script type="math/tex; mode=display">C(x_1, x_2, x_3) = E[x_1 x_2 x_3] - (E[x_1]E[x_2 x_3] + \dots) + 2 E[x_1]E[x_2]E[x_3]</script><h1 id="高阶累积量的性质"><a href="#高阶累积量的性质" class="headerlink" title="高阶累积量的性质"></a>高阶累积量的性质</h1><h2 id="齐次性"><a href="#齐次性" class="headerlink" title="齐次性"></a>齐次性</h2><script type="math/tex; mode=display">
+C(\lambda_1 x_1, \cdots, \lambda_k x_k) = (\prod_{i=1}^k \lambda_i) C(x_1, \cdots, x_k)</script><h2 id="对称性-顺序无关"><a href="#对称性-顺序无关" class="headerlink" title="对称性/顺序无关"></a>对称性/顺序无关</h2><script type="math/tex; mode=display">
+C(x_1, \cdots, x_k) = C(x_{i_1}, \cdot, x_{i_k})</script><h2 id="可加性"><a href="#可加性" class="headerlink" title="可加性"></a>可加性</h2><script type="math/tex; mode=display">
+C(x_1 + y_1, x_2, \cdots, x_k) = C(x_1, x_2, \cdots, x_k) + C(y_1, x_2, \cdots, x_k)</script><h2 id="独立可加性"><a href="#独立可加性" class="headerlink" title="独立可加性"></a>独立可加性</h2><p>假设我们有两组独立随机变量</p>
+<script type="math/tex; mode=display">
+C(x_1 + y_1, \cdots, x_k + y_k) = C(x_1, \cdots, x_k) + C(y_1, \cdots, y_k)</script><h2 id="独立子集性"><a href="#独立子集性" class="headerlink" title="独立子集性"></a>独立子集性</h2><p>如果对于一组随机变量，能够分成两个相互独立的子集，那么它们的联合累积量等于 0</p>
+<h2 id="常数平移不变性"><a href="#常数平移不变性" class="headerlink" title="常数平移不变性"></a>常数平移不变性</h2><script type="math/tex; mode=display">
+C(\alpha+x_1, \cdots, x_k) = C(x_1, \cdots, x_k)</script><p>指 $k \geq 2$ 时的情况</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>高阶累积量可以排除高斯噪声的影响</p>
+</li>
+<li><p>高阶白噪声的高阶累积量是一个多维冲激函数，它的多谱是平坦的</p>
+</li>
+</ul>
+<h1 id="非参数化双谱估计"><a href="#非参数化双谱估计" class="headerlink" title="非参数化双谱估计"></a>非参数化双谱估计</h1><h2 id="双谱的性质"><a href="#双谱的性质" class="headerlink" title="双谱的性质"></a>双谱的性质</h2><ol>
+<li>如果一组 $k$ 个频率的和等于 0（或者 $2\pi$ 的整数倍），即<script type="math/tex; mode=display">
+\sum_{i=1}^k \omega_i \equiv 0 (\bmod \, 2\pi)</script></li>
+</ol>
+<p>那么这组频率就被称为处于 Main Cluster。这通常对应于系统的平稳性要求。对于平稳过程，只有当频率之和为 0 时，其高阶谱才非零。</p>
+<ol>
+<li>如果不仅总和为 0，而且其中的某一部分子集的频率之和也等于 0<script type="math/tex; mode=display">
+\sum_{j\in J} \omega_j \equiv 0 (\bmod \, 2\pi)</script></li>
+</ol>
+<p>这组频率就被称为处于 Proper Subvariety，这意味着这组频率不仅仅是整体相关，而是内部发生了相关，这通常对应于信号是非遍历的或者由多个独立子过程组成的复杂情况。</p>
+<ol>
+<li><p>如果 $k$ 个频率处于 Main Cluster，但不在 Proper Subvariety 中，那么它们之中只有 $k-1$ 个频率是独立的。所以双谱涉及 3 个频率变量。</p>
+</li>
+<li><p>累积量有 $3! = 6$ 中等价形式，包括：</p>
+<script type="math/tex; mode=display">
+C_{3x}(m,n) = C_{3x}(n,m) = C_{3x}(-n, m-n) = C_{3x}(n-m, -m) = C_{3x}(m-n, -n) = C_{3x}(-m, n-m)</script></li>
+<li><p>双谱通常是一个复数，可以表示为</p>
+<script type="math/tex; mode=display">
+B_x(\omega_1, \omega_2) = |B_x(\omega_1, \omega_2)| e^{j\phi_e(\omega_1, \omega_2)}</script></li>
+</ol>
+<p>双谱在两个频率轴向上都具有 $2\pi$ 的周期</p>
+<ol>
+<li>双谱比累积量多一个共轭对称的性质（$X(-\omega) = X^*(\omega)$），所以对称形式更多</li>
+</ol>
+<h2 id="2-维窗函数"><a href="#2-维窗函数" class="headerlink" title="2 维窗函数"></a>2 维窗函数</h2><p>我们在做普通功率谱估计时需要加窗来减少泄露、平滑谱线，估计高阶谱同样也需要，但是二维的 $w(m,n)$</p>
+<p>主要目的是为了提高频率分辨率并减少估计的方差</p>
+<p>有约束：</p>
+<ul>
+<li><p>对称性：$w(m,n) = w(n,m) = w(-m, n-m) = w(m-n, -n)$</p>
+</li>
+<li><p>有限支撑：如果 $(m,n)$ 超出了累积量估计量 $\hat{C}_{3x}(m,n)$ 的有效范围，窗函数就为 0，把不准的地方去掉</p>
+</li>
+<li><p>归一化： $w(0, 0)$ = 1</p>
+</li>
+<li><p>非负性：$W(\omega_1, \omega_2) \geq 0$，即窗函数的傅里叶变换必须在所有频率上都是非负的。 </p>
+</li>
+</ul>
+<h3 id="用一维窗函数逼近"><a href="#用一维窗函数逼近" class="headerlink" title="用一维窗函数逼近"></a>用一维窗函数逼近</h3><p>我们可以令</p>
+<script type="math/tex; mode=display">
+w(m,n) =d(m)d(n)d(n-m)</script><p>一维窗 $d(m)$ 需要满足如下条件：</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{aligned}
+d(m) &= d(-m) \\
+d(m) &= 0 \qquad |m|>L\\  
+d(0) &= 1 \\
+D(\omega) &\geq 0
+\end{aligned}
+\right.</script><p>下面举三个满足上述约束的例子</p>
+<ol>
+<li><p>Optimal window function</p>
+<script type="math/tex; mode=display">
+d_o(m) = \left\{
+\begin{aligned}
+& \frac{1}{\pi} |\sin \frac{\pi m}{L}| + (1 - \frac{|m|}{L}) \cos \frac{\pi m}{L} & |m| < L \\
+& 0 & |m| > L
+\end{aligned}
+\right.</script></li>
+<li><p>Parzen window function</p>
+<script type="math/tex; mode=display">
+d_p(m) = \left\{
+\begin{aligned}
+& 1 - 6 (\frac{|m|}{L})^2 + 6(\frac{|m|}{L})^3 & |m| \leq \frac{L}{2} \\
+& 2(1-\frac{|m|}{L})^3 & \frac{L}{2} \leq |m| \leq L \\
+& 0 & |m| > L
+\end{aligned}
+\right.</script></li>
+<li><p>Frequency average window function</p>
+</li>
+</ol>
+<script type="math/tex; mode=display">d_u(m)</script><p>略</p>
+<p>评价窗函数好不好，需要使用误差 $J$ 和方差 $V$</p>
+<script type="math/tex; mode=display">
+J = \frac{1}{(2\pi)^2} \int_{-\pi}^\pi \int_{-\pi}^\pi (\omega_1 - \omega_2)^2 W(\omega_1, \omega_2)d \omega_1 d \omega_2</script><p>如果窗函数在频域非常集中，那么 $(\omega_1 - \omega_2)^2$ 乘起来积分很小，$J$ 就很小，频率分辨率高</p>
+<script type="math/tex; mode=display">
+V = \sum_{m = -L}^L \sum_{n=-L}^L |w(m,n)|^2</script><p>这等价于频域窗函数的能量</p>
+<p>互相比较一下的话 $V_u = V_o$，但 $J_u = 3.7J_o$，而 $J_p = 1.215J_o, V_p = 0.74V_0$。所以 Parzen 的方差比较小，但是误差比较大。</p>
+<h2 id="双谱估计算法"><a href="#双谱估计算法" class="headerlink" title="双谱估计算法"></a>双谱估计算法</h2><p>已知 $\{x(n)\}$ 是一个确定性的信号，且具有有限能量，则：</p>
+<p>傅里叶变换为：</p>
+<script type="math/tex; mode=display">
+X(\omega) = \sum_{k=-\infty}^\infty x(k) e^{-j\omega k}</script><p>功率谱密度为</p>
+<script type="math/tex; mode=display">
+P_x(\omega) = X(\omega) X^*(\omega)</script><p>双谱的频域表示为：</p>
+<script type="math/tex; mode=display">
+B_x(\omega_1, \omega_2) = X(\omega_1) X(\omega_2) X^*(\omega_1 + \omega_2)</script><p>三谱的频域表示为：</p>
+<script type="math/tex; mode=display">
+T_x(\omega_1, \omega_2, \omega_3) = X(\omega_1) X(\omega_2) X(\omega_3) X^*(\omega_1 + \omega_2 + \omega_3)</script><p>可以看到 $n$ 阶谱的规律 </p>
+<p>PPT 上还有周期信号的公式</p>
+<h3 id="直接法与间接法"><a href="#直接法与间接法" class="headerlink" title="直接法与间接法"></a>直接法与间接法</h3><h4 id="直接法"><a href="#直接法" class="headerlink" title="直接法"></a>直接法</h4><p>对 $M$ 条数据分成 $K$ 段，每段长度为 $N = KM$，减去均值（防止直流分量在频谱中形成巨大的峰值，掩盖其他频率特征。）并补零。</p>
+<p>然后第 $i$ 个数据段 $y^{(i)}(n)$ 进行傅里叶变换</p>
+<script type="math/tex; mode=display">
+Y^(i)(\lambda) = \frac{1}{M} \sum_{n=0}^{M-1} y^(i)(n) e^{\frac{-j2\pi n \lambda}{M}}</script><p>然后计算双谱（$\Delta = 2L_1 + 1$）。最后对多段数据的计算结果取平均。</p>
+<p>后将离散频率索引 $\lambda$ 转换为实际的角频率 $\omega$</p>
+<p>这样计算效率高，但方差比较大，通常需要分段平均或频域平滑</p>
+<h4 id="间接法"><a href="#间接法" class="headerlink" title="间接法"></a>间接法</h4><p>在时域计算信号的三阶累积量，然后进行二维傅里叶变换，然后加窗来平滑谱图，降低方差。</p>
+<p>这样计算量大，但可以通过加窗很好地控制偏差和方差</p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>渐进无偏、一致，但实际方差大。可以增加段数或段长，或使用重叠分段。</p>
+<h1 id="多谱的应用"><a href="#多谱的应用" class="headerlink" title="多谱的应用"></a>多谱的应用</h1><h2 id="Hinich-检测法"><a href="#Hinich-检测法" class="headerlink" title="Hinich 检测法"></a>Hinich 检测法</h2><p>如果 双相干系数 不为 0，则必不为高斯过程。</p>
+<p>如果 双相干系数 是常数，则是线性过程</p>
+<p>PPT 57页介绍了为什么线性系统会导致常数双相干系数（仍然不清楚）</p>
+<h2 id="功率谱重构"><a href="#功率谱重构" class="headerlink" title="功率谱重构"></a>功率谱重构</h2><p>当加性噪声是高斯噪声时，我们可以使用双谱或三谱来重构功率谱，因为它可以抑制噪声。</p>
+<h2 id="相位谱估计"><a href="#相位谱估计" class="headerlink" title="相位谱估计"></a>相位谱估计</h2><p>自相关函数丢失了信号的相位信息，而累积量可以得到相位谱。</p>
+<!-- flag of hidden posts --></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io">不会魔法的小圆</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io/posts/signal_processing_00004.html">https://anti-entrophic.github.io/posts/signal_processing_00004.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://anti-entrophic.github.io" target="_blank">不会魔法的小圆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Signal-Processing/">Signal Processing</a></div><div class="post_share"><div class="social-share" data-image="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">不会魔法的小圆</div><div class="author-info__description">不会魔法的小圆，博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Anti-Entrophic"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">图床爆炸了 会马上修的呜呜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%87%BD%E6%95%B0%E4%B8%8E%E9%AB%98%E9%98%B6%E7%9F%A9"><span class="toc-number">1.</span> <span class="toc-text">特征函数与高阶矩</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E7%BB%B4%E8%81%94%E5%90%88%E7%89%B9%E5%BE%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">二维联合特征函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8B%AC%E7%AB%8B%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">独立性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A9"><span class="toc-number">2.</span> <span class="toc-text">矩</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%87%BD%E6%95%B0%E4%B8%8E%E7%9F%A9%E7%94%9F%E6%88%90"><span class="toc-number">2.1.</span> <span class="toc-text">特征函数与矩生成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%89%B9%E5%BE%81%E5%87%BD%E6%95%B0%E4%B8%8E%E7%B4%AF%E7%A7%AF%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text">第二特征函数与累积量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%E7%9A%84-k-%E9%98%B6%E7%9F%A9"><span class="toc-number">4.</span> <span class="toc-text">随机过程的 k 阶矩</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E9%98%B6%E7%9F%A9%E8%B0%B1%E4%B8%8E%E9%AB%98%E9%98%B6%E7%B4%AF%E7%A7%AF%E9%87%8F%E8%B0%B1"><span class="toc-number">5.</span> <span class="toc-text">高阶矩谱与高阶累积量谱</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E7%9A%84%E9%AB%98%E9%98%B6%E7%B4%AF%E7%A7%AF%E9%87%8F"><span class="toc-number">6.</span> <span class="toc-text">高斯过程的高阶累积量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#M-C-%E5%85%AC%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">M-C 公式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E9%98%B6%E7%B4%AF%E7%A7%AF%E9%87%8F%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">8.</span> <span class="toc-text">高阶累积量的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BD%90%E6%AC%A1%E6%80%A7"><span class="toc-number">8.1.</span> <span class="toc-text">齐次性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E6%80%A7-%E9%A1%BA%E5%BA%8F%E6%97%A0%E5%85%B3"><span class="toc-number">8.2.</span> <span class="toc-text">对称性&#x2F;顺序无关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E5%8A%A0%E6%80%A7"><span class="toc-number">8.3.</span> <span class="toc-text">可加性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8B%AC%E7%AB%8B%E5%8F%AF%E5%8A%A0%E6%80%A7"><span class="toc-number">8.4.</span> <span class="toc-text">独立可加性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8B%AC%E7%AB%8B%E5%AD%90%E9%9B%86%E6%80%A7"><span class="toc-number">8.5.</span> <span class="toc-text">独立子集性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E6%95%B0%E5%B9%B3%E7%A7%BB%E4%B8%8D%E5%8F%98%E6%80%A7"><span class="toc-number">8.6.</span> <span class="toc-text">常数平移不变性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">8.7.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E5%8F%82%E6%95%B0%E5%8C%96%E5%8F%8C%E8%B0%B1%E4%BC%B0%E8%AE%A1"><span class="toc-number">9.</span> <span class="toc-text">非参数化双谱估计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E8%B0%B1%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">9.1.</span> <span class="toc-text">双谱的性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BB%B4%E7%AA%97%E5%87%BD%E6%95%B0"><span class="toc-number">9.2.</span> <span class="toc-text">2 维窗函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%B8%80%E7%BB%B4%E7%AA%97%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91"><span class="toc-number">9.2.1.</span> <span class="toc-text">用一维窗函数逼近</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E8%B0%B1%E4%BC%B0%E8%AE%A1%E7%AE%97%E6%B3%95"><span class="toc-number">9.3.</span> <span class="toc-text">双谱估计算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%B3%95%E4%B8%8E%E9%97%B4%E6%8E%A5%E6%B3%95"><span class="toc-number">9.3.1.</span> <span class="toc-text">直接法与间接法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%B3%95"><span class="toc-number">9.3.1.1.</span> <span class="toc-text">直接法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%B4%E6%8E%A5%E6%B3%95"><span class="toc-number">9.3.1.2.</span> <span class="toc-text">间接法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">9.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E8%B0%B1%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">10.</span> <span class="toc-text">多谱的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hinich-%E6%A3%80%E6%B5%8B%E6%B3%95"><span class="toc-number">10.1.</span> <span class="toc-text">Hinich 检测法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E7%8E%87%E8%B0%B1%E9%87%8D%E6%9E%84"><span class="toc-number">10.2.</span> <span class="toc-text">功率谱重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E4%BD%8D%E8%B0%B1%E4%BC%B0%E8%AE%A1"><span class="toc-number">10.3.</span> <span class="toc-text">相位谱估计</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/10054.html" title="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBOtBpsT6hm7fkR0XkeeypUfkjnJGs7wACRwxrGxPiiUVIKfl97hVK5wEAAwIAA3cAAzoE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning"/></a><div class="content"><a class="title" href="/posts/10054.html" title="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning">Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning</a><time datetime="2026-03-11T10:06:51.000Z" title="发表于 2026-03-11 18:06:51">2026-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10052.html" title="Nesterov"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBECBpFeFx9Ab5RF14QUzlQEZ5CsqNbQACPgtrGwpMsEQKoOPxa0KecwEAAwIAA3cAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nesterov"/></a><div class="content"><a class="title" href="/posts/10052.html" title="Nesterov">Nesterov</a><time datetime="2025-11-13T13:45:37.000Z" title="发表于 2025-11-13 21:45:37">2025-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10051.html" title="Functional Analysis 1 - Dual Space Solution of Optimal Control"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBEBVpFdb5eZBTDcAdRbQtI9fysO78eAACJgtrGwpMsERnl8zPwsyLFwEAAwIAA3cAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Functional Analysis 1 - Dual Space Solution of Optimal Control"/></a><div class="content"><a class="title" href="/posts/10051.html" title="Functional Analysis 1 - Dual Space Solution of Optimal Control">Functional Analysis 1 - Dual Space Solution of Optimal Control</a><time datetime="2025-11-13T05:54:01.000Z" title="发表于 2025-11-13 13:54:01">2025-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.postimg.cc/jjg5jyxg/24f2a50832664c3e6ad70d44eb4918831955897084-1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"/></a><div class="content"><a class="title" href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构">Hessian 谱的 &quot;Bulk + Spikes&quot; 结构</a><time datetime="2025-09-12T05:19:18.000Z" title="发表于 2025-09-12 13:19:18">2025-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10049.html" title="Scaling Law"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAALnomjBPhQpXJnyAkyrgUy8YmHElybxAALJrjEbZjEIRo61j_3lZgZMAQADAgADeQADNgQ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Scaling Law"/></a><div class="content"><a class="title" href="/posts/10049.html" title="Scaling Law">Scaling Law</a><time datetime="2025-08-21T11:07:32.000Z" title="发表于 2025-08-21 19:07:32">2025-08-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 不会魔法的小圆</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

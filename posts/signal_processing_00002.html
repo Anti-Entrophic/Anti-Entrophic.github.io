@@ -1,0 +1,601 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Modern Signal Processing - Chapter II | 不会魔法的小圆</title><meta name="robots" content="noindex"><meta name="author" content="不会魔法的小圆"><meta name="copyright" content="不会魔法的小圆"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="复习期末考试ing，诶真不想学啊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modern Signal Processing - Chapter II">
+<meta property="og:url" content="https://anti-entrophic.github.io/posts/signal_processing_00002.html">
+<meta property="og:site_name" content="不会魔法的小圆">
+<meta property="og:description" content="复习期末考试ing，诶真不想学啊">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg">
+<meta property="article:published_time" content="2025-12-22T03:56:56.000Z">
+<meta property="article:modified_time" content="2026-03-11T08:41:17.617Z">
+<meta property="article:author" content="不会魔法的小圆">
+<meta property="article:tag" content="Signal Processing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://anti-entrophic.github.io/posts/signal_processing_00002.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Modern Signal Processing - Chapter II',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-03-11 16:41:17'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="不会魔法的小圆" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="不会魔法的小圆"><span class="site-name">不会魔法的小圆</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Modern Signal Processing - Chapter II</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-22T03:56:56.000Z" title="发表于 2025-12-22 11:56:56">2025-12-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-11T08:41:17.617Z" title="更新于 2026-03-11 16:41:17">2026-03-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Signal-Processing/">Signal Processing</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Modern Signal Processing - Chapter II"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="自相关函数的非参数估计"><a href="#自相关函数的非参数估计" class="headerlink" title="自相关函数的非参数估计"></a>自相关函数的非参数估计</h1><h2 id="直接估计法"><a href="#直接估计法" class="headerlink" title="直接估计法"></a>直接估计法</h2><p>根据定义</p>
+<script type="math/tex; mode=display">
+R_x(m) = \lim_{N\rightarrow \infty} (\frac{1}{N} \sum_{n=0}^{N-1} x_n x_{n+m})</script><p>真正的自相关 $R_x(m)$ 需要对无穷长的数据求平均 $(N \rightarrow \infty)$。在我们只有 $N$ 个数据点的情况下，自相关函数的估计公式是：</p>
+<script type="math/tex; mode=display">
+\hat{R}_x(m) = \frac{1}{N} \sum_{n=0}^{N-|m|-1} x_n x_{n+m}</script><p>求和项总数是 $N - |m|$</p>
+<p>① 偏差：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbb{E}[\hat{R}_x(m)] &= \frac{1}{N} \sum_{n=0}^{N-|m|-1} \mathbb{E}[x_n x_{n+m}] \\
+&= \frac{N - |m|}{N} R_x(m)
+\end{aligned}</script><p>当 $N \rightarrow \infty$ 时，$\mathbb{E}[\hat{R}_x(m)] = R_x(m)$，所以是渐近无偏</p>
+<p>② 方差</p>
+<script type="math/tex; mode=display">
+\text{Var}[\hat{R}_x(m)] = \mathbb{E}[\hat{R}_x^2(m)] - [\mathbb{E}(\hat{R}_x(m))]^2</script><p>后一项就是 $[\frac{N - |m|}{N} R_x(m)]^2$</p>
+<p>前一项：</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[\hat{R}_x^2(m)] = \frac{1}{N^2} \sum \sum \mathbb{E}(x_ix_{i+m}x_jx_{j+m})</script><p>这个四阶矩几乎没法处理，我们假设这些都是高斯变量。高斯变量有一个矩分解定理：</p>
+<script type="math/tex; mode=display">
+\mathbb{E}(ABCD) = \mathbb{E}(AB)\mathbb{E}(CD) + \mathbb{E}(AC)\mathbb{E}(BD) + \mathbb{E}(AD)\mathbb{E}(BC)</script><p>对应到原公式：</p>
+<ul>
+<li><p>$\mathbb{E}[x_i x_{i+m}] \mathbb{E}[x_j x_{j+m}] = R_x^2(m)$</p>
+</li>
+<li><p>$\mathbb{E}[x_ix_j]\mathbb{E}[x_{i+m}x_{j+m}] = R_x^2(i-j)$</p>
+</li>
+<li><p>$\mathbb{E}[x_ix_{j+m}] \mathbb{E}[x_j x_{i+m}] = R_x(i-j-m)R_x(j-(i+m))$</p>
+</li>
+</ul>
+<p>令 $l = i-j$，则：</p>
+<script type="math/tex; mode=display">
+\text{Var}[\hat{R}_x(m)] = \frac{1}{N} \sum_{l = -(N-|m|-1)}^{N-|m|-1} \cdots</script><p>当 $N \rightarrow \infty$ 时，方差也 $\rightarrow 0$</p>
+<p>综上，偏差趋于0，方差也趋于0，所以这种估计方法是一致估计。</p>
+<h1 id="自相关函数和功率谱的基本性质"><a href="#自相关函数和功率谱的基本性质" class="headerlink" title="自相关函数和功率谱的基本性质"></a>自相关函数和功率谱的基本性质</h1><p>① 对称性</p>
+<p>若 $\{x(n)\}$ 为复序列，$r_{xx}(-m) = r_{xx}^*(m)$；若为实序列，则 $r_{xx}(-m) = r_{xx}(m)$</p>
+<p>② 最大值在原点</p>
+<p>即 $|r_{xx}(m)| \leq r_{xx}(0)$</p>
+<p>③ 周期性与衰减性</p>
+<p>若 $x(n)$ 含周期分量，那么 $r_{xx}(m)$ 也有同周期的分量；否则当 $m \rightarrow \infty$ 时，$r_{xx}(m) \rightarrow 0$</p>
+<p>④ 功率谱的非负性与对称性</p>
+<p>当 $x(n)$ 为实序列时，$S_x(\omega)$ 为非负实对称函数。即 $S_x(-\omega) = S_x(\omega)$ 且 $S_x(\omega) \geq 0$</p>
+<h1 id="离散相关定理"><a href="#离散相关定理" class="headerlink" title="离散相关定理"></a>离散相关定理</h1><p>我们都知道卷积可以用 FFT 计算：</p>
+<script type="math/tex; mode=display">
+x(n) * y(n) = \sum x(k) y(n-k)</script><p>其实相关性也可以：</p>
+<script type="math/tex; mode=display">
+z(n) = \sum x(k) y(n+k)</script><p>具体结论就是： $x_3(n) = \text{IDFT}[X_1^*(k)X_2(k)]$，即：</p>
+<ol>
+<li><p>把 $x$ 和 $y$ 补零</p>
+</li>
+<li><p>做 FFT 得到 $X(k)$ 和 $Y(k)$</p>
+</li>
+<li><p>计算 $X^*(k) \cdot Y(k)$</p>
+</li>
+<li><p>做 IDFT<br>3为3<br>FFT 默认做的是圆周卷积，而我们要的是线性卷积，不会首位相连。所以必须在数据后面补一堆 0，使得总长度 $L \geq 2N-1$</p>
+</li>
+</ol>
+<h1 id="利用互相关性"><a href="#利用互相关性" class="headerlink" title="利用互相关性"></a>利用互相关性</h1><p>设 $x_n = s_n + n_n$</p>
+<ul>
+<li><p>$x_n$ 是我们接收到的观测信号</p>
+</li>
+<li><p>$s_n$ 是我们要找的有用信号</p>
+</li>
+<li><p>$n_n$ 是环境噪声</p>
+</li>
+</ul>
+<p>我们假设 $s_n$ 与 $n_n$ 不相关。计算 观测信号 $x$ 与已知信号 $s$ 的互相关函数 $R_{sx}(m)$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+R_{sx}(m) &= \mathbb{E}[s_nx_{n+m}] \\
+&= \mathbb{E}[s_ns_{n+m}] + \mathbb{E}[s_n n_{n+m}] \\
+&= R_s(m) + 0
+\end{aligned}</script><p>这意味着只要做互相关运算，噪声的影响就会被过滤掉。我们可以找到目标信号中，我们想要寻找的信号 $s_n$ 的相关部分。</p>
+<h1 id="经典谱估计"><a href="#经典谱估计" class="headerlink" title="经典谱估计"></a>经典谱估计</h1><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>方差特性较差：</p>
+<ul>
+<li><p>各次估计的分散性较大</p>
+</li>
+<li><p>估计值随频率的起伏较激烈，且数据愈长起伏愈严重</p>
+</li>
+</ul>
+<h2 id="估计算法"><a href="#估计算法" class="headerlink" title="估计算法"></a>估计算法</h2><p>① 自相关法（Blackman-Tukey 估计）</p>
+<p>先计算自相关函数 $\hat{R}_x(m) = \frac{1}{N} \sum_{n=0}^{N-|m|-1}x_n x_{n+m}$</p>
+<p>再对自相关函数做傅里叶变换，得到功率谱 $\hat{S}_x(e^{j\omega}) = \sum_{m = -(N-1)}^{N-1} \hat{R}_x(m)e^{-jm\omega}$</p>
+<p>② 周期图法 </p>
+<p>直接对信号本身 $x_n$ 做傅里叶变换</p>
+<script type="math/tex; mode=display">
+X(e^{j\omega}) = \sum_{n=0}^{N-1}x_n e^{-jn\omega}</script><p>取其模的平方再除以 $N$，得到功率谱</p>
+<script type="math/tex; mode=display">
+\hat{S}_x(e^{j\omega}) = \frac{1}{N} |X(e^{j\omega})|^2</script><h2 id="性能评估"><a href="#性能评估" class="headerlink" title="性能评估"></a>性能评估</h2><p>① 均值</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[\hat{S}_x(\omega)] = \frac{1}{2\pi} \int S_x(\lambda) V^N (\omega - \lambda) \text{d}\lambda</script><ul>
+<li><p>$S_x(\lambda)$ 是真实的功率谱</p>
+</li>
+<li><p>$V^N(\omega-\lambda)$ 是窗函数频谱的模平方</p>
+</li>
+</ul>
+<p>这是一个渐进无偏估计，估计出来的谱是<strong>真实谱被窗函数模糊后</strong>的结果。当 $N \rightarrow \infty$ 时，窗函数越来越窄，近似于冲激函数，偏差消失。</p>
+<p>② 方差</p>
+<p>仅对白色高斯过程分析：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{Cov}[\hat{S}_x^N(\omega_1)\hat{S}_x^N(\omega_2)] = \sigma_x^4 \{[\frac{\text{sin}\frac{N(\omega_1 + \omega_2)}{2}}{N\text{sin} \frac{\omega_1 + \omega_2}{2}}]^2 + [\frac{\text{sin}\frac{N(\omega_1 - \omega_2)}{2}}{N\text{sin}\frac{\omega_1 -\omega_2}{2}}]^2\} \\
+\Rightarrow \text{Var}[\hat{S}_x^N(\omega) = \sigma_x^4[1 + (\frac{\text{sin}N\omega}{N \text{sin} \omega})^2]]
+\end{aligned}</script><p>所以 $N \rightarrow \infty$ 时，$\text{Var}[\hat{S}_x^N(\omega)]$ 不会 $\rightarrow 0$</p>
+<p>并且功率谱上距离为 $\frac{2\pi}{N}$ 整数倍的各点估计值是互不相关的，其协方差为0，因此结果沿频率轴起伏剧烈，且 $N$ 越大，起伏越密集。</p>
+<h3 id="Example-时延估计"><a href="#Example-时延估计" class="headerlink" title="Example: 时延估计"></a>Example: 时延估计</h3><p>想象我们有两个麦克风，在不同位置收听同一个音源：</p>
+<ul>
+<li>麦克风 1 收到的信号：<script type="math/tex; mode=display">
+y_1(m) = x(m) + n_1(m)</script></li>
+</ul>
+<p>$x(m)$ 是原本的干净声音，$n_1(m)$ 是麦克风 1 附近的背景噪声 </p>
+<ul>
+<li>麦克风 2 收到的信号：<script type="math/tex; mode=display">
+y_2(m) = Ax(m-D) + n_2(m)</script></li>
+</ul>
+<p>$Ax(m-D)$ 是同一个声音，但是由于距离不同，相比麦克风 1 受到的声音会有一个延迟 D，同时有一个衰减 A</p>
+<p>现在，我们计算两个麦克风信号的互相关函数 $r_{y_1y_2}(k)$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+r_{y_1y_2}(k) &= \mathbb{E}[y_1(m) \cdot y_2(m+k)] \\
+&= \mathbb{E}[(x(m)+n_1(m))\cdot(Ax(m+k-D) + n_2(m+k))] \\
+&= A \cdot \mathbb{E}[x(m)x(m+k-D)] + \mathbb{E}[x(m)n_2(m+k)] + A \cdot \mathbb{E}[n_1(m)x(m+k-D)] + \mathbb{E}[n_1(m)n_2(m+k)]
+\end{aligned}</script><p>假设噪声是独立的，那就只留下了第一项 $Ar_{xx}(k-D)$</p>
+<p>又因为我们知道，自相关函数在 $\tau =0$， 即 $k=D$ 时取到最大值。因此，我们只要取不同的 $k$，然后计算自相关性，找到自相关性最高的点对应的 $k$，就是时延 $D$ 了。之后画俩圆找个交点就能锁定音源的位置了。</p>
+<h1 id="功率谱估计的改进"><a href="#功率谱估计的改进" class="headerlink" title="功率谱估计的改进"></a>功率谱估计的改进</h1><h2 id="平均法"><a href="#平均法" class="headerlink" title="平均法"></a>平均法</h2><p>把 $N$ 个数据点分成 $K$ 组，每段长度为 $M$。然后对每段求周期图，加起来取平均</p>
+<script type="math/tex; mode=display">
+\hat{S}_x^{AV}(\omega) = \frac{1}{K} \sum_{i=1}^K \hat{S}_{x,i}^M(\omega)</script><p>这样，它的均值不变，方差会变为原来的 $\frac{1}{k}$。本质上是平均抵消了随机噪声。</p>
+<p>代价是，FFT 的分辨率是 $\frac{\text{采样率}}{M}$，分的段数越多，FFT 就越难分辨不同频率。</p>
+<p>因此，工程设计原则是，先根据目标分辨率和方差来决定 $M$ 和 $K$，最后再决定需要采集多少数据 $N=MK$。</p>
+<h2 id="平滑法"><a href="#平滑法" class="headerlink" title="平滑法"></a>平滑法</h2><p>给自相关函数乘上一个“滞后窗”</p>
+<script type="math/tex; mode=display">
+\hat{S}_x^{SM}(\omega) = \sum_{m = -(M-1)}^{M-1} w^M(m)\hat{R}_x^N(m)e^{-j\omega m}</script><p>时域乘法等价于频域卷积：</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[\hat{S}_x^{SM}] = \frac{1}{2\pi} W^M(\omega) * \mathbb{E}[\hat{S}_x^N(\omega)]</script><h2 id="Welch法"><a href="#Welch法" class="headerlink" title="Welch法"></a>Welch法</h2><p>综合一下，我勒个 A+B 啊</p>
+<ol>
+<li>分段</li>
+</ol>
+<p>允许重叠</p>
+<ol>
+<li>加窗</li>
+</ol>
+<p>每一段数据乘上窗函数。窗函数不要简单的矩形窗，平滑一下。</p>
+<script type="math/tex; mode=display">
+x_i'(n) = x_i(n) \cdot w(n)</script><ol>
+<li>补零与 FFT</li>
+</ol>
+<p>多补点 0 可以平滑一点</p>
+<script type="math/tex; mode=display">
+X(k) = \sum_{n=0}^{M-1}x(n)e^{-j \frac{2\pi}{M} kn}</script><ol>
+<li>算每一段的功率谱<script type="math/tex; mode=display">
+P_i(k) = \frac{1}{MU}|X_i(k)|^2</script></li>
+</ol>
+<p>比较不同的是多了一个归一化因子 $U = \frac{1}{M}\sum w^2(n)$，因为加窗会把信号的能量削弱，需要补回来。</p>
+<ol>
+<li>取平均</li>
+</ol>
+<h2 id="参数选择"><a href="#参数选择" class="headerlink" title="参数选择"></a>参数选择</h2><ol>
+<li>采样率</li>
+</ol>
+<p>最好采 3到5倍 的最高频率。如果要测100Hz的信号，采样率最好设在 300Hz~500Hz</p>
+<ol>
+<li>每段长度</li>
+</ol>
+<script type="math/tex; mode=display">
+L \geq \frac{f_s}{B}</script><p>此处 $B$ 指分辨率</p>
+<h1 id="AR-模型的谱估计"><a href="#AR-模型的谱估计" class="headerlink" title="AR 模型的谱估计"></a>AR 模型的谱估计</h1><p>不用FFT了，直接假设信号是由一个模型产生的，然后算出它的参数。</p>
+<script type="math/tex; mode=display">
+x(n) = \sum a_i x(n-i) = w(n)</script><script type="math/tex; mode=display">
+H(z) = \frac{X(z)}{W(z)} = \frac{1}{A(z)}</script><p>求出参数后，直接代入功率谱公式即可：</p>
+<script type="math/tex; mode=display">
+\hat{S}_x^{AR}(z) = \frac{\sigma^2}{|A(z)|^2}</script><p>所以问题就是，怎么通过观测到的真实数据来估计参数</p>
+<h2 id="Yule-Walker-方程"><a href="#Yule-Walker-方程" class="headerlink" title="Yule-Walker 方程"></a>Yule-Walker 方程</h2><p>它是连接“数据的统计特性（自相关函数）”与“模型参数（AR系数）”的桥梁。</p>
+<p>假设我们有一个 $p$ 阶的 AR 模型：</p>
+<script type="math/tex; mode=display">
+x(n) = - \sum_{k=1}^p a_kx(n-k) + w(n)</script><p>这里的 $x$ 是数据点，$a$ 是 AR 模型的参数，$w$ 是噪声。</p>
+<p>两边同时乘以 $x^*(n-m)$，并求期望 $\mathbb{E}[\cdot]$</p>
+<script type="math/tex; mode=display">
+\mathbb{E}[x(n)x^*(n-m)] = -\sum_{k=1}^p a_k \mathbb{E}[x(n-k)x^*(n-m)] + \mathbb{E}[w(n)x^*(n-m)]</script><p>这是为了将式子变成自相关模式：</p>
+<script type="math/tex; mode=display">
+R_{xx}(m) = - \sum_{k=1}^p a_kR_{xx}(m-k) + \mathbb{E}[w(n)x^*(n-m)]</script><p>最后一项比较特别：</p>
+<ul>
+<li><p>当 $m&gt;0$ 时：$x(n-m)$ 是过去的数据，跟现在的噪声 $w(n)$ 没有关系，所以这一项为 0</p>
+</li>
+<li><p>当 $m=0$ 时：现在的噪声就是现在的信号的一部分，这一项等于噪声方差 $\sigma^2$</p>
+</li>
+</ul>
+<p>因此，Yule-Walker 方程组就是：</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{aligned}
+R_{xx}(m) + \sum_{k=1}^p a_k R_{xx}(m-k) = 0 \\
+R_{xx}(0) + \sum_{k=1}^p a_k R_{xx}(-k) = \sigma^2
+\end{aligned}
+\right.</script><p>上述式子可以表述成矩阵形式：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+R(0) & R(-1) & \cdots & R(-(p-1)) \\
+R(1) & R(0) & \cdots & R(-(p-2)) \\
+\vdots & \vdots & \ddots & \vdots \\
+R(p-1) & R(p-2) & \cdots & R(0)
+\end{bmatrix}
+\begin{bmatrix}
+a_1 \\
+a_2 \\
+\vdots \\
+a_p
+\end{bmatrix}
+=
+-
+\begin{bmatrix}
+R(1) \\
+R(2) \\
+\vdots \\
+R(p)
+\end{bmatrix}</script><p>简写为：</p>
+<script type="math/tex; mode=display">\mathbf{R} \cdot \mathbf{a} = -\mathbf{r}</script><p>或者考虑全两种情况，应该是：</p>
+<script type="math/tex; mode=display">
+\underbrace{
+\begin{bmatrix}
+R(0) & R(-1) & \cdots & R(-p) \\
+R(1) & R(0) & \cdots & R(1-p) \\
+\vdots & \vdots & \ddots & \vdots \\
+R(p) & R(p-1) & \cdots & R(0)
+\end{bmatrix}
+}_{\text{自相关矩阵 (p+1)x(p+1)}}
+\cdot
+\underbrace{
+\begin{bmatrix}
+1 \\
+a_1 \\
+\vdots \\
+a_p
+\end{bmatrix}
+}_{\text{增广系数向量}}
+=
+\underbrace{
+\begin{bmatrix}
+\sigma_p^2 \\
+0 \\
+\vdots \\
+0
+\end{bmatrix}
+}_{\text{右端项}}</script><h2 id="Levinson-Durbin-算法"><a href="#Levinson-Durbin-算法" class="headerlink" title="Levinson-Durbin 算法"></a>Levinson-Durbin 算法</h2><p>直接求上式需要矩阵求逆，复杂度是 $O(p^3)$，LD算法可以利用 $R$ 的对称特性加速计算。</p>
+<p>我们使用综合形式的 Yule-Walker 方程：</p>
+<script type="math/tex; mode=display">
+R_{p-1}a_{p-1} = [\sigma_{p-1}^2, 0, \cdots, 0]^T</script><p>假设我们已经知道了 $p-1$ 阶的系数 $\{a_{p-1, 1}, \cdots, a_{p-1, p-1}\}$</p>
+<p>我们把系数倒过来，设 $a_{p-1}^B$ 是倒序的系数向量，可以得到</p>
+<script type="math/tex; mode=display">
+R_{p-1}a_{p-1}^B = [0, \cdots, 0, \sigma_{p-1}^2]^T</script><p>假设 $p$ 阶的系数向量 $a_p$ 可以由 $p-1$ 阶的解加上一个修正项构成：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix} 1 \\ a_{p,1} \\ \vdots \\ a_{p,p-1} \\ a_{p,p} \end{bmatrix}
+=
+\begin{bmatrix} 1 \\ a_{p-1,1} \\ \vdots \\ a_{p-1,p-1} \\ 0 \end{bmatrix}
++ K_p
+\begin{bmatrix} 0 \\ a_{p-1,p-1}^* \\ \vdots \\ a_{p-1,1}^* \\ 1 \end{bmatrix}</script><p>星号表示共轭，$K_p$ 被称为反射系数。</p>
+<p>代入 $p$ 阶矩阵方程时，前 $p-1$ 行都没问题，但最后一行会出现一个误差，笔记中定义为 $\Delta_p$</p>
+<script type="math/tex; mode=display">
+\Delta_p = R_x(p) + \sum_{k=1}^{p-1}a_{p-1, k}R_x(p-k)</script><p>这代表直接用 $p-1$ 阶模型去预测第 $p$ 个点时产生的误差。联立下等式能得到 $K_p = -\frac{\Delta_p}{\sigma_{p-1}^2}$</p>
+<p>更新误差功率 </p>
+<script type="math/tex; mode=display">
+\sigma_p^2 = \sigma_{p-1}^2 (1 - |K_p|^2)</script><p>总结一下流程就是，初始化</p>
+<ul>
+<li><p>$E_0 = R_x(0)$</p>
+</li>
+<li><p>$a_{0,0} = 1$</p>
+</li>
+</ul>
+<p>递归循环，计算偏差 </p>
+<script type="math/tex; mode=display">
+\Delta_m = R_x(m)+ \sum_{k=1}^{m-1} a_{m-1, k}R_x(m-k)</script><p>计算反射系数</p>
+<script type="math/tex; mode=display">
+K_m = -\frac{\Delta_m}{E_{m-1}}</script><p>更新 AR 系数</p>
+<script type="math/tex; mode=display">
+a_{m,k} = a_{m-1, k} + K_m a^*_{m-1, m-k}</script><p>更新最小误差功率 </p>
+<script type="math/tex; mode=display">
+E_m = E_{m-1}(1 - |K_m|^2)</script><p>总结：</p>
+<p>能迭代也太神奇了，如果按照马尔可夫的经验来看的话。总之，还没有很理解。</p>
+<h1 id="AR-谱估计器的特性"><a href="#AR-谱估计器的特性" class="headerlink" title="AR 谱估计器的特性"></a>AR 谱估计器的特性</h1><h2 id="高分辨率"><a href="#高分辨率" class="headerlink" title="高分辨率"></a>高分辨率</h2><p>因为 AR 谱估计能够延拓自相关函数，即直接用 $R_{xx}(m) = -\sum_{k=1}^p a_k R_{xx}(m-k)$ 去迭代计算后续的自相关函数。</p>
+<p>因此根据维纳-辛钦定理，自相关函数的傅里叶变换就是功率谱密度，等于是我们的数据点变多了，变换后的频谱会更加清晰。</p>
+<h2 id="谱估计值的偏差变小"><a href="#谱估计值的偏差变小" class="headerlink" title="谱估计值的偏差变小"></a>谱估计值的偏差变小</h2><p>经典方法会对真实数据加窗，导致自相关函数在 $\tau$ 变大时衰减过快，会有偏差；而 AR 谱估计会好一点。</p>
+<h2 id="最大熵谱估计的本质"><a href="#最大熵谱估计的本质" class="headerlink" title="最大熵谱估计的本质"></a>最大熵谱估计的本质</h2><p>我们对于除已知的 $r_{xx}(0) \sim r_{xx}(p)$ 之外的数据，不做任何假设，让它们保持 “最混乱、最随机” 的状态</p>
+<p>我们定义谱熵为</p>
+<script type="math/tex; mode=display">
+H[S(\omega)] = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} \ln S(\omega) \text{d}\omega</script><p>这里的 $H$ 代表熵，我们要找到一个功率谱密度 $S(\omega)$，使得这个积分值（熵）最大。</p>
+<p>$\Omega = \frac{\pi}{\Delta t}$ 指的是奈奎斯特角频率，就是能表示的最高有效频率。$\Delta t$ 是时间间隔。</p>
+<p>我们对已知数据施加约束条件</p>
+<script type="math/tex; mode=display">
+r_{xx}(m) = \frac{1}{2\Omega} \int_{-\Omega}^{\Omega} S(\omega) e^{j\omega m \Delta t}\text{d}\omega, \quad m = 0 \sim p</script><p>意思是不管估计的功率谱如何，总要保证前 $0 \sim p$ 个估计出来的自相关值得和实际观测到的相同。</p>
+<p>我们用拉格朗日乘数法解极值问题：</p>
+<script type="math/tex; mode=display">
+J = \underbrace{H[S(\omega)]}_{\text{目标：最大化熵}} + \sum_{m=0}^{p} \lambda_m \underbrace{[\dots]}_{\text{约束：误差为0}}</script><p>对 $S(\omega)$ 求导并令导数为 0，最后可以得到：</p>
+<script type="math/tex; mode=display">
+S(z) = \frac{\sigma^2}{|1+ \sum_{k=1}^p a_kz^{-k}|^2}</script><p>与 AR谱估计 相同，说明两者本质相同。</p>
+<h1 id="AR-模型阶数的选择"><a href="#AR-模型阶数的选择" class="headerlink" title="AR 模型阶数的选择"></a>AR 模型阶数的选择</h1><p>阶数太低，分辨率低，有可能把两个峰画成一个；阶数太高，拟合了噪声可能出现不存在的峰。</p>
+<h2 id="矩阵求秩"><a href="#矩阵求秩" class="headerlink" title="矩阵求秩"></a>矩阵求秩</h2><p>计算 Yule-Walker 方程自相关矩阵的秩突变的位置。但不好用</p>
+<h2 id="FPE"><a href="#FPE" class="headerlink" title="FPE"></a>FPE</h2><script type="math/tex; mode=display">
+FPE(k) = \frac{N+k}{N-k} \cdot \hat{\rho}_k</script><p>其中，$\hat{\rho}_k$ 是预测误差功率，$\frac{N+k}{N-k}$ 是惩罚项。</p>
+<p>当增加 $k$ 时，FPE 曲线会先下降（因为误差 $\hat{\rho} 降得快$），后上升（因为惩罚项 $\frac{N+k}{N-k}$ 升得快）</p>
+<h2 id="AIC"><a href="#AIC" class="headerlink" title="AIC"></a>AIC</h2><script type="math/tex; mode=display">
+AIC(k) = N\ln \hat{\rho}_k + 2k</script><ul>
+<li><p>$N\ln \hat{\rho}_k$ 阶数越高，误差越小</p>
+</li>
+<li><p>$2k$ 惩罚项，阶数越高，惩罚越重</p>
+</li>
+</ul>
+<h2 id="BIC"><a href="#BIC" class="headerlink" title="BIC"></a>BIC</h2><script type="math/tex; mode=display">
+BIC(k) = N \ln \hat{\rho}_k + k \ln N</script><p>对复杂模型的惩罚更大。体现了模型拟合精度与实时处理计算量间的综合考量。</p>
+<h2 id="CAT"><a href="#CAT" class="headerlink" title="CAT"></a>CAT</h2><script type="math/tex; mode=display">
+CAT(k) = \frac{1}{N} \sum_{i=1}^k \frac{1}{\tilde{\rho}_i} - \frac{1}{\tilde{\rho}_k}</script><p>其中 $\tilde{\rho}_i = \frac{N}{N-1}\hat{\rho}_i$</p>
+<h2 id="经验公式"><a href="#经验公式" class="headerlink" title="经验公式"></a>经验公式</h2><p>设 $N$ 是数据长度，一般选择 $\frac{N}{3} &lt; k &lt; \frac{N}{2}$</p>
+<p>信噪比高则 k 小，反之。$10 \lg (P_0 / D(p)) + p \geq \frac{N}{5}$</p>
+<h1 id="谱峰频率偏移"><a href="#谱峰频率偏移" class="headerlink" title="谱峰频率偏移"></a>谱峰频率偏移</h1><p>信噪比高；正弦信号分量初相位是 $\pi$ 的奇数倍；数据长度是正弦分量 $\frac{1}{4}$ 周期的奇数倍；AR阶数 与 $N+1$ 可比拟</p>
+<h1 id="噪声下的-AR-谱估计"><a href="#噪声下的-AR-谱估计" class="headerlink" title="噪声下的 AR 谱估计"></a>噪声下的 AR 谱估计</h1><p>假设信号里有两个靠得很近的频率，$\Delta f$ 至少要差多少，我们才能区分开？</p>
+<p>周期图法：</p>
+<script type="math/tex; mode=display">
+\Delta f \approx \frac{0.86}{N}</script><p>Blackman-Tukey：</p>
+<script type="math/tex; mode=display">
+\Delta f \approx \frac{0.67}{N}</script><p>AR 模型法：</p>
+<script type="math/tex; mode=display">
+\Delta f \approx \frac{1.03}{N \cdot [(N+1) \cdot SNR]^{0.31}}</script><h2 id="改进措施"><a href="#改进措施" class="headerlink" title="改进措施"></a>改进措施</h2><ol>
+<li><p>用 ARMA 模型</p>
+</li>
+<li><p>先用维纳滤波把噪声滤掉</p>
+</li>
+<li><p>利用高阶 AR 模型</p>
+</li>
+</ol>
+<h1 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h1><h2 id="FFT-估计自相关函数"><a href="#FFT-估计自相关函数" class="headerlink" title="FFT 估计自相关函数"></a>FFT 估计自相关函数</h2><p>利用 Wiener-Khinchin 定理，即 <strong>自相关函数是信号功率谱的傅里叶逆变换</strong>。</p>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li><p><strong>计算信号的功率谱（Power Spectrum）</strong>：</p>
+<ul>
+<li>假设信号为 $f(n)$。</li>
+<li>先求信号的傅里叶变换（DFT）：$F(k) = \text{DFT}\{f(n)\}$。</li>
+<li>信号的功率谱等于其幅度谱的平方：$P(k) = |F(k)|^2$。</li>
+<li><em>（笔记中略写了 $f(n)$ 的形式，直接跳到 $X(k)$，假设 $X(k)$ 是信号的 DFT。）</em></li>
+<li>笔记中直接写了：$|X(k)|^2 \Rightarrow R_x(m)$，这意味着功率谱是 $|X(k)|^2$。</li>
+</ul>
+</li>
+<li><p><strong>对功率谱进行傅里叶逆变换（IDFT）</strong>：</p>
+<ul>
+<li>自相关函数 $R_x(m)$ 是功率谱 $P(k)$ 的傅里叶逆变换（IDFT）。</li>
+<li><strong>公式</strong>：$R_x(m) = \text{IDFT}\{P(k)\} = \text{IDFT}\{|X(k)|^2\}$。</li>
+</ul>
+</li>
+</ol>
+<p><strong>笔记中的具体表达</strong>：</p>
+<ul>
+<li>“由 FFT 估 $X(k)$，求 $X^<em>(k)$，求 $X(k) \cdot X^</em>(k)$，得到 $|X(k)|^2$”：这是计算功率谱 $|X(k)|^2$ 的过程。</li>
+<li>“$|X(k)|^2 \Rightarrow R_x(m)$”：这是 Wiener-Khinchin 定理的应用，功率谱的逆变换得到自相关函数。</li>
+<li>“$\hat{R}_x(m) = \text{IDFT}\{|\hat{X}(k)|^2\}$”：其中 $\hat{X}(k)$ 是信号的 DFT，$\hat{R}_x(m)$ 是估计的自相关函数。</li>
+</ul>
+<p><strong>需要注意的细节（笔记中的“措施”）：</strong></p>
+<ul>
+<li><strong>补零操作 (Zero Padding)</strong>：为了提高自相关函数的估计精度（更平滑），通常会对信号进行补零，使其长度 $N$ 远大于原信号长度，并且满足 $N \ge 2N-1$（其中 $N$ 是原信号长度）。这会使 DFT 的计算更接近于连续信号的傅里叶变换，并且 IDFT 得到的自相关函数长度会更长。</li>
+<li><strong>DFT 的周期性</strong>：DFT 具有周期性，所以 $|\hat{X}(k)|^2$ 也是周期的。</li>
+<li><strong>周期性与非对应性</strong>：笔记中提到“周期性与卷积性质的不对应”。在估计自相关函数时，如果直接对有限长度信号的 DFT 进行幅度平方再 IDFT，得到的不是真实的无限长自相关函数，而是有截断效应的。笔记的描述可能是在提醒这一点。</li>
+<li><strong>偶对称性</strong>：自相关函数 $R_x(m)$ 具有偶对称性，即 $R_x(m) = R_x(-m)$。笔记也指出了这一点。</li>
+</ul>
+<hr>
+<h3 id="二、-长数据分段处理以改善自相关估计"><a href="#二、-长数据分段处理以改善自相关估计" class="headerlink" title="二、 长数据分段处理以改善自相关估计"></a>二、 长数据分段处理以改善自相关估计</h3><p><strong>问题背景</strong>：<br>当原始信号长度很长时，如果直接进行 FFT 估计自相关函数，可能会遇到以下问题：</p>
+<ol>
+<li><strong>计算量大</strong>：FFT 的计算复杂度与数据长度的平方（或 $N \log N$）有关，长数据会导致计算时间过长。</li>
+<li><strong>存储需求大</strong>：需要存储大量数据。</li>
+<li><strong>可能引入效应</strong>：如果信号的非平稳性在长数据中变化剧烈，直接处理可能导致估计偏差。</li>
+</ol>
+<p><strong>解决方法：分段处理（Segment Processing）</strong></p>
+<p><strong>核心思想</strong>：将长数据分割成若干个较短的段，分别估计各段的自相关函数，然后将它们组合起来得到整体的估计。</p>
+<p><strong>笔记中的步骤</strong>：</p>
+<ol>
+<li><p><strong>分段</strong>：</p>
+<ul>
+<li>设信号总长度为 $N_{total}$。</li>
+<li>选择一个段长度 $M$（通常 $M &lt; N_{total}$）。</li>
+<li>将总数据分成 $K$ 段，每段长度为 $M$（可能最后一个段会短一些）。</li>
+<li>笔记中设置 $N$（估计自相关函数的总长度）和 $L$（窗长），要求 $L \ge M$ 且 $N \ge 2L-1$。</li>
+<li>笔记中设置 $P$ 为 DFT 的长度，要求 $P \ge L+M-1$。</li>
+</ul>
+</li>
+<li><p><strong>对每一段进行处理</strong>：</p>
+<ul>
+<li><strong>选取数据</strong>：假设信号为 $x_0[n]$。</li>
+<li><strong>数据窗口化（加窗）</strong>：对于每一段，可能需要一个窗函数 $w(n)$ 来平滑截断效应。笔记中虽然提到“加窗 w(n)”，但这里的步骤似乎更侧重于直接分段，并且对分段的信号进行处理。</li>
+<li><strong>构建分段信号 $a_{i,n}$ 和 $b_{i,n}$</strong>：<ul>
+<li>对于第 $i$ 段（从 $x_0$ 中选取），构建序列 $a_{i,n}$ 和 $b_{i,n}$。</li>
+<li>$a_{i,n}$ 似乎是当前段的数据 $x_0$ 的某个部分，用于计算。</li>
+<li>$b_{i,n}$ 似乎也与 $x_0$ 的数据有关，并且与 $a_{i,n}$ 构成一种配对。</li>
+<li><strong>重要说明</strong>：这个步骤的符号表示（$a_{i,n}$, $b_{i,n}$）可能涉及一种特定的算法，例如 <strong> Welch’s method</strong> 或其他段平均自相关估计方法。这里的 $P$ 指 DFT 的长度，用于计算。</li>
+<li><strong>计算 $A_{i,k}$ 和 $B_{i,k}$</strong>：对 $a_{i,n}$ 和 $b_{i,n}$ 分别进行 $P$ 点 DFT 得到 $A_{i,k}$ 和 $B_{i,k}$。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>组合各段结果</strong>：</p>
+<ul>
+<li><strong>计算 $V_{i,k}$</strong>：$V_{i,k} = A_{i,k} \cdot B_{i,k}^*$ (可能是 $A_{i,k}$ 与 $B_{i,k}$ 共轭的乘积，或类似操作）。</li>
+<li><strong>平均 $V_k$</strong>：对所有段的 $V_{i,k}$ 进行平均，得到 $V_k = \frac{1}{K} \sum_{i} V_{i,k}$。</li>
+<li><strong>IDFT 得到最终自相关函数</strong>：对平均结果 $V_k$ 进行傅里叶逆变换，得到最终的自相关函数估计 $\hat{R}_x(m)$。<script type="math/tex; mode=display">\hat{R}_x(m) = \frac{1}{N} \text{IDFT}\{V_k\}</script><em>注：这里的 $N$ 可能是最终估计自相关函数的长度。</em></li>
+</ul>
+</li>
+</ol>
+<p><strong>分段处理的优势</strong>：</p>
+<ul>
+<li><strong>降低计算复杂度</strong>：对短段进行 FFT 比对长数据直接 FFT 计算量小。</li>
+<li><strong>减小存储需求</strong>：只需处理当前段的数据。</li>
+<li><strong>改善估计性能</strong>：通过对多个段的自相关估计进行平均（如 Welch 方法），可以<strong>降低方差</strong>，从而得到更平滑、更可靠的自相关函数估计。这相当于一种“平滑平均”操作。</li>
+</ul>
+<p><strong>总结</strong>：<br>这部分笔记介绍了基于 FFT 的自相关函数估计方法，强调了 Wiener-Khinchin 定理的应用。对于长数据，通过将其分成短段，分别进行 DFT/FFT 计算，然后进行组合平均，可以有效降低计算量并改善自相关估计的鲁棒性。笔记中涉及的 $a_{i,n}, b_{i,n}, V_{i,k}$ 等步骤，很可能是在实现某种特定的分段自相关估计算法，如 Welch 方法，以实现平滑平均的效果。</p>
+<!-- flag of hidden posts --></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io">不会魔法的小圆</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io/posts/signal_processing_00002.html">https://anti-entrophic.github.io/posts/signal_processing_00002.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://anti-entrophic.github.io" target="_blank">不会魔法的小圆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Signal-Processing/">Signal Processing</a></div><div class="post_share"><div class="social-share" data-image="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAKuvmiBzJ6CvJsTG8OrwxvXmssgeC39AALHrzEbuU0IRCMWojxnMj8gAQADAgADdwADNgQ.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">不会魔法的小圆</div><div class="author-info__description">不会魔法的小圆，博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Anti-Entrophic"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">图床爆炸了 会马上修的呜呜</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E7%9A%84%E9%9D%9E%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">自相关函数的非参数估计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E4%BC%B0%E8%AE%A1%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">直接估计法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E5%92%8C%E5%8A%9F%E7%8E%87%E8%B0%B1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%B4%A8"><span class="toc-number">2.</span> <span class="toc-text">自相关函数和功率谱的基本性质</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E7%9B%B8%E5%85%B3%E5%AE%9A%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">离散相关定理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E4%BA%92%E7%9B%B8%E5%85%B3%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text">利用互相关性</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E8%B0%B1%E4%BC%B0%E8%AE%A1"><span class="toc-number">5.</span> <span class="toc-text">经典谱估计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%B0%E8%AE%A1%E7%AE%97%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">估计算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="toc-number">5.3.</span> <span class="toc-text">性能评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-%E6%97%B6%E5%BB%B6%E4%BC%B0%E8%AE%A1"><span class="toc-number">5.3.1.</span> <span class="toc-text">Example: 时延估计</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%9F%E7%8E%87%E8%B0%B1%E4%BC%B0%E8%AE%A1%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="toc-number">6.</span> <span class="toc-text">功率谱估计的改进</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E5%9D%87%E6%B3%95"><span class="toc-number">6.1.</span> <span class="toc-text">平均法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E6%BB%91%E6%B3%95"><span class="toc-number">6.2.</span> <span class="toc-text">平滑法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Welch%E6%B3%95"><span class="toc-number">6.3.</span> <span class="toc-text">Welch法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9"><span class="toc-number">6.4.</span> <span class="toc-text">参数选择</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AR-%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%B0%B1%E4%BC%B0%E8%AE%A1"><span class="toc-number">7.</span> <span class="toc-text">AR 模型的谱估计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Yule-Walker-%E6%96%B9%E7%A8%8B"><span class="toc-number">7.1.</span> <span class="toc-text">Yule-Walker 方程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Levinson-Durbin-%E7%AE%97%E6%B3%95"><span class="toc-number">7.2.</span> <span class="toc-text">Levinson-Durbin 算法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AR-%E8%B0%B1%E4%BC%B0%E8%AE%A1%E5%99%A8%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">8.</span> <span class="toc-text">AR 谱估计器的特性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87"><span class="toc-number">8.1.</span> <span class="toc-text">高分辨率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%B1%E4%BC%B0%E8%AE%A1%E5%80%BC%E7%9A%84%E5%81%8F%E5%B7%AE%E5%8F%98%E5%B0%8F"><span class="toc-number">8.2.</span> <span class="toc-text">谱估计值的偏差变小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E7%86%B5%E8%B0%B1%E4%BC%B0%E8%AE%A1%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">8.3.</span> <span class="toc-text">最大熵谱估计的本质</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AR-%E6%A8%A1%E5%9E%8B%E9%98%B6%E6%95%B0%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">9.</span> <span class="toc-text">AR 模型阶数的选择</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E6%B1%82%E7%A7%A9"><span class="toc-number">9.1.</span> <span class="toc-text">矩阵求秩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FPE"><span class="toc-number">9.2.</span> <span class="toc-text">FPE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AIC"><span class="toc-number">9.3.</span> <span class="toc-text">AIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BIC"><span class="toc-number">9.4.</span> <span class="toc-text">BIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAT"><span class="toc-number">9.5.</span> <span class="toc-text">CAT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%8F%E9%AA%8C%E5%85%AC%E5%BC%8F"><span class="toc-number">9.6.</span> <span class="toc-text">经验公式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B0%B1%E5%B3%B0%E9%A2%91%E7%8E%87%E5%81%8F%E7%A7%BB"><span class="toc-number">10.</span> <span class="toc-text">谱峰频率偏移</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%99%AA%E5%A3%B0%E4%B8%8B%E7%9A%84-AR-%E8%B0%B1%E4%BC%B0%E8%AE%A1"><span class="toc-number">11.</span> <span class="toc-text">噪声下的 AR 谱估计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B%E6%8E%AA%E6%96%BD"><span class="toc-number">11.1.</span> <span class="toc-text">改进措施</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-number">12.</span> <span class="toc-text">其它</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FFT-%E4%BC%B0%E8%AE%A1%E8%87%AA%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="toc-number">12.1.</span> <span class="toc-text">FFT 估计自相关函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E9%95%BF%E6%95%B0%E6%8D%AE%E5%88%86%E6%AE%B5%E5%A4%84%E7%90%86%E4%BB%A5%E6%94%B9%E5%96%84%E8%87%AA%E7%9B%B8%E5%85%B3%E4%BC%B0%E8%AE%A1"><span class="toc-number">12.1.1.</span> <span class="toc-text">二、 长数据分段处理以改善自相关估计</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/10054.html" title="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBOtBpsT6hm7fkR0XkeeypUfkjnJGs7wACRwxrGxPiiUVIKfl97hVK5wEAAwIAA3cAAzoE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning"/></a><div class="content"><a class="title" href="/posts/10054.html" title="Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning">Mousse - Rectifying the Geometry of Muon with Curvature-Aware Preconditioning</a><time datetime="2026-03-11T10:06:51.000Z" title="发表于 2026-03-11 18:06:51">2026-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10052.html" title="Nesterov"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBECBpFeFx9Ab5RF14QUzlQEZ5CsqNbQACPgtrGwpMsEQKoOPxa0KecwEAAwIAA3cAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nesterov"/></a><div class="content"><a class="title" href="/posts/10052.html" title="Nesterov">Nesterov</a><time datetime="2025-11-13T13:45:37.000Z" title="发表于 2025-11-13 21:45:37">2025-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10051.html" title="Functional Analysis 1 - Dual Space Solution of Optimal Control"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBEBVpFdb5eZBTDcAdRbQtI9fysO78eAACJgtrGwpMsERnl8zPwsyLFwEAAwIAA3cAAzYE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Functional Analysis 1 - Dual Space Solution of Optimal Control"/></a><div class="content"><a class="title" href="/posts/10051.html" title="Functional Analysis 1 - Dual Space Solution of Optimal Control">Functional Analysis 1 - Dual Space Solution of Optimal Control</a><time datetime="2025-11-13T05:54:01.000Z" title="发表于 2025-11-13 13:54:01">2025-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.postimg.cc/jjg5jyxg/24f2a50832664c3e6ad70d44eb4918831955897084-1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构"/></a><div class="content"><a class="title" href="/posts/10050.html" title="Hessian 谱的 &quot;Bulk + Spikes&quot; 结构">Hessian 谱的 &quot;Bulk + Spikes&quot; 结构</a><time datetime="2025-09-12T05:19:18.000Z" title="发表于 2025-09-12 13:19:18">2025-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10049.html" title="Scaling Law"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAALnomjBPhQpXJnyAkyrgUy8YmHElybxAALJrjEbZjEIRo61j_3lZgZMAQADAgADeQADNgQ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Scaling Law"/></a><div class="content"><a class="title" href="/posts/10049.html" title="Scaling Law">Scaling Law</a><time datetime="2025-08-21T11:07:32.000Z" title="发表于 2025-08-21 19:07:32">2025-08-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 不会魔法的小圆</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
