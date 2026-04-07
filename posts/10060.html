@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>残差连接的数学视角（一）：mHC | 不会魔法的小圆</title><meta name="author" content="不会魔法的小圆"><meta name="copyright" content="不会魔法的小圆"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="没几个月就已经卷完了 ┐(´д&#96;)┌">
+<meta property="og:type" content="article">
+<meta property="og:title" content="残差连接的数学视角（一）：mHC">
+<meta property="og:url" content="https://anti-entrophic.github.io/posts/10060.html">
+<meta property="og:site_name" content="不会魔法的小圆">
+<meta property="og:description" content="没几个月就已经卷完了 ┐(´д&#96;)┌">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBQMlp1MBQ5dGVwi4RnviLrttmPkpregACdAxrG3oeqEYqKRFn1Tbi9gEAAwIAA3cAAzsE.jpg">
+<meta property="article:published_time" content="2026-04-07T08:24:19.000Z">
+<meta property="article:modified_time" content="2026-04-07T08:29:14.439Z">
+<meta property="article:author" content="不会魔法的小圆">
+<meta property="article:tag" content="Model Structure">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBQMlp1MBQ5dGVwi4RnviLrttmPkpregACdAxrG3oeqEYqKRFn1Tbi9gEAAwIAA3cAAzsE.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://anti-entrophic.github.io/posts/10060.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '残差连接的数学视角（一）：mHC',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-04-07 16:29:14'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="不会魔法的小圆" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBQMlp1MBQ5dGVwi4RnviLrttmPkpregACdAxrG3oeqEYqKRFn1Tbi9gEAAwIAA3cAAzsE.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="不会魔法的小圆"><span class="site-name">不会魔法的小圆</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/html/index.html"><i class="fa-fw fas fa-archive"></i><span> Tools</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">残差连接的数学视角（一）：mHC</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-07T08:24:19.000Z" title="发表于 2026-04-07 16:24:19">2026-04-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-07T08:29:14.439Z" title="更新于 2026-04-07 16:29:14">2026-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Math/">Math</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="残差连接的数学视角（一）：mHC"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Residual-Connection"><a href="#Residual-Connection" class="headerlink" title="Residual Connection"></a>Residual Connection</h1><p>残差连接我们都知道：</p>
+<script type="math/tex; mode=display">
+x_{l+1} = x_l + \mathcal{F}(x_l， \mathcal{W}_l)</script><p>其中 $x_l$ 表示输入 $l$ 层的 hidden state，$W_l$ 表示第 $l$ 层的权重。</p>
+<p>最早看到对于残差连接的理解，就是保证回传的梯度不会消失，因为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial x_{l+1}}{\partial x_l} &= I + \frac{\partial \mathcal{F}(x_l, \mathcal{W}_l)}{\partial x_l} \\
+\frac{\partial \mathcal{L}}{\partial x_l} &= \frac{\partial \mathcal{L}}{\partial x_{l+1}} \frac{\partial x_{l+1}}{\partial x_{l}} \\
+&= \frac{\partial \mathcal{L}}{\partial x_{l+1}} (I + \frac{\partial \mathcal{F}_l}{\partial x_l})
+\end{aligned}</script><p>我们可以看成，梯度也有一个类似的残差流。或者说：</p>
+<script type="math/tex; mode=display">
+\frac{\partial \mathcal{L}}{\partial x_l} = \frac{\partial \mathcal{L}}{\partial x_{L}}\prod_{i = l}^{L-1} (I + \frac{\partial \mathcal{F}_i}{\partial x_i})</script><p>这里的 $\prod_{i = l}^{L-1} (I + \frac{\partial \mathcal{F}_i}{\partial x_i})$ 不会像 $\prod_{i = l}^{L-1} \frac{\partial \mathcal{F}_i}{\partial x_i}$ 一样快速坍缩，因此保住了梯度。这种保梯度的观点当然没错，ResNet 本身可能也就是这个观点。</p>
+<h1 id="Hyper-Connection"><a href="#Hyper-Connection" class="headerlink" title="Hyper Connection"></a>Hyper Connection</h1><p>在架构大炼金中，简单的 residual connection 也没有幸免，迎来了自己的升级版：</p>
+<script type="math/tex; mode=display">
+x_{l+1} = \mathcal{H}_l^{\text{res}}x_l + \mathcal{H}_l^{\text{post}} \mathcal{F}(\mathcal{H}_l^{\text{pre}}x_l, \mathcal{W}_l)</script><p>这里，hidden state $x_l$ 的维度从 $C$ 被扩展为了 $n \times C$。 $\mathcal{H}_l^{\text{res}}\in \mathbb{R}^{n \times n}$ 负责混合残差流的 $x_l$ 的 $n$ 个通道；$\mathcal{H}_l^{\text{pre}}$ 和 $\mathcal{H}_l^{\text{post}}$ 则扮演了类似与 MLP 的 up/down projection 的作用。总而言之，是一种廉价的增加复杂度的方法，以及又一次缺乏数学约束的炼金。</p>
+<p>当我们展开 HC，自然会看到它的问题：</p>
+<script type="math/tex; mode=display">
+x_L = (\prod_{i=l}^{L-1} \mathcal{H}_l^{\text{res}})x_l + \sum_{i=1}^{L-1} (\prod_{j=i+1}^{L-1} \mathcal{H}_j^{\text{res}}) \mathcal{H}_i^{\text{post}} \mathcal{F}(\mathcal{H_i^{\text{pre}}x_i, \mathcal{W}_i})</script><p>（这里的连乘都默认递降，$\prod_{i=l}^{L-1} \mathcal{H}_l := \mathcal{H}_{L-1} \mathcal{H}_{L-2} \cdots \mathcal{H}_l$）</p>
+<p>显然，梯度中的 $I$ 会变成 $\prod_{i=l}^{L-1} \mathcal{H}_l^{\text{res}}$，再没有显式结构能够阻止坍缩，会导致训练的不稳定。</p>
+<div class="note warning flat"><p>事实上，HC 这块有很多变体，但我没有深入了解，仅当成一个整体用于抛砖引玉。下一篇文章在介绍 AttnRes 时，其中会有详细的对比。</p>
+</div>
+<h1 id="Manifold-Constrained-Hyper-Connections-mHC"><a href="#Manifold-Constrained-Hyper-Connections-mHC" class="headerlink" title="Manifold-Constrained Hyper-Connections (mHC)"></a>Manifold-Constrained Hyper-Connections (mHC)</h1><p>为了解决这个问题，mHC 就对 $\mathcal{H}_l^{\text{res}}$ 加了一个流形约束，希望保住残差连接本身保梯度的性质，或者我更喜欢说，保住 LLM 喜欢的那个偏置。mHC 将算子约束为双随机矩阵，满足：</p>
+<script type="math/tex; mode=display">
+\mathcal{H}_l^{\text{res}} \textbf{1}_n = \textbf{1}_n, \, \textbf{1}_n^T \mathcal{H}_l^{\text{res}}  = \textbf{1}_n^T, \, \mathcal{H}_l^{\text{res}} \geq 0</script><p>其构成的流形 $\mathcal{M}^{\text{res}}$ 被称为 Birkhoff 多面体。当通道数 n=1 时，这里的条件退化为 $\mathcal{H}_l^{\text{res}} = 1$， 与 $\mathcal{H}_l^{\text{res}}=I_n$ 保持一致。</p>
+<p>这一双随机矩阵约束被视为是比 $\mathcal{H}_l^{\text{res}}=I_n$ 更好的。文中的 Section 4.1 提到的第三个性质中就道出了这一选择的数学本质：“置换矩阵的凸组合”。</p>
+<h2 id="置换矩阵"><a href="#置换矩阵" class="headerlink" title="置换矩阵"></a>置换矩阵</h2><p>想象 mHC 中有 3 条通道，置换操作允许我们交换这 3 条通道的信息：</p>
+<script type="math/tex; mode=display">P = \begin{pmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix}</script><p>置换矩阵构成一个群，称为对称群 $S_n$。显然， 它是正交群 $O_n$ 的离散子群，因为 $P^TP=I$ 总成立，只不过，你没办法交换 0.5 个通道，置换群 $S_n$ 是不连续的。</p>
+<h2 id="Birkhoff-von-Neumann-Theorem"><a href="#Birkhoff-von-Neumann-Theorem" class="headerlink" title="Birkhoff-von Neumann Theorem"></a>Birkhoff-von Neumann Theorem</h2><p>显然，我们不光需要置换矩阵，更需要一种类似通道信息混合的操作，执行非单一置换矩阵的“软交换”，就好像是我们想把第一个通道的 0.3 交换到第二个通道去，0.4 交换到第三个通道去。</p>
+<p>根据 Birkhoff-von Neumann 定理，这种<strong>置换矩阵的凸组合，就构成了双随机矩阵；置换矩阵的凸包，就构成了双随机矩阵流形</strong>，即 Birkhoff 多面体。</p>
+<p>从数学角度来看，双随机流形构成了一个半群，因为它不存在逆元，我们没法从通道混合后的分离出原来的输入。举个很直观的例子，对于：</p>
+<script type="math/tex; mode=display">
+x=
+\begin{pmatrix}1\\0\end{pmatrix},
+\qquad
+y=
+\begin{pmatrix}0\\1\end{pmatrix}</script><p>这两个输入，经过双随机矩阵</p>
+<script type="math/tex; mode=display">
+A=
+\begin{pmatrix}
+\frac12&\frac12\\
+\frac12&\frac12
+\end{pmatrix}</script><p>后，</p>
+<script type="math/tex; mode=display">
+Ax=Ay=
+\begin{pmatrix}
+\frac12\\
+\frac12
+\end{pmatrix}</script><p>也就是说，我们根据结果没法分辨输入是 $x$ 还是 $y$ 了。这里的双随机矩阵 $A$ 不可逆。其实哪怕可逆也不行，逆并不一定也是一个双随机矩阵。事实上，当且仅当 $A\in \mathcal{M}$ 是置换矩阵时，才有 $A^{-1} \in \mathcal{M}$。</p>
+<p>可以这样直观理解：半群和信息的单向流动是相契合的，通道信息混合本身就是一种熵增操作。</p>
+<h2 id="mHC-的做法"><a href="#mHC-的做法" class="headerlink" title="mHC 的做法"></a>mHC 的做法</h2><p>mHC 的 $\mathcal{H}_l^{\text{res}}$ 一开始是经过一个无约束的线性投影生成的</p>
+<script type="math/tex; mode=display">
+\tilde{\mathcal{H}}_l^{\text{res}} = \alpha_l^{\text{res}} \cdot \text{mat}(\vec{x}_l' \phi_l^{\text{res}}) + b_l^{\text{res}}</script><p>有点麻烦，我直接贴论文吧：</p>
+<center>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBP89pz71aqhCG2wnubC_n8kbx6Q_9mAAC9gtrG6FSgEamIVkUpJm2MAEAAwIAA3kAAzoE.png
+" width="400px" />
+
+<p style="font-size: 10px;"> 原论文 Section 4.2</p>
+</center>
+
+<p>在 mHC 中，这里采用了Sinkhorn-Knopp 算法，将生成的无约束的 $\tilde{\mathcal{H}}_l^{\text{res}}$ 再投影为一个双随机矩阵。这是一个迭代算法，mHC 采用了 20 步。尽管进行了kernel优化，但总体而言，mHC 引入了 6.7% 的时间延迟。</p>
+<h2 id="Semi-group-的困境"><a href="#Semi-group-的困境" class="headerlink" title="Semi group 的困境"></a>Semi group 的困境</h2><p>正如我们在<a href="https://anti-entrophic.github.io/posts/10059.html">从李群的视角看 ROPE 旋转位置编码</a>那篇blog中提到的，正交群的旋转矩阵 $R(t)$ 是由 反对称矩阵 $X$ 通过矩阵指数生成的：$R = e^{tX}$。不仅要问，我们能找到双随机矩阵流形的生成元 $Q: \mathcal{H}=e^{tQ}$ 吗？</p>
+<p>答案是有的，而且这个 $Q$ 意外的简单，是 Markov 转移速率矩阵，满足：</p>
+<script type="math/tex; mode=display">
+Q\textbf{1} = \textbf{1}Q = 0</script><p>对 $ \mathcal{H}\textbf{1} = \textbf{1} \mathcal{H}=\textbf{1}$ 代入后求导即可</p>
+<p>既然我们已经知道了双随机矩阵 $\mathcal{H}$ 的生成元是 $Q$，我们直接让模型不要输出 $\mathcal{H}$ 而是生成 $Q$ 不就可以了吗？再通过矩阵指数得到 $\mathcal{H}$ 即可：</p>
+<script type="math/tex; mode=display">
+\mathcal{H} = e^{tQ} = I + tQ + \frac{1}{2!}(tQ)^2 + \frac{1}{3!}(tQ)^3 + \cdots</script><p>然而，这里的 $\mathcal{H}$ 不是群而是半群，整个 $\mathcal{M}$ 是一个凸包而不是一个光滑流形，因此我们没有办法用生成元法生成所有双随机矩阵，事实上有相当一部分 $\mathcal{H}$ 没有办法生成，是很难受的一个点。</p>
+<h1 id="mHC-的变体"><a href="#mHC-的变体" class="headerlink" title="mHC 的变体"></a>mHC 的变体</h1><p>目前已经能找到一些 mHC 的变体，太卷了。</p>
+<h2 id="mHC-lite"><a href="#mHC-lite" class="headerlink" title="mHC-lite"></a>mHC-lite</h2><p>ArXiv: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2601.05732">mHC-lite: You Don’t Need 20 Sinkhorn-Knopp Iterations</a></p>
+<p>它的想法是，与其把一个随机矩阵投到 Birkhoff 凸包内，不如我们将这个凸包的所有顶点作为一个基底，也就是所有的 $n!$ 种置换矩阵，然后直接学一个坐标 $a_k$，使得</p>
+<script type="math/tex; mode=display">
+\mathcal{H}^{\text{res}} = \sum_{i=1}^{n!}a_i P_i，\quad a_i \geq 0, \quad \sum_i a_i = 1</script><p>最后这一步用一个 softmax 来解决。</p>
+<p>这个问题在我看来有以下两个缺陷：</p>
+<ul>
+<li><p>基底的数量是 $n!$。尽管在 mHC 的 setting 下，$n=4$ 是可以接受的，但是会无法 scaling 更大的 $n$</p>
+</li>
+<li><p>过参数化。一个 $n \times n$ 的双随机矩阵，它的真实自由度其实只有 $(n-1)^2$，因为确定了前 $n-1$ 行和列，最后一行和一列就自动确定了。这里的问题是，mHC-lite 要求输出 $n!$ 个坐标参数，但实际的自由度只有 $(n-1)^2$。还是同样的问题，当 $n=4$ 时差距不严重，只是 $(4-1)^2=9$ 和 $4!=24$。但如果 $n=8$ 则有 $(8-1)^2 = 49$ 与 $8!=40320$ 的巨大差距。参数完全冗余。</p>
+</li>
+</ul>
+<h2 id="KromHC"><a href="#KromHC" class="headerlink" title="KromHC"></a>KromHC</h2><p>ArXiv: <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2601.21579">KromHC: Manifold-Constrained Hyper-Connections with Kronecker-Product Residual Matrices</a></p>
+<p>一篇有些偷换概念的文章。它们选了一个带 Kronecker 乘法结构的子半群作为目标，认为可以通过学习一组小双随机矩阵的参数，再 kronecker 积乘起来得到一个大的双随机矩阵。</p>
+<p>说的更具体一点，以 $n=8$ 为例，由于 $8 = 2 \times 2 \times 2$，就可以构造 3 个小的双随机矩阵 $U_i$，每个都是 $S_2$ 的凸组合，最后令 $\mathcal{H}^{\text{res}} = U_3 \otimes U_2 \otimes U_1$</p>
+<p>显然，这里只能得到一个 $\mathcal{M}$ 的子集，并非所有的双随机矩阵都有这样的 Kronecker 积乘法结构。它的自由度只有 $3 \times (2-1)^2 = 3 \ll (8-1)^2 = 49$。至于这种结构偏置 LLM 是否接受，就是另话了。直觉上来看，这种约束似乎过强了。</p>
+<h2 id="sHC"><a href="#sHC" class="headerlink" title="sHC"></a>sHC</h2><p>ArXiv: <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2603.20896">Beyond the Birkhoff Polytope: Spectral-Sphere-Constrained Hyper-Connections</a></p>
+<p>好文章。</p>
+<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>原来 mHC 的双随机矩阵约束满足：</p>
+<script type="math/tex; mode=display">
+\mathcal{H}_l^{\text{res}} \textbf{1}_n = \textbf{1}_n, \, \textbf{1}_n^T \mathcal{H}_l^{\text{res}}  = \textbf{1}_n^T, \, \mathcal{H}_l^{\text{res}} \geq 0</script><p>而 sHC 抛弃了最后的非负约束，替换为：</p>
+<script type="math/tex; mode=display">
+\mathcal{H}_l^{\text{res}} \textbf{1}_n = \textbf{1}_n, \, \textbf{1}_n^T \mathcal{H}_l^{\text{res}}  = \textbf{1}_n^T, \, \|\mathcal{H}_l^{\text{res}}\|_{\text{op}} = 1</script><p>这样的话，由于矩阵乘积满足</p>
+<script type="math/tex; mode=display">
+\|\mathcal{H}_1\mathcal{H}_2\|_{\text{op}} \leq \|\mathcal{H}_1\|_{\text{op}}\|\mathcal{H}_2\|_{\text{op}} =1</script><p>并且，又因为 $\textbf{1}$ 是特征向量，所以 $|\mathcal{H}_1\mathcal{H}_2|_{\text{op}} \geq 1$，所以有：</p>
+<script type="math/tex; mode=display">
+\|\mathcal{H}_1\mathcal{H}_2\|_{\text{op}} = 1</script><p>所以这个约束矩阵集合对乘法封闭。它实际上比 mHC 范围更大。</p>
+<p>具体的求法比较复杂。作者定义</p>
+<script type="math/tex; mode=display">
+J = \frac{1}{n} \textbf{1} \textbf{1}^T, \quad \mathbb{Z}_n = \{\mathcal{H} \in \mathbb{R}^{n \times n}: \mathcal{H}\textbf{1} = 0, \textbf{1}^T \mathcal{H} = 0\}</script><p>则：</p>
+<script type="math/tex; mode=display">
+\mathcal{H}^{\text{res}} = J + \mathcal{H}^{\text{disp}}</script><p>其中 $\mathcal{H}^{\text{disp}} \in \mathbb{Z}_n$</p>
+<p>接下来的关键一步是，由于 $|\mathcal{H}^{\text{res}}|_{\text{op}} = \max(|J|_{\text{op}}, |\mathcal{H}^{\text{disp}}|_{\text{op}})$，而 $|J|_{\text{op}}=1$，所以：</p>
+<script type="math/tex; mode=display">
+\|\mathcal{H}^{\text{res}}\|_{\text{op}} = 1 \Longleftrightarrow \|\mathcal{H}^{\text{disp}}\|_{\text{op}} \leq 1</script><p>把约束转换到了 $\mathbb{Z}$ 空间上，太天才了。</p>
+<p>然后对 $\mathcal{H}^{\text{disp}}$ 做 SVD，令：</p>
+<script type="math/tex; mode=display">
+\mathcal{H}^{\text{disp}} = U\Sigma V^T</script><p>$\mathcal{H}^{\text{disp}}$ 的行空间和列空间都必须落在 $\textbf{1}^\perp$ 这个 $(n-1)$-维子空间里。于是作者固定了一个 $\textbf{1}^\perp$ 的正交基 $U_Z \in \mathbb{R}^{n \times (n-1)}$，写成：</p>
+<script type="math/tex; mode=display">
+U = U_ZU_{\text{core}}, \quad V = U_Z V_{\text{core}}</script><p>其中</p>
+<script type="math/tex; mode=display">
+U_{\text{core}}, V_{\text{core}} \in \mathbb{R}^{(n-1) \times (n-1)}</script><p>是正交矩阵。最终：</p>
+<script type="math/tex; mode=display">
+\mathcal{H}^{\text{disp}} = (U_ZU_{\text{core}})\Sigma( U_Z V_{\text{core}})^T</script><p>只要 $\Sigma$ 的奇异值都落在 $[-1, 1]$ 内，就有:</p>
+<script type="math/tex; mode=display">
+\|\mathcal{H}^{\text{disp}}\|_{\text{op}} \leq 1</script><h3 id="数学本质"><a href="#数学本质" class="headerlink" title="数学本质"></a>数学本质</h3><p>我们可以将 $J$ 视作 $J = uu^T, u:= \frac{1}{\sqrt{n}} \textbf{1}$，因为：</p>
+<script type="math/tex; mode=display">
+\mathcal{H} \textbf{1} = \textbf{1} \Longleftrightarrow \mathcal{H} u = u</script><p>所以 $\text{span}\{u\}$ 是一个 $\mathcal{H}$ 的不变子空间。又因为：</p>
+<script type="math/tex; mode=display">
+\textbf{1}^T \mathcal{H}  = \textbf{1}^T \Longleftrightarrow \mathcal{H}^T u = u</script><p>任取 $x \in u^\perp$，即 $u^Tx = 0$，则：</p>
+<script type="math/tex; mode=display">
+u^T(\mathcal{H}x) = (\mathcal{H}^Tu)^Tx = u^Tx = 0</script><p>所以 $\mathcal{H}x \in u^\perp$，$u^\perp$ 也是 $\mathcal{H}$ 的不变子空间，所以我们有</p>
+<script type="math/tex; mode=display">
+\mathcal{H} \sim \begin{pmatrix}
+1 & 0 \\
+0 & M
+\end{pmatrix}</script><p>比起 mHC 的通道混合，sHC 更像是把空间分解成了 $\mathbb{R}^n = \text{span}\{\textbf{1}\} \oplus \textbf{1}^\perp$，前半部分做恒等映射，后半部分做谱约束的变换。</p>
+<p>sHC 的全部自由度，都在后半部分 $(n-1) \times (n-1)$ 的谱范数约束的单位球内。</p>
+<p>在这种视角下，$\mathcal{H}$ 对乘法封闭是很自然的，因为</p>
+<script type="math/tex; mode=display">
+\mathcal{H}_1\mathcal{H}_2 \sim \begin{pmatrix}
+1 & 0 \\
+0 & M_1M_2
+\end{pmatrix}</script><p>而 $|M_1M_2| \leq |M_1||M_2| \leq 1$，所以 $\mathcal{H}_1\mathcal{H}_2$ 自然仍满足约束。</p>
+<p>考虑 sHC 的约束实际上等价于考虑这个 $M$。同样是 $(n-1)^2$ 的自由度，这当然不是巧合，我觉得 sHC 找到的数学结构其实已经很本质了。</p>
+<h3 id="半群与最大子群"><a href="#半群与最大子群" class="headerlink" title="半群与最大子群"></a>半群与最大子群</h3><p>事实上，更准确地说，我们可以将任意 $M$ 视作极分解：</p>
+<script type="math/tex; mode=display">
+M = QP</script><p>其中 $Q = UV^T \in O(n-1)$ 是正交部分；而</p>
+<script type="math/tex; mode=display">
+P = V\Sigma V^T</script><p>是一个对称半正定矩阵，并且由于 $|M|_{\text{op}} \le 1$，它满足</p>
+<script type="math/tex; mode=display">
+0 \preceq P \preceq I</script><p>这里，$Q$ 可以理解为纯旋转的可逆部分，而 $P$ 则代表了不可逆的收缩部分。也就是说，sHC 在 $\textbf{1}^\perp$ 上允许的并不是任意线性变换，而是一个<strong>正交变换之后再接一个收缩算子</strong>。从这个角度看，sHC 的约束实际上把残差流分成了两部分：</p>
+<ul>
+<li>一个可逆、守范数的“群”部分；</li>
+<li>一个不可逆、带耗散的“半群”部分。</li>
+</ul>
+<p>这和 mHC 的情况很不一样。sHC 其实已经把问题从“如何在 Birkhoff 多面体里找一个好点”，转化成了“如何在一个收缩半群里找一个好算子”。它不再依赖 Birkhoff 多面体这种有棱有角的凸几何，而是等价于在 $(n-1)$-维空间上考虑</p>
+<script type="math/tex; mode=display">
+\{M\in \mathbb{R}^{(n-1)\times(n-1)}: \|M\|_{\text{op}}\le 1\}</script><p>这个算子范数球。<br>当然，半群终究不是群。它虽然有一个很自然的最大子群，如果我们进一步要求 $M$ 可逆且 $M^{-1}$ 仍在球内，那么由于</p>
+<script type="math/tex; mode=display">
+\|M\|_{\text{op}} \leq 1, \quad \|M^{-1}\|_{\text{op}} \leq 1</script><p>$M$ 的所有奇异值都只能等于 1，所以 $M$ 必须是一个正交矩阵。相当于我们在找：</p>
+<script type="math/tex; mode=display">
+\mathcal{H} \sim\left\{
+\begin{pmatrix}
+1 & 0\\
+0 & Q
+\end{pmatrix}
+: Q\in O(n-1)
+\right\},</script><p>但大部分元素仍然是不可逆的，残差流混合天然是半群而非群这个麻烦仍然存在。不过，我觉得 sHC 能告诉我们，约束未必非得来自双随机矩阵，也可以来自更本质的谱稳定结构，就已经足够好了。我很喜欢。</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>回顾这些 mHC 变体，它们其实都是在考虑该选择什么样的代数结构作为 Residual Stream 中多条通道之间的动态混合的约束。如果我们按照可行解空间从大到小排序，那会是 sHC &gt; mHC/mHC-lite &gt; KromHC。</p>
+<p>我还是一贯的观点，这些工作其实很难说谁好谁坏，主要还是看 LLM 更喜欢那种代数偏置，而 LLM 的偏好目前来说似乎是缺乏第一性的探测方法的。因此，对于各种方法本质代数结构的捕捉，并进行分类整理，我觉得是一件很重要的事情，是我们为数不多总结 LLM 偏置的方法之一。</p>
+<p>下一篇可能想介绍一下 Kimi 的 AttnRes。和 mHC 这种在单层内横向执行混合的方法不同，AttnRes 是在深度上纵向进行混合，两者是相对比较正交的，同样是很精彩的工作。</p>
+<h1 id="How-to-site"><a href="#How-to-site" class="headerlink" title="How to site"></a>How to site</h1><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@misc&#123;zhang2026residual,</span><br><span class="line">  author=&#123;Yechen Zhang&#125;,</span><br><span class="line">  title=&#123;残差连接的数学视角（一）：mHC&#125;,</span><br><span class="line">  year=&#123;2026&#125;,</span><br><span class="line">  month=&#123;April&#125;,</span><br><span class="line">  url=&#123;\url&#123;https://anti-entrophic.github.io/posts/10060.html&#125;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io">不会魔法的小圆</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://anti-entrophic.github.io/posts/10060.html">https://anti-entrophic.github.io/posts/10060.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://anti-entrophic.github.io" target="_blank">不会魔法的小圆</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Model-Structure/">Model Structure</a><a class="post-meta__tags" href="/tags/Math/">Math</a><a class="post-meta__tags" href="/tags/LLM/">LLM</a></div><div class="post_share"><div class="social-share" data-image="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBQMlp1MBQ5dGVwi4RnviLrttmPkpregACdAxrG3oeqEYqKRFn1Tbi9gEAAwIAA3cAAzsE.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/10059.html" title="从李群的视角看 ROPE 旋转位置编码"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBPftpw9X-YGH12m2dXguyfI_1MNB09AACpAtrG6BMIEaXPPouE9MjlwEAAwIAA3kAAzoE.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">从李群的视角看 ROPE 旋转位置编码</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/10038.html" title="Part I of Mathematical Structure of Mamba - Hippo"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJG82ff1w5esUgOIv2_I3Ec26GjClAYAALosTEbTk4BR1QAAYifvJODJAEAAwIAA3cAAzYE.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-23</div><div class="title">Part I of Mathematical Structure of Mamba - Hippo</div></div></a></div><div><a href="/posts/10039.html" title="Part II of Mathematical Structure of Mamba - S4"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJjSWgMzguLW7n4NF7aOmF9xf3dDw4aAAJgsDEbNu1pRH2bEOtt7JOdAQADAgADdwADNgQ.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-23</div><div class="title">Part II of Mathematical Structure of Mamba - S4</div></div></a></div><div><a href="/posts/10043.html" title="Part IV of Mathematical Structure of Mamba - Mamba&amp;Mamba2"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJ1c2gmAaUbbnW3_3N0kxIfcdvoaZvaAAKwrjEb3ZYwRfLm3FnjPcb5AQADAgADeQADNgQ.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-15</div><div class="title">Part IV of Mathematical Structure of Mamba - Mamba&amp;Mamba2</div></div></a></div><div><a href="/posts/10035.html" title="Sparsemax"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJTTmf1Ek0-hwAB6K-MTYKhFAS65kiTkgACb7ExG8W0qEcgM-UKzdhEWQEAAwIAA3gAAzYE.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-11</div><div class="title">Sparsemax</div></div></a></div><div><a href="/posts/10040.html" title="Part III of Mathematical Structure of Mamba - S4D"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAJjeGgM5CzgO8uqzR6RZuom-6BcNKaRAAKXsDEbNu1pRK8DbWzKH4FKAQADAgADeAADNgQ.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-25</div><div class="title">Part III of Mathematical Structure of Mamba - S4D</div></div></a></div><div><a href="/posts/10052.html" title="Nesterov"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBECBpFeFx9Ab5RF14QUzlQEZ5CsqNbQACPgtrGwpMsEQKoOPxa0KecwEAAwIAA3cAAzYE.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-13</div><div class="title">Nesterov</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">不会魔法的小圆</div><div class="author-info__description">不会魔法的小圆，博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Anti-Entrophic"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">修炼天阶功法中...</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Residual-Connection"><span class="toc-number">1.</span> <span class="toc-text">Residual Connection</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hyper-Connection"><span class="toc-number">2.</span> <span class="toc-text">Hyper Connection</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Manifold-Constrained-Hyper-Connections-mHC"><span class="toc-number">3.</span> <span class="toc-text">Manifold-Constrained Hyper-Connections (mHC)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%AE%E6%8D%A2%E7%9F%A9%E9%98%B5"><span class="toc-number">3.1.</span> <span class="toc-text">置换矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Birkhoff-von-Neumann-Theorem"><span class="toc-number">3.2.</span> <span class="toc-text">Birkhoff-von Neumann Theorem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mHC-%E7%9A%84%E5%81%9A%E6%B3%95"><span class="toc-number">3.3.</span> <span class="toc-text">mHC 的做法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Semi-group-%E7%9A%84%E5%9B%B0%E5%A2%83"><span class="toc-number">3.4.</span> <span class="toc-text">Semi group 的困境</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mHC-%E7%9A%84%E5%8F%98%E4%BD%93"><span class="toc-number">4.</span> <span class="toc-text">mHC 的变体</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mHC-lite"><span class="toc-number">4.1.</span> <span class="toc-text">mHC-lite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KromHC"><span class="toc-number">4.2.</span> <span class="toc-text">KromHC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sHC"><span class="toc-number">4.3.</span> <span class="toc-text">sHC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="toc-number">4.3.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E6%9C%AC%E8%B4%A8"><span class="toc-number">4.3.2.</span> <span class="toc-text">数学本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E7%BE%A4%E4%B8%8E%E6%9C%80%E5%A4%A7%E5%AD%90%E7%BE%A4"><span class="toc-number">4.3.3.</span> <span class="toc-text">半群与最大子群</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number">5.</span> <span class="toc-text">Conclusion</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-to-site"><span class="toc-number">6.</span> <span class="toc-text">How to site</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/10060.html" title="残差连接的数学视角（一）：mHC"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBQMlp1MBQ5dGVwi4RnviLrttmPkpregACdAxrG3oeqEYqKRFn1Tbi9gEAAwIAA3cAAzsE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="残差连接的数学视角（一）：mHC"/></a><div class="content"><a class="title" href="/posts/10060.html" title="残差连接的数学视角（一）：mHC">残差连接的数学视角（一）：mHC</a><time datetime="2026-04-07T08:24:19.000Z" title="发表于 2026-04-07 16:24:19">2026-04-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10059.html" title="从李群的视角看 ROPE 旋转位置编码"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBPftpw9X-YGH12m2dXguyfI_1MNB09AACpAtrG6BMIEaXPPouE9MjlwEAAwIAA3kAAzoE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从李群的视角看 ROPE 旋转位置编码"/></a><div class="content"><a class="title" href="/posts/10059.html" title="从李群的视角看 ROPE 旋转位置编码">从李群的视角看 ROPE 旋转位置编码</a><time datetime="2026-03-25T12:38:31.000Z" title="发表于 2026-03-25 20:38:31">2026-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10058.html" title="Part II of Symplectic Geometry - Properties"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBPXZpwRkcP7Vw1z_kEqgYeSkbJMB5HAACfAtrGxBNCEbJmGV2UtE8SwEAAwIAA3cAAzoE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Part II of Symplectic Geometry - Properties"/></a><div class="content"><a class="title" href="/posts/10058.html" title="Part II of Symplectic Geometry - Properties">Part II of Symplectic Geometry - Properties</a><time datetime="2026-03-23T05:16:17.000Z" title="发表于 2026-03-23 13:16:17">2026-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10057.html" title="Part I of Symplectic Geometry - The Basis"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBPXNpwROolwfBiXFB6X305Imj1AhnwwACeQtrGxBNCEZX9QNKMy9OtwEAAwIAA3cAAzoE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Part I of Symplectic Geometry - The Basis"/></a><div class="content"><a class="title" href="/posts/10057.html" title="Part I of Symplectic Geometry - The Basis">Part I of Symplectic Geometry - The Basis</a><time datetime="2026-03-18T11:26:05.000Z" title="发表于 2026-03-18 19:26:05">2026-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/10055.html" title="Functional Analysis - Quick Explanation"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBOuZpskNitPpGoRyuzgKPzdQCqEDi5wACxAtrG96ZkEWrfRmE4GP37QEAAwIAA3cAAzoE.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Functional Analysis - Quick Explanation"/></a><div class="content"><a class="title" href="/posts/10055.html" title="Functional Analysis - Quick Explanation">Functional Analysis - Quick Explanation</a><time datetime="2026-03-12T04:39:14.000Z" title="发表于 2026-03-12 12:39:14">2026-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By 不会魔法的小圆</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
