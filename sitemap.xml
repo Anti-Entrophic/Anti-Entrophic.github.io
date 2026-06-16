@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://anti-entrophic.github.io/posts/10060.html</loc>
+    <loc>https://anti-entrophic.github.io/posts/10062.html</loc>
     
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -12,6 +12,15 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/posts/10061.html</loc>
+    
+    <lastmod>2026-05-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/posts/10060.html</loc>
     
     <lastmod>2026-04-20</lastmod>
     
@@ -355,7 +364,7 @@
 
   <url>
     <loc>https://anti-entrophic.github.io/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -363,224 +372,231 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Hexo-Butterfly-tutorial/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Other/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Windows/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Computer-Network/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Study/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Notes/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Computer-Graphics/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Homework/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Distributed-System/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Lab/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/NLP/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Mamba/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Model-Structure/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/HiPPO/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/S4/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Neural-Network/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/softmax/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Optimizer/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Linear-Algebra/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Operating-System/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Math/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Optimization/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Reinforcement-Learning/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/CUDA/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/triton/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Functional-Analysis/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/LLM/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Scaling-Law/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Pretrain/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Symplectic-Geometry/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Positional-Embedding/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/tags/Geometry/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/tags/Extension/</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -589,112 +605,119 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Hexo-Butterfly-tutorial/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Other/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Windows/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/NLP/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Computer-Network/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Distributed-System/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Computer-Graphics/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Model-Structure/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Neural-Network/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Math/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Study/Operating-System/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Optimizer/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/Reinforcement-Learning/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/cuda/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/LLM/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://anti-entrophic.github.io/categories/Other/</loc>
+    <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
