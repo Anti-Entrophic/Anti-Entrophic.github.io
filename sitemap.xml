@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://anti-entrophic.github.io/posts/10062.html</loc>
-    
-    <lastmod>2026-06-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://anti-entrophic.github.io/posts/10061.html</loc>
     
     <lastmod>2026-05-13</lastmod>
@@ -594,13 +585,6 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://anti-entrophic.github.io/tags/Extension/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
@@ -710,13 +694,6 @@
   
   <url>
     <loc>https://anti-entrophic.github.io/categories/LLM/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://anti-entrophic.github.io/categories/Other/</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

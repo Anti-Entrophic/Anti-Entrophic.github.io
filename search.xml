@@ -4,31 +4,6 @@
   
     
     <entry>
-      <title>Toy Vscode Extension - Vibe Check</title>
-      <link href="/posts/10062.html"/>
-      <url>/posts/10062.html</url>
-      
-        <content type="html"><![CDATA[<p>最近 Vibe Coding 用量越来越大，古法编程日渐式微。</p><p>但可惜我是一个古人，每次 Vibe Coding 完的代码我都要自己审一下才敢放心用…… 但是往往只来得及review最关键的部分。由于不是自己写的代码，很多时候看过就忘了，加上下次 Vibe Coding 可能又把 review 过部分的代码给修改了，导致经常需要 re-review。</p><p>为了正常推进工作进度，很多时候 AI codes 来不及看也不敢动，就先一并接收着。git 没法帮我跟踪区分 AI codes 与 manual codes，实在深受其扰，于是自己写了一个<a href="https://github.com/Anti-Entrophic/VibeCheck">插件</a>跟踪哪些代码已经过人类review，界定代码中的人类可信边界（</p><p>但其实就是给每个 block 打个 review 过的标，记录行哈希以跟踪改变，避免 re-review 的情况发生。</p><center><img src="https://i.072333.xyz/file/AgACAgEAAyEGAASMaMWHAAEBTB9qMUexbcjAmsvBYdp0dTxFJNaYdAACQAxrG_DZkUVw_Do8QuvMFwEAAwIAA3kAAzwE.png" width="400px" /><p style="font-size: 10px;"> 能用就行</p></center><p>最近发生了好多事，心累。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Other` </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Extension </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>谱条件</title>
       <link href="/posts/10061.html"/>
       <url>/posts/10061.html</url>
